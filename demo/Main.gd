@@ -18,6 +18,7 @@ func load_config():
 		ram_slider.value = int(config.get_value("Global", "ram", 4))
 		x_line_edit.text = str(config.get_value("Resolution", "x", ""))
 		y_line_edit.text = str(config.get_value("Resolution", "y", ""))
+
 func save_config():
 	var config = ConfigFile.new()
 	
@@ -64,21 +65,20 @@ func load_backgrounds():
 		load_backgrounds()
 
 
-#func _input(event: InputEvent) -> void:
-#	if Engine.is_editor_hint(): return
-#	if Input.is_action_just_pressed("debug_change_background"):
-#		canvas_background.change_background()
+func _input(event: InputEvent) -> void:
+	if Engine.is_editor_hint(): return
+	if Input.is_action_just_pressed("debug_change_background"):
+		canvas_background.change_background()
 
 
 func _on_minecraft_folder_button_pressed() -> void:
 	OS.shell_open(ProjectSettings.globalize_path("user://"))
 
 
-func _on_h_slider_value_changed(value: float) -> void:
-	ram_label.text = str(value) + "Go"
+func _on_ram_slider_drag_ended(value_changed: bool) -> void:
+	ram_label.text = str(value_changed) + "Go"
 	save_config()
 
 
 func _on_resolution_line_edit_text_changed(new_text: String) -> void:
-	print(new_text)
 	save_config()

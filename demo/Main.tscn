@@ -158,7 +158,7 @@ text = "Play"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[connection signal="value_changed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/RamContainer/RamSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="drag_ended" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/RamContainer/RamSlider" to="." method="_on_ram_slider_drag_ended"]
 [connection signal="text_changed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer/XLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
 [connection signal="text_changed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer/YLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
 [connection signal="pressed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/MinecraftFolderButton" to="." method="_on_minecraft_folder_button_pressed"]

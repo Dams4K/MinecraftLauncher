@@ -24,7 +24,6 @@ func update_blur_effect():
 	blur_effect.material.set("shader_parameter/blur_amount", blur_amount)
 
 func change_background():
-	print("baaaackgrounds")
 	if len(backgrounds) == 0 || texture_rect == null: return
 	
 	backgrounds.shuffle()
