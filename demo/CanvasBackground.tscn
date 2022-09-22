@@ -1,0 +1,48 @@
+[gd_scene load_steps=10 format=3 uid="uid://c4mndr017k5bj"]
+
+[ext_resource type="Script" path="res://demo/CanvasBackground.gd" id="1_i3cqj"]
+[ext_resource type="Texture2D" uid="uid://cxagxx3pbk6nj" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_7.jpg" id="2_1a3yp"]
+[ext_resource type="Material" uid="uid://igoox5qwswv7" path="res://demo/assets/materials/BlurMaterial.tres" id="2_gnp5s"]
+[ext_resource type="Texture2D" uid="uid://p83bxvj3h2d7" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_4_2021.jpg" id="3_onq6t"]
+[ext_resource type="Texture2D" uid="uid://dyuawxii778l6" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_1_2021.jpg" id="4_bbap7"]
+[ext_resource type="Texture2D" uid="uid://di2kcvmqgnlp4" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_6.jpg" id="5_ho3lj"]
+[ext_resource type="Texture2D" uid="uid://caiek12ngpt80" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_2_2021.jpg" id="6_q38u3"]
+[ext_resource type="Texture2D" uid="uid://um8sts8ewg8w" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_5.jpg" id="7_dyjsw"]
+[ext_resource type="Texture2D" uid="uid://lpc6uqc2jwad" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_3_2021.jpg" id="8_ymmnc"]
+
+[node name="CanvasBackground" type="CanvasLayer"]
+script = ExtResource("1_i3cqj")
+backgrounds = [ExtResource("5_ho3lj"), ExtResource("2_1a3yp"), ExtResource("6_q38u3"), ExtResource("4_bbap7"), ExtResource("8_ymmnc"), ExtResource("3_onq6t"), ExtResource("7_dyjsw")]
+blur_amount = 0.0
+debug_change_background = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="BlurEffect" type="ColorRect" parent="Control"]
+unique_name_in_owner = true
+material = ExtResource("2_gnp5s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

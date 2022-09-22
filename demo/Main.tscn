@@ -1,0 +1,164 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1bd8h43spuha"]
+
+[ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
+[ext_resource type="PackedScene" uid="uid://c4mndr017k5bj" path="res://demo/CanvasBackground.tscn" id="1_liqpm"]
+[ext_resource type="Texture2D" uid="uid://cmbj4fgbyxr3g" path="res://demo/assets/textures/icons/crack_icon.png" id="7_1oive"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 2
+script = ExtResource("1_idodt")
+
+[node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
+layer = -1
+blur_amount = 1.0
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+custom_minimum_size = Vector2i(400, 300)
+layout_mode = 2
+offset_left = 376.0
+offset_top = 174.0
+offset_right = 776.0
+offset_bottom = 474.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="AccountButton" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 31.0
+text = "Dams4LT"
+icon = ExtResource("7_1oive")
+expand_icon = true
+
+[node name="SettingsContainer" type="VBoxContainer" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+offset_top = 35.0
+offset_right = 400.0
+offset_bottom = 131.0
+
+[node name="RamContainer" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+offset_right = 400.0
+offset_bottom = 26.0
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/RamContainer"]
+layout_mode = 2
+offset_right = 86.0
+offset_bottom = 26.0
+text = " Max RAM :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RamSlider" type="HSlider" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/RamContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 90.0
+offset_right = 361.0
+offset_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+min_value = 1.0
+value = 4.0
+ticks_on_borders = true
+
+[node name="RAMLabel" type="Label" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/RamContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 365.0
+offset_right = 400.0
+offset_bottom = 26.0
+text = "4Go "
+
+[node name="ResolutionContainer" type="HBoxContainer" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+offset_top = 30.0
+offset_right = 400.0
+offset_bottom = 61.0
+
+[node name="Label" type="Label" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer"]
+layout_mode = 2
+offset_top = 2.0
+offset_right = 96.0
+offset_bottom = 28.0
+text = " Résolution :"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XLineEdit" type="LineEdit" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 100.0
+offset_right = 241.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+placeholder_text = "<auto>"
+alignment = 1
+
+[node name="X" type="Label" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer"]
+layout_mode = 2
+offset_left = 245.0
+offset_top = 2.0
+offset_right = 255.0
+offset_bottom = 28.0
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YLineEdit" type="LineEdit" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 259.0
+offset_right = 400.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+placeholder_text = "<auto>"
+alignment = 1
+
+[node name="MinecraftFolderButton" type="Button" parent="CenterContainer/Panel/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+offset_top = 65.0
+offset_right = 400.0
+offset_bottom = 96.0
+text = "Open Minecraft Folder"
+
+[node name="PlayButton" type="Button" parent="CenterContainer/Panel/VBoxContainer"]
+layout_mode = 2
+offset_top = 269.0
+offset_right = 400.0
+offset_bottom = 300.0
+size_flags_vertical = 10
+text = "Play"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[connection signal="value_changed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/RamContainer/RamSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="text_changed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer/XLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
+[connection signal="text_changed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/ResolutionContainer/YLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
+[connection signal="pressed" from="CenterContainer/Panel/VBoxContainer/SettingsContainer/MinecraftFolderButton" to="." method="_on_minecraft_folder_button_pressed"]

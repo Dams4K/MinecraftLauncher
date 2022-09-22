@@ -31,7 +31,7 @@ func download_libraries():
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await download_file(url, LIBRARIES_PATH.plus_file(path), sha1)
+		await download_file(url, LIBRARIES_PATH.path_join(path), sha1)
 	
 	print("download_libraries - ended")
 
@@ -42,7 +42,7 @@ func download_natives():
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await download_file(url, NATIVES_PATH.plus_file(file_name), sha1)
+		await download_file(url, NATIVES_PATH.path_join(file_name), sha1)
 	
 	print("download_natives - ended")
 
