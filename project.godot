@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 
 Launcher="*res://autoloads/Launcher.tscn"
 Utils="*res://autoloads/Utils.gd"
+Config="*res://demo/autoloads/Config.gd"
 
 [input]
 

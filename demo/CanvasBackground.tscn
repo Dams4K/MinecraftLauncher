@@ -12,7 +12,7 @@
 
 [node name="CanvasBackground" type="CanvasLayer"]
 script = ExtResource("1_i3cqj")
-backgrounds = [ExtResource("5_ho3lj"), ExtResource("2_1a3yp"), ExtResource("6_q38u3"), ExtResource("4_bbap7"), ExtResource("8_ymmnc"), ExtResource("3_onq6t"), ExtResource("7_dyjsw")]
+backgrounds = [ExtResource("2_1a3yp"), ExtResource("7_dyjsw"), ExtResource("8_ymmnc"), ExtResource("3_onq6t"), ExtResource("6_q38u3"), ExtResource("4_bbap7"), ExtResource("5_ho3lj")]
 blur_amount = 0.0
 debug_change_background = false
 
@@ -28,13 +28,25 @@ offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="BackgroundTexture" type="TextureRect" parent="Control"]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("6_q38u3")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="TransitionTexture" type="TextureRect" parent="Control"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_bbap7")
 ignore_texture_size = true
 stretch_mode = 6
 
@@ -46,3 +58,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
