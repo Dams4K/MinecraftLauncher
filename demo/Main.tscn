@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://b1bd8h43spuha"]
+[gd_scene load_steps=13 format=3 uid="uid://b1bd8h43spuha"]
 
+[ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
 [ext_resource type="PackedScene" uid="uid://c4mndr017k5bj" path="res://demo/CanvasBackground.tscn" id="1_liqpm"]
 [ext_resource type="Texture2D" uid="uid://lpc6uqc2jwad" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_3_2021.jpg" id="3_l0suc"]
@@ -12,15 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
 [ext_resource type="PackedScene" uid="uid://cpxs0a8b3cxrj" path="res://demo/menus/AccountsContainer.tscn" id="11_jpeew"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oouwd"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
-
-[sub_resource type="Theme" id="Theme_pywg6"]
-ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_oouwd")
-
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -29,12 +21,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 2
-theme = SubResource("Theme_pywg6")
+theme = ExtResource("1_hsfwl")
 script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = [ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("9_07b58"), ExtResource("8_l2bsn"), ExtResource("3_l0suc"), ExtResource("5_8w3vm"), ExtResource("6_bdn53")]
+backgrounds = [ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("4_0hgcl"), ExtResource("7_hoigf"), ExtResource("3_l0suc"), ExtResource("8_l2bsn"), ExtResource("9_07b58")]
 blur_amount = 1.0
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
@@ -59,8 +51,23 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayContainer" parent="CenterContainer/Panel/Container" instance=ExtResource("10_5hgt8")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 400.0
+offset_bottom = 166.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="AccountsContainer" parent="CenterContainer/Panel/Container" instance=ExtResource("11_jpeew")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 170.0
+offset_right = 400.0
+offset_bottom = 300.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="_switch_to_accounts_container" from="CenterContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
 [connection signal="_switch_to_play_container" from="CenterContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]

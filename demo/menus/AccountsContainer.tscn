@@ -1,38 +1,75 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpxs0a8b3cxrj"]
+[gd_scene load_steps=4 format=3 uid="uid://cpxs0a8b3cxrj"]
 
+[ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_pc0k7"]
 [ext_resource type="Script" path="res://demo/menus/AccountsContainer.gd" id="1_xi4q4"]
+[ext_resource type="PackedScene" uid="uid://dqwfsxg3kbbdi" path="res://demo/menus/AccountButton.tscn" id="5_kprq5"]
 
 [node name="AccountsContainer" type="VBoxContainer"]
 unique_name_in_owner = true
-offset_right = 400.0
-offset_bottom = 300.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
+theme = ExtResource("1_pc0k7")
 theme_override_constants/separation = 10
 script = ExtResource("1_xi4q4")
 
 [node name="BackButton" type="Button" parent="."]
-offset_right = 400.0
+layout_mode = 2
+offset_right = 1152.0
 offset_bottom = 31.0
 text = "Back"
 
 [node name="ScrollAccountsContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
 offset_top = 41.0
-offset_right = 400.0
-offset_bottom = 259.0
+offset_right = 1152.0
+offset_bottom = 607.0
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
 [node name="AccountsContainer" type="VBoxContainer" parent="ScrollAccountsContainer"]
-offset_right = 392.0
-offset_bottom = 218.0
+layout_mode = 2
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 1139.0
+offset_bottom = 561.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="AccountButton2" parent="ScrollAccountsContainer/AccountsContainer" instance=ExtResource("5_kprq5")]
+layout_mode = 2
+anchors_preset = 0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 0.0
+offset_right = 1134.0
+offset_bottom = 31.0
+grow_horizontal = 1
+grow_vertical = 1
+selected = true
+
+[node name="AccountButton" parent="ScrollAccountsContainer/AccountsContainer" instance=ExtResource("5_kprq5")]
+layout_mode = 2
+anchors_preset = 0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 35.0
+offset_right = 1134.0
+offset_bottom = 66.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="AddAccount" type="Button" parent="."]
-offset_top = 269.0
-offset_right = 400.0
-offset_bottom = 300.0
+layout_mode = 2
+offset_top = 617.0
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_vertical = 8
 text = "Add Account"
 

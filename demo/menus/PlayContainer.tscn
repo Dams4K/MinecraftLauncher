@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://kd8li5fi1xi6"]
+[gd_scene load_steps=4 format=3 uid="uid://kd8li5fi1xi6"]
 
 [ext_resource type="Texture2D" uid="uid://cmbj4fgbyxr3g" path="res://demo/assets/textures/icons/crack_icon.png" id="1_emrvn"]
 [ext_resource type="Script" path="res://demo/menus/PlayContainer.gd" id="1_fdyb6"]
+[ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="3_il1tp"]
 
 [node name="PlayContainer" type="VBoxContainer"]
 unique_name_in_owner = true
-visible = false
-offset_right = 400.0
-offset_bottom = 300.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -15,26 +16,22 @@ size_flags_vertical = 3
 script = ExtResource("1_fdyb6")
 
 [node name="AccountButton" type="Button" parent="."]
-layout_mode = 2
-offset_right = 400.0
+offset_right = 1152.0
 offset_bottom = 31.0
 text = "Dams4LT"
 icon = ExtResource("1_emrvn")
 expand_icon = true
 
 [node name="SettingsContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
 offset_top = 35.0
-offset_right = 400.0
+offset_right = 1152.0
 offset_bottom = 131.0
 
 [node name="RamContainer" type="HBoxContainer" parent="SettingsContainer"]
-layout_mode = 2
-offset_right = 400.0
+offset_right = 1152.0
 offset_bottom = 26.0
 
 [node name="Label" type="Label" parent="SettingsContainer/RamContainer"]
-layout_mode = 2
 offset_right = 86.0
 offset_bottom = 26.0
 text = " Max RAM :"
@@ -43,32 +40,29 @@ vertical_alignment = 1
 
 [node name="RamSlider" type="HSlider" parent="SettingsContainer/RamContainer"]
 unique_name_in_owner = true
-layout_mode = 2
 offset_left = 90.0
-offset_right = 361.0
+offset_right = 1113.0
 offset_bottom = 26.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("3_il1tp")
 min_value = 1.0
 value = 4.0
 ticks_on_borders = true
 
 [node name="RAMLabel" type="Label" parent="SettingsContainer/RamContainer"]
 unique_name_in_owner = true
-layout_mode = 2
-offset_left = 365.0
-offset_right = 400.0
+offset_left = 1117.0
+offset_right = 1152.0
 offset_bottom = 26.0
 text = "4Go "
 
 [node name="ResolutionContainer" type="HBoxContainer" parent="SettingsContainer"]
-layout_mode = 2
 offset_top = 30.0
-offset_right = 400.0
+offset_right = 1152.0
 offset_bottom = 61.0
 
 [node name="Label" type="Label" parent="SettingsContainer/ResolutionContainer"]
-layout_mode = 2
 offset_top = 2.0
 offset_right = 96.0
 offset_bottom = 28.0
@@ -78,19 +72,17 @@ vertical_alignment = 1
 
 [node name="XLineEdit" type="LineEdit" parent="SettingsContainer/ResolutionContainer"]
 unique_name_in_owner = true
-layout_mode = 2
 offset_left = 100.0
-offset_right = 241.0
+offset_right = 617.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 placeholder_text = "<auto>"
 alignment = 1
 
 [node name="X" type="Label" parent="SettingsContainer/ResolutionContainer"]
-layout_mode = 2
-offset_left = 245.0
+offset_left = 621.0
 offset_top = 2.0
-offset_right = 255.0
+offset_right = 631.0
 offset_bottom = 28.0
 text = "X"
 horizontal_alignment = 1
@@ -98,31 +90,29 @@ vertical_alignment = 1
 
 [node name="YLineEdit" type="LineEdit" parent="SettingsContainer/ResolutionContainer"]
 unique_name_in_owner = true
-layout_mode = 2
-offset_left = 259.0
-offset_right = 400.0
+offset_left = 635.0
+offset_right = 1152.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 placeholder_text = "<auto>"
 alignment = 1
 
 [node name="MinecraftFolderButton" type="Button" parent="SettingsContainer"]
-layout_mode = 2
 offset_top = 65.0
-offset_right = 400.0
+offset_right = 1152.0
 offset_bottom = 96.0
 text = "Open Minecraft Folder"
 
 [node name="PlayButton" type="Button" parent="."]
-layout_mode = 2
-offset_top = 269.0
-offset_right = 400.0
-offset_bottom = 300.0
+offset_top = 617.0
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_vertical = 10
 text = "Play"
 
 [connection signal="pressed" from="AccountButton" to="." method="_on_account_button_pressed"]
 [connection signal="drag_ended" from="SettingsContainer/RamContainer/RamSlider" to="." method="_on_ram_slider_drag_ended"]
+[connection signal="value_changed" from="SettingsContainer/RamContainer/RamSlider" to="." method="_on_ram_slider_value_changed"]
 [connection signal="text_changed" from="SettingsContainer/ResolutionContainer/XLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
 [connection signal="text_changed" from="SettingsContainer/ResolutionContainer/YLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
 [connection signal="pressed" from="SettingsContainer/MinecraftFolderButton" to="." method="_on_minecraft_folder_button_pressed"]

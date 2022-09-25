@@ -21,11 +21,6 @@ func _on_minecraft_folder_button_pressed() -> void:
 	OS.shell_open(ProjectSettings.globalize_path("user://"))
 
 
-func _on_ram_slider_drag_ended(value_changed: bool) -> void:
-	if value_changed:
-		ram_label.text = str(ram_slider.value) + "Go"
-		Config.ram = ram_slider.value
-
 func _on_resolution_line_edit_text_changed(new_text: String) -> void:
 	Config.x_resolution = x_line_edit.text.to_int()
 	Config.y_resolution = y_line_edit.text.to_int()
@@ -33,3 +28,12 @@ func _on_resolution_line_edit_text_changed(new_text: String) -> void:
 
 func _on_account_button_pressed() -> void:
 	emit_signal("_switch_to_accounts_container")
+
+
+func _on_ram_slider_value_changed(value: float) -> void:
+	ram_label.text = str(value) + "Go"
+
+
+func _on_ram_slider_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		Config.ram = ram_slider.value
