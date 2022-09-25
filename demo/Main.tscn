@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://caiek12ngpt80" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_2_2021.jpg" id="8_l2bsn"]
 [ext_resource type="Texture2D" uid="uid://p83bxvj3h2d7" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_4_2021.jpg" id="9_07b58"]
 [ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
-[ext_resource type="PackedScene" uid="uid://cpxs0a8b3cxrj" path="res://demo/menus/AccountsContainer.tscn" id="11_jpeew"]
+[ext_resource type="PackedScene" uid="uid://8j3snbh0cghx" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
