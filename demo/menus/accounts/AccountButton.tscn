@@ -22,15 +22,15 @@ script = ExtResource("2_yq5fs")
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2i(31, 31)
-offset_right = 8.0
+offset_right = 31.0
 offset_bottom = 31.0
 icon = ExtResource("3_fpibb")
 expand_icon = true
 
 [node name="SelectButton" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 12.0
-offset_right = 916.0
+offset_left = 35.0
+offset_right = 925.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -41,17 +41,11 @@ expand_icon = true
 [node name="EditButton" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2i(31, 31)
-offset_left = 920.0
-offset_right = 1146.0
+offset_left = 929.0
+offset_right = 1152.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Edit"
 icon = ExtResource("4_5e0d4")
 icon_alignment = 2
 expand_icon = true
-
-[node name="Label" type="Label" parent="."]
-offset_left = 1150.0
-offset_top = 4.0
-offset_right = 1151.0
-offset_bottom = 27.0

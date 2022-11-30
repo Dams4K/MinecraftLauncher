@@ -1,12 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwenvn07m4nf3"]
+[gd_scene load_steps=4 format=3 uid="uid://dgrlowegvnurx"]
 
 [ext_resource type="Script" path="res://autoloads/Launcher.gd" id="1_ue7q2"]
-[ext_resource type="PackedScene" uid="uid://dtfa8e6fahfdy" path="res://autoloads/VersionManifest.tscn" id="2_kbokh"]
-[ext_resource type="PackedScene" uid="uid://fcqkyt2eusmq" path="res://autoloads/Libraries.tscn" id="3_3yxpa"]
+[ext_resource type="PackedScene" uid="uid://c8am746qrmcuj" path="res://autoloads/MinecraftVersionManifest.tscn" id="2_kbokh"]
+[ext_resource type="PackedScene" uid="uid://banvgumjcbvna" path="res://autoloads/MinecraftLibraries.tscn" id="3_kg5ws"]
 
 [node name="Launcher" type="Node"]
 script = ExtResource("1_ue7q2")
 
-[node name="VersionManifest" parent="." instance=ExtResource("2_kbokh")]
+[node name="MinecraftVersionManifest" parent="." instance=ExtResource("2_kbokh")]
 
-[node name="Libraries" parent="." instance=ExtResource("3_3yxpa")]
+[node name="MinecraftLibraries" parent="." instance=ExtResource("3_kg5ws")]

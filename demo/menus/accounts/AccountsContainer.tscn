@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_4b3a1"]
 [ext_resource type="Script" path="res://demo/menus/accounts/AccountsContainer.gd" id="2_2rvid"]
-[ext_resource type="PackedScene" path="res://demo/menus/accounts/AccountButton.tscn" id="3_fhkxx"]
+[ext_resource type="PackedScene" uid="uid://b8oxyn0vmd8v3" path="res://demo/menus/accounts/AccountButton.tscn" id="3_fhkxx"]
 
 [node name="AccountsContainer" type="VBoxContainer"]
 unique_name_in_owner = true
@@ -17,13 +17,11 @@ theme_override_constants/separation = 10
 script = ExtResource("2_2rvid")
 
 [node name="BackButton" type="Button" parent="."]
-layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 31.0
 text = "Back"
 
 [node name="ScrollAccountsContainer" type="ScrollContainer" parent="."]
-layout_mode = 2
 offset_top = 41.0
 offset_right = 1152.0
 offset_bottom = 607.0
@@ -32,7 +30,6 @@ horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
 [node name="AccountsContainer" type="VBoxContainer" parent="ScrollAccountsContainer"]
-layout_mode = 2
 offset_left = 5.0
 offset_top = 5.0
 offset_right = 1139.0
@@ -41,7 +38,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="AccountButton2" parent="ScrollAccountsContainer/AccountsContainer" instance=ExtResource("3_fhkxx")]
-layout_mode = 2
 anchors_preset = 0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -54,7 +50,6 @@ grow_vertical = 1
 selected = true
 
 [node name="AccountButton" parent="ScrollAccountsContainer/AccountsContainer" instance=ExtResource("3_fhkxx")]
-layout_mode = 2
 anchors_preset = 0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -66,7 +61,6 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="AddAccount" type="Button" parent="."]
-layout_mode = 2
 offset_top = 617.0
 offset_right = 1152.0
 offset_bottom = 648.0

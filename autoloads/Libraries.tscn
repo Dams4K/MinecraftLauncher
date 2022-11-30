@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://fcqkyt2eusmq"]
-
-[ext_resource type="Script" path="res://autoloads/Libraries.gd" id="1_ujdlj"]
-
-[node name="Libraries" type="Node"]
-script = ExtResource("1_ujdlj")
-
-[node name="Downloader" type="HTTPRequest" parent="."]
-accept_gzip = false

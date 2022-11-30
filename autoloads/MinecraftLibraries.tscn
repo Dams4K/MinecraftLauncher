@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://banvgumjcbvna"]
+
+[ext_resource type="Script" path="res://autoloads/MinecraftLibraries.gd" id="1_hr1aj"]
+
+[node name="MinecraftLibraries" type="Node"]
+script = ExtResource("1_hr1aj")
+
+[node name="Downloader" type="HTTPRequest" parent="."]
+accept_gzip = false

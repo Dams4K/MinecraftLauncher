@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://caiek12ngpt80" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_2_2021.jpg" id="8_l2bsn"]
 [ext_resource type="Texture2D" uid="uid://p83bxvj3h2d7" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_4_2021.jpg" id="9_07b58"]
 [ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
-[ext_resource type="PackedScene" uid="uid://8j3snbh0cghx" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
+[ext_resource type="PackedScene" uid="uid://7621mv7f4fro" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -37,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="CenterContainer"]
-custom_minimum_size = Vector2i(400, 300)
+custom_minimum_size = Vector2(400, 300)
 offset_left = 376.0
 offset_top = 174.0
 offset_right = 776.0
@@ -69,5 +69,4 @@ offset_bottom = 300.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[connection signal="_switch_to_accounts_container" from="CenterContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
 [connection signal="_switch_to_play_container" from="CenterContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]

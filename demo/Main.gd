@@ -21,28 +21,34 @@ var has_already_tried = false
 func load_backgrounds():
 	canvas_background.backgrounds = []
 
-	var dir = Directory.new()
 	var dir_path = ProjectSettings.get("Launcher/Paths/Backgrounds")
-
-	if dir.open(dir_path) == OK:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
+	var dir_local = DirAccess.open(dir_path)
+	var dir_local_ok = DirAccess.get_open_error()
+	var dir_perma = DirAccess.open(base_backgrounds_path)
+	var dir_perma_ok = DirAccess.get_open_error()
+	
+	if dir_local_ok == OK:
+		dir_local.list_dir_begin()
+		var file_name = dir_local.get_next()
 		while file_name != "":
-			if !dir.current_is_dir():
+			if !dir_local.current_is_dir():
 				var image = Image.load_from_file(dir_path.path_join(file_name))
 				var texture = ImageTexture.create_from_image(image)
 				canvas_background.backgrounds.append(texture)
-			file_name = dir.get_next()
-	elif dir.open(base_backgrounds_path) == OK && !has_already_tried:
+			file_name = dir_local.get_next()
+	elif dir_perma_ok == OK && !has_already_tried:
 		has_already_tried = true
-		dir.make_dir(dir_path)
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if !dir.current_is_dir() && file_name.get_extension() in ["jpg", "png", "jpeg"]:
-				dir.copy(base_backgrounds_path.path_join(file_name), dir_path.path_join(file_name))
-			file_name = dir.get_next()
+		
+		if DirAccess.make_dir_absolute(dir_path) == OK:
+			dir_perma.list_dir_begin()
+			var file_name = dir_perma.get_next()
+			
+			while file_name != "":
+				if !dir_perma.current_is_dir() && file_name.get_extension() in ["jpg", "png", "jpeg"]:
+					dir_perma.copy(base_backgrounds_path.path_join(file_name), dir_path.path_join(file_name))
+				file_name = dir_perma.get_next()
 		load_backgrounds()
+
 
 func _input(event: InputEvent) -> void:
 	if Engine.is_editor_hint(): return

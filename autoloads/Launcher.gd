@@ -1,15 +1,12 @@
 extends Node
 
-@onready var versionManifest: Node = $VersionManifest
-@onready var libraries: Node = $Libraries
+@onready var versionManifest: MinecraftVersionManifest = $MinecraftVersionManifest
+@onready var libraries: MinecraftLibraries = $MinecraftLibraries
 
 func _ready() -> void:
-	return
-	
-	await versionManifest.get_all_versions()
 	var version_file = await versionManifest.download_version_file("1.19.2")
 	if not version_file.is_empty():
 		libraries.libraries = version_file["libraries"]
 		
-		await libraries.download_natives()
+		await libraries.download_natives(true)
 		await libraries.download_libraries()

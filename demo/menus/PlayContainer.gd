@@ -8,7 +8,7 @@ signal _switch_to_accounts_container
 @onready var y_line_edit: LineEdit = %YLineEdit
 
 func _ready() -> void:
-	ram_slider.max_value = OSInformation.get_total_system_memory().to_int() / 1024 / 1024 / 1024 + 1
+#	ram_slider.max_value = OSInformation.get_total_system_memory().to_int() / 1024 / 1024 / 1024 + 1
 	
 	ram_slider.value = Config.ram
 	ram_label.text = str(Config.ram) + "Go"
