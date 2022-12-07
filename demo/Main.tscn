@@ -26,7 +26,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = [ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("4_0hgcl"), ExtResource("7_hoigf"), ExtResource("3_l0suc"), ExtResource("8_l2bsn"), ExtResource("9_07b58")]
+backgrounds = [ExtResource("5_8w3vm"), ExtResource("6_bdn53"), ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("9_07b58"), ExtResource("3_l0suc")]
 blur_amount = 1.0
 
 [node name="CenterContainer" type="CenterContainer" parent="."]

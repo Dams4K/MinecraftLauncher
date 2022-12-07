@@ -1,0 +1,113 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5yd7pkk0nk2u"]
+
+[ext_resource type="Script" path="res://demo/menus/custom_nodes/DoubleSlider.gd" id="1_yxt3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_365b0"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ik4jo"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.72549, 0.72549, 0.72549, 0.6)
+border_color = Color(1, 1, 1, 0)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8xl8v"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 0.745098)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="DoubleSlider" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_yxt3d")
+min_value = -10.0
+max_value = 10.0
+step = 0.5
+min_cursor_value = -5.0
+max_cursor_value = 0.0
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 12)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_365b0")
+
+[node name="ForegroundPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ik4jo")
+
+[node name="MinCursorPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -6.0
+offset_right = 12.0
+offset_bottom = 6.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8xl8v")
+
+[node name="MaxCursorPanel" type="Panel" parent="."]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -6.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8xl8v")
+
+[connection signal="resized" from="." to="." method="_on_resized"]
+[connection signal="mouse_entered" from="BackgroundPanel" to="." method="_on_background_panel_mouse_entered"]
+[connection signal="mouse_exited" from="BackgroundPanel" to="." method="_on_background_panel_mouse_exited"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4amq8dq1dlwi"]
+
+[ext_resource type="Script" path="res://demo/menus/custom_nodes/Tests.gd" id="1_7uhgj"]
+[ext_resource type="PackedScene" uid="uid://b5yd7pkk0nk2u" path="res://demo/menus/custom_nodes/DoubleSlider.tscn" id="1_21moo"]
+
+[node name="Tests" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7uhgj")
+
+[node name="DoubleSlider" parent="." instance=ExtResource("1_21moo")]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -282.0
+
+[connection signal="drag_ended" from="DoubleSlider" to="." method="_on_double_slider_drag_ended"]
+[connection signal="drag_started" from="DoubleSlider" to="." method="_on_double_slider_drag_started"]
+[connection signal="max_cursor_value_changed" from="DoubleSlider" to="." method="_on_double_slider_max_cursor_value_changed"]
+[connection signal="min_cursor_value_changed" from="DoubleSlider" to="." method="_on_double_slider_min_cursor_value_changed"]

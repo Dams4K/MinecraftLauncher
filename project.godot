@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Control",
+"class": &"DoubleSlider",
+"language": &"GDScript",
+"path": "res://demo/menus/custom_nodes/DoubleSlider.gd"
+}, {
 "base": "Resource",
 "class": &"MinecraftInstallation",
 "language": &"GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[{
 "path": "res://autoloads/MinecraftVersionManifest.gd"
 }]
 _global_script_class_icons={
+"DoubleSlider": "",
 "MinecraftInstallation": "",
 "MinecraftLibraries": "",
 "MinecraftVersion": "",
