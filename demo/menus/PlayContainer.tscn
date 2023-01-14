@@ -6,7 +6,6 @@
 
 [node name="PlayContainer" type="VBoxContainer"]
 unique_name_in_owner = true
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -16,33 +15,26 @@ size_flags_vertical = 3
 script = ExtResource("1_fdyb6")
 
 [node name="AccountButton" type="Button" parent="."]
-offset_right = 1152.0
-offset_bottom = 31.0
+layout_mode = 2
 text = "Dams4LT"
 icon = ExtResource("1_emrvn")
 expand_icon = true
 
 [node name="SettingsContainer" type="VBoxContainer" parent="."]
-offset_top = 35.0
-offset_right = 1152.0
-offset_bottom = 131.0
+layout_mode = 2
 
 [node name="RamContainer" type="HBoxContainer" parent="SettingsContainer"]
-offset_right = 1152.0
-offset_bottom = 26.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="SettingsContainer/RamContainer"]
-offset_right = 86.0
-offset_bottom = 26.0
+layout_mode = 2
 text = " Max RAM :"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RamSlider" type="HSlider" parent="SettingsContainer/RamContainer"]
 unique_name_in_owner = true
-offset_left = 90.0
-offset_right = 1113.0
-offset_bottom = 26.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("3_il1tp")
@@ -52,61 +44,44 @@ ticks_on_borders = true
 
 [node name="RAMLabel" type="Label" parent="SettingsContainer/RamContainer"]
 unique_name_in_owner = true
-offset_left = 1117.0
-offset_right = 1152.0
-offset_bottom = 26.0
+layout_mode = 2
 text = "4Go "
 
 [node name="ResolutionContainer" type="HBoxContainer" parent="SettingsContainer"]
-offset_top = 30.0
-offset_right = 1152.0
-offset_bottom = 61.0
+layout_mode = 2
 
 [node name="Label" type="Label" parent="SettingsContainer/ResolutionContainer"]
-offset_top = 2.0
-offset_right = 96.0
-offset_bottom = 28.0
+layout_mode = 2
 text = " Résolution :"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="XLineEdit" type="LineEdit" parent="SettingsContainer/ResolutionContainer"]
 unique_name_in_owner = true
-offset_left = 100.0
-offset_right = 617.0
-offset_bottom = 31.0
+layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "<auto>"
 alignment = 1
 
 [node name="X" type="Label" parent="SettingsContainer/ResolutionContainer"]
-offset_left = 621.0
-offset_top = 2.0
-offset_right = 631.0
-offset_bottom = 28.0
+layout_mode = 2
 text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="YLineEdit" type="LineEdit" parent="SettingsContainer/ResolutionContainer"]
 unique_name_in_owner = true
-offset_left = 635.0
-offset_right = 1152.0
-offset_bottom = 31.0
+layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "<auto>"
 alignment = 1
 
 [node name="MinecraftFolderButton" type="Button" parent="SettingsContainer"]
-offset_top = 65.0
-offset_right = 1152.0
-offset_bottom = 96.0
+layout_mode = 2
 text = "Open Minecraft Folder"
 
 [node name="PlayButton" type="Button" parent="."]
-offset_top = 617.0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 2
 size_flags_vertical = 10
 text = "Play"
 
@@ -116,3 +91,4 @@ text = "Play"
 [connection signal="text_changed" from="SettingsContainer/ResolutionContainer/XLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
 [connection signal="text_changed" from="SettingsContainer/ResolutionContainer/YLineEdit" to="." method="_on_resolution_line_edit_text_changed"]
 [connection signal="pressed" from="SettingsContainer/MinecraftFolderButton" to="." method="_on_minecraft_folder_button_pressed"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

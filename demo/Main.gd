@@ -7,6 +7,7 @@ const base_backgrounds_path = "res://demo/assets/textures/backgrounds/"
 @onready var play_container: VBoxContainer = %PlayContainer
 @onready var accounts_container: VBoxContainer = %AccountsContainer
 
+@onready var minecraft_launcher: Launcher = $MinecraftLauncher
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -64,3 +65,7 @@ func _on_play_container__switch_to_accounts_container() -> void:
 func _on_accounts_container__switch_to_play_container() -> void:
 	play_container.visible = true
 	accounts_container.visible = false
+
+
+func _on_play_button_pressed() -> void:
+	pass

@@ -1,6 +1,7 @@
 extends VBoxContainer
 
 signal _switch_to_accounts_container
+signal _play_button_pressed
 
 @onready var ram_label: Label = %RAMLabel
 @onready var ram_slider: HSlider = %RamSlider
@@ -37,3 +38,7 @@ func _on_ram_slider_value_changed(value: float) -> void:
 func _on_ram_slider_drag_ended(value_changed: bool) -> void:
 	if value_changed:
 		Config.ram = ram_slider.value
+
+
+func _on_play_button_pressed() -> void:
+	emit_signal("_play_button_pressed")

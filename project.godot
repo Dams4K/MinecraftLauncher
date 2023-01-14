@@ -14,10 +14,25 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://demo/menus/custom_nodes/DoubleSlider.gd"
 }, {
+"base": "Node",
+"class": &"Downloading",
+"language": &"GDScript",
+"path": "res://addons/minecraft_launcher/downloading.gd"
+}, {
+"base": "Node",
+"class": &"Launcher",
+"language": &"GDScript",
+"path": "res://addons/minecraft_launcher/launcher.gd"
+}, {
+"base": "Node",
+"class": &"MinecraftAssets",
+"language": &"GDScript",
+"path": "res://addons/minecraft_launcher/version_components/minecraft_assets.gd"
+}, {
 "base": "Resource",
 "class": &"MinecraftInstallation",
 "language": &"GDScript",
-"path": "res://addons/minecraft_launcher/MinecraftVersion/MinecraftInstallation.gd"
+"path": "res://addons/minecraft_launcher/MinecraftInstallation.gd"
 }, {
 "base": "Node",
 "class": &"MinecraftLibraries",
@@ -27,19 +42,28 @@ _global_script_classes=[{
 "base": "Node",
 "class": &"MinecraftVersion",
 "language": &"GDScript",
-"path": "res://addons/minecraft_launcher/MinecraftVersion/MinecraftVersion.gd"
+"path": "res://addons/minecraft_launcher/MinecraftVersion.gd"
 }, {
 "base": "Node",
 "class": &"MinecraftVersionManifest",
 "language": &"GDScript",
 "path": "res://autoloads/MinecraftVersionManifest.gd"
+}, {
+"base": "Node",
+"class": &"Utils",
+"language": &"GDScript",
+"path": "res://addons/minecraft_launcher/utils.gd"
 }]
 _global_script_class_icons={
 "DoubleSlider": "",
+"Downloading": "",
+"Launcher": "",
+"MinecraftAssets": "",
 "MinecraftInstallation": "",
 "MinecraftLibraries": "",
 "MinecraftVersion": "",
-"MinecraftVersionManifest": ""
+"MinecraftVersionManifest": "",
+"Utils": ""
 }
 
 [Launcher]
@@ -52,12 +76,10 @@ Paths/Config="user://config.cfg"
 config/name="MinecraftLauncher"
 run/main_scene="res://demo/Main.tscn"
 config/features=PackedStringArray("4.0")
-config/icon="res://icon.png"
+config/icon="res://icon.svg"
 
 [autoload]
 
-Launcher="*res://autoloads/Launcher.tscn"
-Utils="*res://autoloads/Utils.gd"
 Config="*res://demo/autoloads/Config.gd"
 GlobalFunctions="*res://demo/autoloads/GlobalFunctions.gd"
 

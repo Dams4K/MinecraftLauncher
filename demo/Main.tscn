@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b1bd8h43spuha"]
+[gd_scene load_steps=14 format=3 uid="uid://b1bd8h43spuha"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://p83bxvj3h2d7" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_4_2021.jpg" id="9_07b58"]
 [ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
 [ext_resource type="PackedScene" uid="uid://7621mv7f4fro" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/launcher.gd" id="13_nuljg"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -26,11 +27,12 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = [ExtResource("5_8w3vm"), ExtResource("6_bdn53"), ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("9_07b58"), ExtResource("3_l0suc")]
+backgrounds = [ExtResource("3_l0suc"), ExtResource("8_l2bsn"), ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("9_07b58"), ExtResource("7_hoigf"), ExtResource("4_0hgcl")]
 blur_amount = 1.0
+transition_time = 15.0
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -38,35 +40,24 @@ grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="CenterContainer"]
 custom_minimum_size = Vector2(400, 300)
-offset_left = 376.0
-offset_top = 174.0
-offset_right = 776.0
-offset_bottom = 474.0
+layout_mode = 2
 
 [node name="Container" type="VBoxContainer" parent="CenterContainer/Panel"]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayContainer" parent="CenterContainer/Panel/Container" instance=ExtResource("10_5hgt8")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 400.0
-offset_bottom = 166.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 
 [node name="AccountsContainer" parent="CenterContainer/Panel/Container" instance=ExtResource("11_jpeew")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_top = 170.0
-offset_right = 400.0
-offset_bottom = 300.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 
+[node name="MinecraftLauncher" type="Node" parent="."]
+script = ExtResource("13_nuljg")
+
+[connection signal="_play_button_pressed" from="CenterContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
+[connection signal="_switch_to_accounts_container" from="CenterContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
 [connection signal="_switch_to_play_container" from="CenterContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]
