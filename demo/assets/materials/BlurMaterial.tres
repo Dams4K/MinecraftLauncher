@@ -4,3 +4,4 @@
 
 [resource]
 shader = ExtResource("1_v71q3")
+shader_parameter/blur_amount = 1.0

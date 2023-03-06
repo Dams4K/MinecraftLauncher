@@ -17,21 +17,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ofo67")
 script = ExtResource("2_yq5fs")
+is_selected = null
 
 [node name="IconButton" type="Button" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
-custom_minimum_size = Vector2i(31, 31)
-offset_right = 31.0
-offset_bottom = 31.0
+custom_minimum_size = Vector2(31, 31)
+layout_mode = 2
 icon = ExtResource("3_fpibb")
 expand_icon = true
 
 [node name="SelectButton" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 35.0
-offset_right = 925.0
-offset_bottom = 31.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 text = "Dams4K"
@@ -40,12 +38,12 @@ expand_icon = true
 
 [node name="EditButton" type="Button" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2i(31, 31)
-offset_left = 929.0
-offset_right = 1152.0
-offset_bottom = 31.0
+custom_minimum_size = Vector2(31, 31)
+layout_mode = 2
 size_flags_horizontal = 3
 text = "Edit"
 icon = ExtResource("4_5e0d4")
 icon_alignment = 2
 expand_icon = true
+
+[connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]

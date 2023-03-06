@@ -68,4 +68,4 @@ func _on_accounts_container__switch_to_play_container() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	pass
+	minecraft_launcher.launch()

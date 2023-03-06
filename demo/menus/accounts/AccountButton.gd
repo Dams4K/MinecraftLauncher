@@ -1,9 +1,11 @@
 @tool
 extends HBoxContainer
 
-@export var selected: bool = false:
+signal selected(who)
+
+@export var is_selected: bool = false:
 	set(v):
-		selected = v
+		is_selected = v
 		if select_button != null:
 			update_selected()
 
@@ -24,4 +26,9 @@ func _on_account_button_resized() -> void:
 
 
 func update_selected():
-	select_button.theme_type_variation = "ButtonSelected" if selected else ""
+	select_button.theme_type_variation = "ButtonSelected" if is_selected else ""
+
+
+func _on_select_button_pressed() -> void:
+	emit_signal("selected", self)
+	is_selected = true

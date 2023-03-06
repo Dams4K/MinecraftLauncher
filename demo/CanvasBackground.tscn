@@ -12,7 +12,7 @@
 
 [node name="CanvasBackground" type="CanvasLayer"]
 script = ExtResource("1_i3cqj")
-backgrounds = Array[Texture2D]([ExtResource("7_dyjsw"), ExtResource("2_1a3yp"), ExtResource("5_ho3lj"), ExtResource("3_onq6t"), ExtResource("4_bbap7"), ExtResource("8_ymmnc"), ExtResource("6_q38u3")])
+backgrounds = Array[Texture2D]([ExtResource("7_dyjsw"), ExtResource("3_onq6t"), ExtResource("4_bbap7"), ExtResource("6_q38u3"), ExtResource("8_ymmnc"), ExtResource("5_ho3lj"), ExtResource("2_1a3yp")])
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -45,7 +45,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_ho3lj")
+texture = ExtResource("8_ymmnc")
 expand_mode = 1
 stretch_mode = 6
 
