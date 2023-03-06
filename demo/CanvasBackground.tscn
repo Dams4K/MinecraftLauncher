@@ -12,9 +12,7 @@
 
 [node name="CanvasBackground" type="CanvasLayer"]
 script = ExtResource("1_i3cqj")
-backgrounds = [ExtResource("8_ymmnc"), ExtResource("5_ho3lj"), ExtResource("6_q38u3"), ExtResource("3_onq6t"), ExtResource("2_1a3yp"), ExtResource("4_bbap7"), ExtResource("7_dyjsw")]
-blur_amount = 0.0
-debug_change_background = false
+backgrounds = Array[Texture2D]([ExtResource("7_dyjsw"), ExtResource("2_1a3yp"), ExtResource("5_ho3lj"), ExtResource("3_onq6t"), ExtResource("4_bbap7"), ExtResource("8_ymmnc"), ExtResource("6_q38u3")])
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -30,29 +28,31 @@ grow_vertical = 2
 
 [node name="BackgroundTexture" type="TextureRect" parent="Control"]
 unique_name_in_owner = true
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-ignore_texture_size = true
+texture = ExtResource("7_dyjsw")
+expand_mode = 1
 stretch_mode = 6
 
 [node name="TransitionTexture" type="TextureRect" parent="Control"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-ignore_texture_size = true
+texture = ExtResource("5_ho3lj")
+expand_mode = 1
 stretch_mode = 6
 
 [node name="BlurEffect" type="ColorRect" parent="Control"]
 unique_name_in_owner = true
 material = ExtResource("2_gnp5s")
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2

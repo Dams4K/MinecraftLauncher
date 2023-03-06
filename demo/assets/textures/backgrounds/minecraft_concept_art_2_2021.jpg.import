@@ -4,23 +4,22 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://caiek12ngpt80"
 path.s3tc="res://.godot/imported/minecraft_concept_art_2_2021.jpg-2885f6b86e5fe3df5c3edcb7b262247d.s3tc.ctex"
-path.etc2="res://.godot/imported/minecraft_concept_art_2_2021.jpg-2885f6b86e5fe3df5c3edcb7b262247d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc", "etc2"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://demo/assets/textures/backgrounds/minecraft_concept_art_2_2021.jpg"
-dest_files=["res://.godot/imported/minecraft_concept_art_2_2021.jpg-2885f6b86e5fe3df5c3edcb7b262247d.s3tc.ctex", "res://.godot/imported/minecraft_concept_art_2_2021.jpg-2885f6b86e5fe3df5c3edcb7b262247d.etc2.ctex"]
+dest_files=["res://.godot/imported/minecraft_concept_art_2_2021.jpg-2885f6b86e5fe3df5c3edcb7b262247d.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true

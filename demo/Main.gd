@@ -20,7 +20,7 @@ func _ready() -> void:
 
 var has_already_tried = false
 func load_backgrounds():
-	canvas_background.backgrounds = []
+	canvas_background.backgrounds = [] as Array[Texture2D]
 
 	var dir_path = ProjectSettings.get("Launcher/Paths/Backgrounds")
 	var dir_local = DirAccess.open(dir_path)
