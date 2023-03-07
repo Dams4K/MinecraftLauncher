@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://8p5a6sbwpwr4"]
-
-[ext_resource type="Script" path="res://addons/minecraft_launcher/version_components/minecraft_assets.gd" id="1_4r2jw"]
-
-[node name="MinecraftAssets" type="Node"]
-script = ExtResource("1_4r2jw")

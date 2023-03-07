@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://duliiyafrs8i"]
+[gd_scene load_steps=18 format=3 uid="uid://duliiyafrs8i"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
@@ -12,8 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://p83bxvj3h2d7" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_4_2021.jpg" id="9_07b58"]
 [ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
 [ext_resource type="PackedScene" uid="uid://7621mv7f4fro" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
+[ext_resource type="Shader" path="res://demo/assets/shaders/appear_bottom.gdshader" id="13_6lgvq"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/launcher.gd" id="13_nuljg"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft_installation.gd" id="14_e2onq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8uauq"]
+shader = ExtResource("13_6lgvq")
+shader_parameter/y_pos = 0.0
 
 [sub_resource type="Resource" id="Resource_dii2y"]
 script = ExtResource("14_e2onq")
@@ -33,7 +38,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("8_l2bsn"), ExtResource("3_l0suc"), ExtResource("5_8w3vm"), ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("9_07b58"), ExtResource("6_bdn53")])
+backgrounds = Array[Texture2D]([ExtResource("7_hoigf"), ExtResource("8_l2bsn"), ExtResource("3_l0suc"), ExtResource("6_bdn53"), ExtResource("4_0hgcl"), ExtResource("9_07b58"), ExtResource("5_8w3vm")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -44,27 +49,89 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(400, 300)
 layout_mode = 2
 
-[node name="Container" type="VBoxContainer" parent="CenterContainer/Panel"]
+[node name="Container" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Panel"]
 layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayContainer" parent="CenterContainer/Panel/Container" instance=ExtResource("10_5hgt8")]
+[node name="PlayContainer" parent="CenterContainer/VBoxContainer/Panel/Container" instance=ExtResource("10_5hgt8")]
 layout_mode = 2
 
-[node name="AccountsContainer" parent="CenterContainer/Panel/Container" instance=ExtResource("11_jpeew")]
+[node name="AccountsContainer" parent="CenterContainer/VBoxContainer/Panel/Container" instance=ExtResource("11_jpeew")]
+visible = false
 layout_mode = 2
+
+[node name="LoadingPanel" type="Panel" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_8uauq")
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/LoadingPanel"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoadingBar" type="ProgressBar" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer"]
+unique_name_in_owner = true
+use_parent_material = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+value = 50.0
+
+[node name="InformativeLabels" type="HBoxContainer" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer"]
+use_parent_material = true
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="AssetsLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
+use_parent_material = true
+layout_mode = 2
+theme_type_variation = &"LabelError"
+theme_override_font_sizes/font_size = 9
+text = "Assets"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NativesLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
+use_parent_material = true
+layout_mode = 2
+theme_type_variation = &"LabelSuccess"
+theme_override_font_sizes/font_size = 9
+text = "Natives"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LibrariesLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
+use_parent_material = true
+layout_mode = 2
+theme_type_variation = &"LabelProcess"
+theme_override_font_sizes/font_size = 9
+text = "Libraries"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MinecraftLauncher" type="Node" parent="."]
 script = ExtResource("13_nuljg")
 default_installation = SubResource("Resource_dii2y")
 
-[connection signal="_play_button_pressed" from="CenterContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
-[connection signal="_switch_to_accounts_container" from="CenterContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
-[connection signal="_switch_to_play_container" from="CenterContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]
+[connection signal="_play_button_pressed" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
+[connection signal="_switch_to_accounts_container" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
+[connection signal="_switch_to_play_container" from="CenterContainer/VBoxContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]
+[connection signal="assets_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_assets_downloaded"]
+[connection signal="libraries_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_libraries_downloaded"]
+[connection signal="natives_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_natives_downloaded"]

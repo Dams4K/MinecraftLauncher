@@ -6,4 +6,3 @@
 script = ExtResource("1_hr1aj")
 
 [node name="Downloader" type="HTTPRequest" parent="."]
-accept_gzip = false

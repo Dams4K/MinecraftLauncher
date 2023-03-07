@@ -1,27 +1,14 @@
-extends Node
+extends Resource
+class_name MinecraftLibraries
 
+const LIBRARIES_URL = "https://libraries.minecraft.net/"
 const LIBRARIES_PATH = "user://libraries/"
 const NATIVES_PATH = "user://natives/"
 
-@onready var downloader: HTTPRequest = $Downloader
+var data: Array = []
 
-var libraries: Array
-
-
-func download_file(url: String, path: String, sha1: String):
-	DirAccess.make_dir_recursive_absolute(path.replace(path.get_file(), "")) # TODO: check err
-	# if something is missing, don't do it
-	if url == "" || path == "": return
-	
-	if not FileAccess.file_exists(path) or not Utils.check_sha1(path, sha1):
-		downloader.download_file = path
-		downloader.request(url)
-		await downloader.request_completed
-	
-	# check if file is correct
-	if not Utils.check_sha1(path, sha1):
-		DirAccess.remove_absolute(path)
-
+func _init(data: Array) -> void:
+	self.data = data
 
 func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool) -> void:
 	var reader = ZIPReader.new()
@@ -44,7 +31,7 @@ func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool
 		DirAccess.remove_absolute(path)
 
 
-func download_libraries():
+func download_libraries(downloader: Requests):
 	var libs = get_libs(false)
 	
 	for lib in libs:
@@ -52,11 +39,11 @@ func download_libraries():
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await download_file(url, LIBRARIES_PATH.path_join(path), sha1)
+		await Utils.download_file(downloader, url, LIBRARIES_PATH.path_join(path), sha1)
 	
 	print("download_libraries - ended")
 
-func download_natives(clear_folder: bool):
+func download_natives(downloader: Requests, clear_folder: bool = false):
 	if clear_folder:
 		for filename in DirAccess.get_files_at(NATIVES_PATH):
 			DirAccess.remove_absolute(NATIVES_PATH.path_join(filename))
@@ -67,7 +54,7 @@ func download_natives(clear_folder: bool):
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await download_file(url, NATIVES_PATH.path_join(file_name), sha1)
+		await Utils.download_file(downloader, url, NATIVES_PATH.path_join(file_name), sha1)
 		await unzip_file(NATIVES_PATH.path_join(file_name), ["MANIFEST.mf"], true)
 	
 	print("download_natives - ended")
@@ -76,7 +63,7 @@ func download_natives(clear_folder: bool):
 func get_libs(natives: bool) -> Array:
 	var libs = []
 	
-	for librarie in libraries:
+	for librarie in data:
 		if not check_rules(librarie.get("rules", [])): continue
 		
 		var artifact = librarie["downloads"].get("artifact", {})

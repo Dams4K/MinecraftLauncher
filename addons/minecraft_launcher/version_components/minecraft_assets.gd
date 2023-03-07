@@ -1,4 +1,4 @@
-extends Node
+extends Resource
 class_name MinecraftAssets
 
 const RESOURCES_URL = "https://resources.download.minecraft.net/"
@@ -19,7 +19,7 @@ func get_total_size():
 func get_url():
 	return data.get("url", "")
 
-func download_assets(downloader: HTTPRequest):
+func download_assets(downloader: Requests):
 	var folder = "user://assets/"
 	var file_path = folder.path_join("%s.json" % get_id())
 	await Utils.download_file(downloader, get_url(), file_path, get_sha1())
@@ -31,10 +31,13 @@ func download_assets(downloader: HTTPRequest):
 	var content: Dictionary = JSON.parse_string(file.get_as_text())
 	var objects = content.get("objects", {})
 	
-	for object in objects.values():
+	for i in range(len(objects.values())):
+		var object = objects.values()[i]
+		print(str(i+1) + "/" + str(len(objects)))
+		
 		var hash: String = object.get("hash")
 		var url = hash.substr(0, 2) + "/" + hash
-		var object_path = folder.path_join("assets/objects").path_join(url)
+		var object_path = folder.path_join("objects").path_join(url)
 		
 		if not FileAccess.file_exists(object_path):
 			await Utils.download_file(downloader, RESOURCES_URL.path_join(url), object_path)

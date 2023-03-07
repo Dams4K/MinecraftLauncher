@@ -41,4 +41,5 @@ func _on_ram_slider_drag_ended(value_changed: bool) -> void:
 
 
 func _on_play_button_pressed() -> void:
+	print("play")
 	emit_signal("_play_button_pressed")

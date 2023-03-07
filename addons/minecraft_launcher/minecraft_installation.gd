@@ -19,5 +19,9 @@ func get_minecraft_assets():
 	var version_data = get_data()
 	return MinecraftAssets.new(version_data["assetIndex"])
 
+func get_minecraft_libraries():
+	var version_data = get_data()
+	return MinecraftLibraries.new(version_data["libraries"])
+
 #func get_libraries():
 #	return version_data["libraries"]

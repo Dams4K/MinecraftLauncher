@@ -9,7 +9,18 @@ const base_backgrounds_path = "res://demo/assets/textures/backgrounds/"
 
 @onready var minecraft_launcher: Launcher = $MinecraftLauncher
 
+@onready var loading_panel: Panel = %LoadingPanel
+@onready var loading_bar: ProgressBar = %LoadingBar
+@onready var informative_labels: HBoxContainer = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels
+
+@onready var assets_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/AssetsLabel
+@onready var natives_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/NativesLabel
+@onready var libraries_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/LibrariesLabel
+
 func _ready() -> void:
+	loading_panel.modulate.a = 0.0;
+	loading_panel.material.set("shader_parameter/y_pos", -4.0 - loading_panel.custom_minimum_size.y)
+	
 	if !Engine.is_editor_hint():
 		await load_backgrounds()
 		canvas_background.change_background()
@@ -68,4 +79,24 @@ func _on_accounts_container__switch_to_play_container() -> void:
 
 
 func _on_play_button_pressed() -> void:
+	for child in informative_labels.get_children():
+		if child is Label:
+			child.theme_type_variation = "LabelProcess"
+	
+	var tween = create_tween().set_parallel()
+	tween.tween_property(loading_panel, "modulate:a", 1.0, .5)
+	tween.tween_property(loading_panel.material, "shader_parameter/y_pos", 0.0, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tween.play()
 	minecraft_launcher.launch()
+
+
+func _on_minecraft_launcher_assets_downloaded() -> void:
+	assets_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_minecraft_launcher_libraries_downloaded() -> void:
+	libraries_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_minecraft_launcher_natives_downloaded() -> void:
+	natives_label.theme_type_variation = "LabelSuccess"
