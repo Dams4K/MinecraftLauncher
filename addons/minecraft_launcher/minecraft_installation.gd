@@ -23,5 +23,8 @@ func get_minecraft_libraries():
 	var version_data = get_data()
 	return MinecraftLibraries.new(version_data["libraries"])
 
+func run():
+	print("run")
+
 #func get_libraries():
 #	return version_data["libraries"]

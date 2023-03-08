@@ -18,6 +18,7 @@ const base_backgrounds_path = "res://demo/assets/textures/backgrounds/"
 @onready var libraries_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/LibrariesLabel
 
 func _ready() -> void:
+	loading_bar.value = 0
 	loading_panel.modulate.a = 0.0;
 	loading_panel.material.set("shader_parameter/y_pos", -4.0 - loading_panel.custom_minimum_size.y)
 	
@@ -100,3 +101,8 @@ func _on_minecraft_launcher_libraries_downloaded() -> void:
 
 func _on_minecraft_launcher_natives_downloaded() -> void:
 	natives_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_minecraft_launcher_file_downloaded(files_downloaded, total_files) -> void:
+	loading_bar.max_value = total_files
+	loading_bar.value = files_downloaded

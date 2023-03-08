@@ -1,7 +1,10 @@
 extends Resource
 class_name MinecraftAssets
 
+signal new_asset_downloaded(assets_downloaded: int, total_assets: int)
+
 const RESOURCES_URL = "https://resources.download.minecraft.net/"
+const ASSETS_FOLDER = "user://assets/"
 
 var data: Dictionary = {}
 
@@ -19,27 +22,32 @@ func get_total_size():
 func get_url():
 	return data.get("url", "")
 
-func download_assets(downloader: Requests):
-	var folder = "user://assets/"
-	var file_path = folder.path_join("%s.json" % get_id())
+func get_assets_list(downloader: Requests) -> Dictionary:
+	var file_path = ASSETS_FOLDER.path_join("%s.json" % get_id())
 	await Utils.download_file(downloader, get_url(), file_path, get_sha1())
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	if file.get_error() != OK:
 		print("error opening version_file")
-		return
+		return {}
 	var content: Dictionary = JSON.parse_string(file.get_as_text())
-	var objects = content.get("objects", {})
+	var objects: Dictionary = content.get("objects", {})
 	
-	for i in range(len(objects.values())):
+	return objects
+
+func download_assets(downloader: Requests):
+	var objects = await get_assets_list(downloader)
+	
+	var assets_count = len(objects.values())
+	for i in range(assets_count):
 		var object = objects.values()[i]
-		print(str(i+1) + "/" + str(len(objects)))
 		
 		var hash: String = object.get("hash")
 		var url = hash.substr(0, 2) + "/" + hash
-		var object_path = folder.path_join("objects").path_join(url)
+		var object_path = ASSETS_FOLDER.path_join("objects").path_join(url)
 		
 		if not FileAccess.file_exists(object_path):
 			await Utils.download_file(downloader, RESOURCES_URL.path_join(url), object_path)
+		emit_signal("new_asset_downloaded", i+1, assets_count)
 	
 	print("finish")

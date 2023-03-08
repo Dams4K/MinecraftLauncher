@@ -1,11 +1,19 @@
 extends Resource
 class_name MinecraftLibraries
 
+signal new_lib_downloaded(lib_downloaded: int, total_libs: int)
+
 const LIBRARIES_URL = "https://libraries.minecraft.net/"
 const LIBRARIES_PATH = "user://libraries/"
 const NATIVES_PATH = "user://natives/"
 
 var data: Array = []
+
+enum LibrariesType {
+	LIBRARIES,
+	NATIVES,
+	BOTH
+}
 
 func _init(data: Array) -> void:
 	self.data = data
@@ -31,36 +39,41 @@ func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool
 		DirAccess.remove_absolute(path)
 
 
-func download_libraries(downloader: Requests):
-	var libs = get_libs(false)
-	
-	for lib in libs:
+func download_libraries(downloader: Requests) -> void:
+	var libs = get_libs(LibrariesType.LIBRARIES)
+	var libs_count: int = len(libs)
+	for i in range(libs_count):
+		var lib: Dictionary = libs[i]
 		var path = lib.get("path", "")
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
 		await Utils.download_file(downloader, url, LIBRARIES_PATH.path_join(path), sha1)
+		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_libraries - ended")
 
-func download_natives(downloader: Requests, clear_folder: bool = false):
+func download_natives(downloader: Requests, clear_folder: bool = false) -> void:
 	if clear_folder:
 		for filename in DirAccess.get_files_at(NATIVES_PATH):
 			DirAccess.remove_absolute(NATIVES_PATH.path_join(filename))
 	
-	var libs = get_libs(true)
-	for lib in libs:
+	var libs = get_libs(LibrariesType.NATIVES)
+	var libs_count: int = len(libs)
+	for i in range(libs_count):
+		var lib: Dictionary = libs[i]
 		var file_name = lib.get("path", "").split("/")[-1]
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
 		await Utils.download_file(downloader, url, NATIVES_PATH.path_join(file_name), sha1)
 		await unzip_file(NATIVES_PATH.path_join(file_name), ["MANIFEST.mf"], true)
+		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_natives - ended")
 
 
-func get_libs(natives: bool) -> Array:
+func get_libs(lib_type: LibrariesType = LibrariesType.BOTH) -> Array:
 	var libs = []
 	
 	for librarie in data:
@@ -69,12 +82,12 @@ func get_libs(natives: bool) -> Array:
 		var artifact = librarie["downloads"].get("artifact", {})
 		var classifiers = librarie["downloads"].get("classifiers", {})
 		
-		if get_os_name() in librarie.get("natives", {}) && natives:
+		if get_os_name() in librarie.get("natives", {}) and lib_type in [LibrariesType.NATIVES, LibrariesType.BOTH]:
 			var os_arch = "64" if OS.has_feature("64") else "32"
 			var native = classifiers.get(librarie["natives"][get_os_name()].format({"arch": os_arch}))
 			if native != null:
 				libs.append(native)
-		if not natives && not artifact.is_empty():
+		if not artifact.is_empty() and lib_type in [LibrariesType.LIBRARIES, LibrariesType.BOTH]:
 			libs.append(artifact)
 	
 	return libs
