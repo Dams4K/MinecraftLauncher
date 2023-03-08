@@ -7634,6 +7634,25 @@ function _emscripten_glUniform2f(location, v0, v1) {
  GLctx.uniform2f(webglGetUniformLocation(location), v0, v1);
 }
 
+var miniTempWebGLFloatBuffers = [];
+
+function _emscripten_glUniform2fv(location, count, value) {
+ if (GL.currentContext.version >= 2) {
+  count && GLctx.uniform2fv(webglGetUniformLocation(location), GROWABLE_HEAP_F32(), value >> 2, count * 2);
+  return;
+ }
+ if (count <= 144) {
+  var view = miniTempWebGLFloatBuffers[2 * count - 1];
+  for (var i = 0; i < 2 * count; i += 2) {
+   view[i] = GROWABLE_HEAP_F32()[value + 4 * i >> 2];
+   view[i + 1] = GROWABLE_HEAP_F32()[value + (4 * i + 4) >> 2];
+  }
+ } else {
+  var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 8 >> 2);
+ }
+ GLctx.uniform2fv(webglGetUniformLocation(location), view);
+}
+
 var __miniTempWebGLIntBuffers = [];
 
 function _emscripten_glUniform2iv(location, count, value) {
@@ -7652,8 +7671,6 @@ function _emscripten_glUniform2iv(location, count, value) {
  }
  GLctx.uniform2iv(webglGetUniformLocation(location), view);
 }
-
-var miniTempWebGLFloatBuffers = [];
 
 function _emscripten_glUniform3fv(location, count, value) {
  if (GL.currentContext.version >= 2) {
@@ -8783,25 +8800,6 @@ var GodotAudio = {
  }
 };
 
-function _godot_audio_capture_start() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(48, 1);
- return GodotAudio.create_input(function(input) {
-  input.connect(GodotAudio.driver.get_node());
- });
-}
-
-function _godot_audio_capture_stop() {
- if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(49, 1);
- if (GodotAudio.input) {
-  const tracks = GodotAudio.input["mediaStream"]["getTracks"]();
-  for (let i = 0; i < tracks.length; i++) {
-   tracks[i]["stop"]();
-  }
-  GodotAudio.input.disconnect();
-  GodotAudio.input = null;
- }
-}
-
 function _godot_audio_has_worklet() {
  return GodotAudio.ctx && GodotAudio.ctx.audioWorklet ? 1 : 0;
 }
@@ -8813,6 +8811,25 @@ function _godot_audio_init(p_mix_rate, p_latency, p_state_change, p_latency_upda
  const channels = GodotAudio.init(mix_rate, p_latency, statechange, latencyupdate);
  GodotRuntime.setHeapValue(p_mix_rate, GodotAudio.ctx.sampleRate, "i32");
  return channels;
+}
+
+function _godot_audio_input_start() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(48, 1);
+ return GodotAudio.create_input(function(input) {
+  input.connect(GodotAudio.driver.get_node());
+ });
+}
+
+function _godot_audio_input_stop() {
+ if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(49, 1);
+ if (GodotAudio.input) {
+  const tracks = GodotAudio.input["mediaStream"]["getTracks"]();
+  for (let i = 0; i < tracks.length; i++) {
+   tracks[i]["stop"]();
+  }
+  GodotAudio.input.disconnect();
+  GodotAudio.input = null;
+ }
 }
 
 function _godot_audio_is_available() {
@@ -11375,12 +11392,11 @@ function _godot_webxr_get_bounds_geometry(r_points) {
   return 0;
  }
  const buf = GodotRuntime.malloc(point_count * 3 * 4);
- GodotRuntime.setHeapValue(buf, point_count, "i32");
  for (let i = 0; i < point_count; i++) {
   const point = GodotWebXR.space.boundsGeometry[i];
-  GodotRuntime.setHeapValue(buf + (i * 3 + 1) * 4, point.x, "float");
-  GodotRuntime.setHeapValue(buf + (i * 3 + 2) * 4, point.y, "float");
-  GodotRuntime.setHeapValue(buf + (i * 3 + 3) * 4, point.z, "float");
+  GodotRuntime.setHeapValue(buf + (i * 3 + 0) * 4, point.x, "float");
+  GodotRuntime.setHeapValue(buf + (i * 3 + 1) * 4, point.y, "float");
+  GodotRuntime.setHeapValue(buf + (i * 3 + 2) * 4, point.z, "float");
  }
  GodotRuntime.setHeapValue(r_points, buf, "i32");
  return point_count;
@@ -12526,16 +12542,16 @@ var preloadedAudios = {};
 
 var GLctx;
 
-var __miniTempWebGLIntBuffersStorage = new Int32Array(288);
-
-for (var i = 0; i < 288; ++i) {
- __miniTempWebGLIntBuffers[i] = __miniTempWebGLIntBuffersStorage.subarray(0, i + 1);
-}
-
 var miniTempWebGLFloatBuffersStorage = new Float32Array(288);
 
 for (var i = 0; i < 288; ++i) {
  miniTempWebGLFloatBuffers[i] = miniTempWebGLFloatBuffersStorage.subarray(0, i + 1);
+}
+
+var __miniTempWebGLIntBuffersStorage = new Int32Array(288);
+
+for (var i = 0; i < 288; ++i) {
+ __miniTempWebGLIntBuffers[i] = __miniTempWebGLIntBuffersStorage.subarray(0, i + 1);
 }
 
 Module["request_quit"] = function() {
@@ -12569,7 +12585,7 @@ GodotOS.atexit(function(resolve, reject) {
 
 GodotJSWrapper.proxies = new Map();
 
-var proxiedFunctionTable = [ null, _proc_exit, exitOnMainThread, pthreadCreateProxied, ___syscall__newselect, ___syscall_accept4, ___syscall_bind, ___syscall_chdir, ___syscall_chmod, ___syscall_connect, ___syscall_faccessat, ___syscall_fcntl64, ___syscall_getcwd, ___syscall_getdents64, ___syscall_getsockname, ___syscall_getsockopt, ___syscall_ioctl, ___syscall_listen, ___syscall_lstat64, ___syscall_mkdirat, ___syscall_newfstatat, ___syscall_openat, ___syscall_poll, ___syscall_readlinkat, ___syscall_recvfrom, ___syscall_renameat, ___syscall_rmdir, ___syscall_sendto, ___syscall_socket, ___syscall_stat64, ___syscall_statfs64, ___syscall_symlink, ___syscall_unlinkat, __mmap_js, __munmap_js, _tzset_impl, _emscripten_force_exit, _emscripten_webgl_destroy_context, _emscripten_webgl_create_context_proxied, _emscripten_webgl_enable_extension, _environ_get, _environ_sizes_get, _fd_close, _fd_fdstat_get, _fd_read, _fd_seek, _fd_write, _getaddrinfo, _godot_audio_capture_start, _godot_audio_capture_stop, _godot_audio_is_available, _godot_webgl2_glFramebufferTextureMultiviewOVR, _godot_webxr_get_bounds_geometry, _godot_webxr_get_color_texture, _godot_webxr_get_depth_texture, _godot_webxr_get_projection_for_view, _godot_webxr_get_render_target_size, _godot_webxr_get_transform_for_view, _godot_webxr_get_velocity_texture, _godot_webxr_get_view_count, _godot_webxr_get_visibility_state, _godot_webxr_initialize, _godot_webxr_is_session_supported, _godot_webxr_is_supported, _godot_webxr_uninitialize, _godot_webxr_update_input_source ];
+var proxiedFunctionTable = [ null, _proc_exit, exitOnMainThread, pthreadCreateProxied, ___syscall__newselect, ___syscall_accept4, ___syscall_bind, ___syscall_chdir, ___syscall_chmod, ___syscall_connect, ___syscall_faccessat, ___syscall_fcntl64, ___syscall_getcwd, ___syscall_getdents64, ___syscall_getsockname, ___syscall_getsockopt, ___syscall_ioctl, ___syscall_listen, ___syscall_lstat64, ___syscall_mkdirat, ___syscall_newfstatat, ___syscall_openat, ___syscall_poll, ___syscall_readlinkat, ___syscall_recvfrom, ___syscall_renameat, ___syscall_rmdir, ___syscall_sendto, ___syscall_socket, ___syscall_stat64, ___syscall_statfs64, ___syscall_symlink, ___syscall_unlinkat, __mmap_js, __munmap_js, _tzset_impl, _emscripten_force_exit, _emscripten_webgl_destroy_context, _emscripten_webgl_create_context_proxied, _emscripten_webgl_enable_extension, _environ_get, _environ_sizes_get, _fd_close, _fd_fdstat_get, _fd_read, _fd_seek, _fd_write, _getaddrinfo, _godot_audio_input_start, _godot_audio_input_stop, _godot_audio_is_available, _godot_webgl2_glFramebufferTextureMultiviewOVR, _godot_webxr_get_bounds_geometry, _godot_webxr_get_color_texture, _godot_webxr_get_depth_texture, _godot_webxr_get_projection_for_view, _godot_webxr_get_render_target_size, _godot_webxr_get_transform_for_view, _godot_webxr_get_velocity_texture, _godot_webxr_get_view_count, _godot_webxr_get_visibility_state, _godot_webxr_initialize, _godot_webxr_is_session_supported, _godot_webxr_is_supported, _godot_webxr_uninitialize, _godot_webxr_update_input_source ];
 
 var ASSERTIONS = true;
 
@@ -12725,6 +12741,7 @@ var asmLibraryArg = {
  "emscripten_glUniform1ui": _emscripten_glUniform1ui,
  "emscripten_glUniform1uiv": _emscripten_glUniform1uiv,
  "emscripten_glUniform2f": _emscripten_glUniform2f,
+ "emscripten_glUniform2fv": _emscripten_glUniform2fv,
  "emscripten_glUniform2iv": _emscripten_glUniform2iv,
  "emscripten_glUniform3fv": _emscripten_glUniform3fv,
  "emscripten_glUniform4f": _emscripten_glUniform4f,
@@ -12762,10 +12779,10 @@ var asmLibraryArg = {
  "getaddrinfo": _getaddrinfo,
  "getnameinfo": _getnameinfo,
  "glGetBufferSubData": _glGetBufferSubData,
- "godot_audio_capture_start": _godot_audio_capture_start,
- "godot_audio_capture_stop": _godot_audio_capture_stop,
  "godot_audio_has_worklet": _godot_audio_has_worklet,
  "godot_audio_init": _godot_audio_init,
+ "godot_audio_input_start": _godot_audio_input_start,
+ "godot_audio_input_stop": _godot_audio_input_stop,
  "godot_audio_is_available": _godot_audio_is_available,
  "godot_audio_resume": _godot_audio_resume,
  "godot_audio_worklet_create": _godot_audio_worklet_create,
@@ -13023,6 +13040,12 @@ var dynCall_viiiiifiiijii = Module["dynCall_viiiiifiiijii"] = createExportWrappe
 
 var dynCall_viiiiifiiiijjii = Module["dynCall_viiiiifiiiijjii"] = createExportWrapper("dynCall_viiiiifiiiijjii");
 
+var dynCall_jiifff = Module["dynCall_jiifff"] = createExportWrapper("dynCall_jiifff");
+
+var dynCall_vijf = Module["dynCall_vijf"] = createExportWrapper("dynCall_vijf");
+
+var dynCall_iij = Module["dynCall_iij"] = createExportWrapper("dynCall_iij");
+
 var dynCall_vijiii = Module["dynCall_vijiii"] = createExportWrapper("dynCall_vijiii");
 
 var dynCall_vijiiii = Module["dynCall_vijiiii"] = createExportWrapper("dynCall_vijiiii");
@@ -13030,8 +13053,6 @@ var dynCall_vijiiii = Module["dynCall_vijiiii"] = createExportWrapper("dynCall_v
 var dynCall_vijii = Module["dynCall_vijii"] = createExportWrapper("dynCall_vijii");
 
 var dynCall_viiiiij = Module["dynCall_viiiiij"] = createExportWrapper("dynCall_viiiiij");
-
-var dynCall_iij = Module["dynCall_iij"] = createExportWrapper("dynCall_iij");
 
 var dynCall_viiijii = Module["dynCall_viiijii"] = createExportWrapper("dynCall_viiijii");
 
@@ -13071,8 +13092,6 @@ var dynCall_viiiij = Module["dynCall_viiiij"] = createExportWrapper("dynCall_vii
 
 var dynCall_vijj = Module["dynCall_vijj"] = createExportWrapper("dynCall_vijj");
 
-var dynCall_vijf = Module["dynCall_vijf"] = createExportWrapper("dynCall_vijf");
-
 var dynCall_vijji = Module["dynCall_vijji"] = createExportWrapper("dynCall_vijji");
 
 var dynCall_vijjii = Module["dynCall_vijjii"] = createExportWrapper("dynCall_vijjii");
@@ -13109,8 +13128,6 @@ var dynCall_vijijii = Module["dynCall_vijijii"] = createExportWrapper("dynCall_v
 
 var dynCall_vijiijiiiiii = Module["dynCall_vijiijiiiiii"] = createExportWrapper("dynCall_vijiijiiiiii");
 
-var dynCall_vijiiijf = Module["dynCall_vijiiijf"] = createExportWrapper("dynCall_vijiiijf");
-
 var dynCall_vijiiij = Module["dynCall_vijiiij"] = createExportWrapper("dynCall_vijiiij");
 
 var dynCall_vijiiiiiiji = Module["dynCall_vijiiiiiiji"] = createExportWrapper("dynCall_vijiiiiiiji");
@@ -13139,13 +13156,15 @@ var dynCall_iiij = Module["dynCall_iiij"] = createExportWrapper("dynCall_iiij");
 
 var dynCall_ij = Module["dynCall_ij"] = createExportWrapper("dynCall_ij");
 
-var dynCall_iiiijf = Module["dynCall_iiiijf"] = createExportWrapper("dynCall_iiiijf");
+var dynCall_jiiiii = Module["dynCall_jiiiii"] = createExportWrapper("dynCall_jiiiii");
 
 var dynCall_viijiiii = Module["dynCall_viijiiii"] = createExportWrapper("dynCall_viijiiii");
 
 var dynCall_viijiii = Module["dynCall_viijiii"] = createExportWrapper("dynCall_viijiii");
 
 var dynCall_iiji = Module["dynCall_iiji"] = createExportWrapper("dynCall_iiji");
+
+var dynCall_iiiijf = Module["dynCall_iiiijf"] = createExportWrapper("dynCall_iiiijf");
 
 var dynCall_vijiiiii = Module["dynCall_vijiiiii"] = createExportWrapper("dynCall_vijiiiii");
 
@@ -13175,7 +13194,7 @@ var dynCall_viijiji = Module["dynCall_viijiji"] = createExportWrapper("dynCall_v
 
 var dynCall_iiiiijiii = Module["dynCall_iiiiijiii"] = createExportWrapper("dynCall_iiiiijiii");
 
-var dynCall_iiiiiijf = Module["dynCall_iiiiiijf"] = createExportWrapper("dynCall_iiiiiijf");
+var dynCall_iiiiiijd = Module["dynCall_iiiiiijd"] = createExportWrapper("dynCall_iiiiiijd");
 
 var dynCall_jiijj = Module["dynCall_jiijj"] = createExportWrapper("dynCall_jiijj");
 
@@ -13221,7 +13240,7 @@ var dynCall_jijii = Module["dynCall_jijii"] = createExportWrapper("dynCall_jijii
 
 var dynCall_vijid = Module["dynCall_vijid"] = createExportWrapper("dynCall_vijid");
 
-var dynCall_vijiiffiiiii = Module["dynCall_vijiiffiiiii"] = createExportWrapper("dynCall_vijiiffiiiii");
+var dynCall_vijiiiffiiiii = Module["dynCall_vijiiiffiiiii"] = createExportWrapper("dynCall_vijiiiffiiiii");
 
 var dynCall_vijiiiiii = Module["dynCall_vijiiiiii"] = createExportWrapper("dynCall_vijiiiiii");
 
