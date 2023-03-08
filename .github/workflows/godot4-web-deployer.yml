@@ -27,8 +27,8 @@ jobs:
       run: |
         echo "GODOT_VERSION=${GODOT_MAJOR_MINOR_VERSION}.${GODOT_PATCH_VERSION}" >> $GITHUB_ENV
 
-        echo "GODOT_EXECUTABLE_DOWNLOAD_URL=https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/${GODOT_PATCH_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_linux.x86_64.zip" >> $GITHUB_ENV
-        echo "GODOT_TEMPLATES_DOWNLOAD_URL=https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/${GODOT_PATCH_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_export_templates.tpz" >> $GITHUB_ENV
+        echo "GODOT_EXECUTABLE_DOWNLOAD_URL=https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_linux.x86_64.zip" >> $GITHUB_ENV
+        echo "GODOT_TEMPLATES_DOWNLOAD_URL=https://downloads.tuxfamily.org/godotengine/${GODOT_MAJOR_MINOR_VERSION}/Godot_v${GODOT_MAJOR_MINOR_VERSION}-${GODOT_PATCH_VERSION}_export_templates.tpz" >> $GITHUB_ENV
 
     - name: Checkout
       uses: actions/checkout@v3
