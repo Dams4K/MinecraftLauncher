@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://duliiyafrs8i"]
+[gd_scene load_steps=20 format=3 uid="uid://duliiyafrs8i"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
@@ -15,10 +15,15 @@
 [ext_resource type="Shader" path="res://demo/assets/shaders/appear_bottom.gdshader" id="13_6lgvq"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/launcher.gd" id="13_nuljg"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft_installation.gd" id="14_e2onq"]
+[ext_resource type="Script" path="res://demo/LoadingBar.gd" id="14_yip4u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8uauq"]
 shader = ExtResource("13_6lgvq")
 shader_parameter/y_pos = 0.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_nyopm"]
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Resource" id="Resource_muax6"]
 script = ExtResource("14_e2onq")
@@ -38,7 +43,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("3_l0suc"), ExtResource("4_0hgcl"), ExtResource("5_8w3vm"), ExtResource("9_07b58"), ExtResource("8_l2bsn"), ExtResource("6_bdn53"), ExtResource("7_hoigf")])
+backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("9_07b58"), ExtResource("3_l0suc")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -91,6 +96,22 @@ use_parent_material = true
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 value = 50.0
+show_percentage = false
+script = ExtResource("14_yip4u")
+text = "Downloading... {value}%"
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar"]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Downloading... 50%"
+label_settings = SubResource("LabelSettings_nyopm")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="InformativeLabels" type="HBoxContainer" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer"]
 use_parent_material = true
@@ -132,6 +153,7 @@ installation = SubResource("Resource_muax6")
 [connection signal="_play_button_pressed" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
 [connection signal="_switch_to_accounts_container" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
 [connection signal="_switch_to_play_container" from="CenterContainer/VBoxContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]
+[connection signal="value_changed" from="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" to="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" method="_on_value_changed"]
 [connection signal="assets_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_assets_downloaded"]
 [connection signal="file_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_file_downloaded"]
 [connection signal="libraries_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_libraries_downloaded"]
