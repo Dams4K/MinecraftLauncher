@@ -106,3 +106,7 @@ func _on_minecraft_launcher_natives_downloaded() -> void:
 func _on_minecraft_launcher_file_downloaded(files_downloaded, total_files) -> void:
 	loading_bar.max_value = total_files
 	loading_bar.value = files_downloaded
+
+
+func _on_minecraft_launcher_launching() -> void:
+	loading_bar.text = "Launching..."

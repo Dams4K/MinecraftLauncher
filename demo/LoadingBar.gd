@@ -1,7 +1,11 @@
 @tool
 extends ProgressBar
 
-@export var text := "{value}%"
+@export var text := "{value}%":
+	set(v):
+		text = v
+		if is_inside_tree() and label != null:
+			_on_value_changed(value)
 
 @onready var label: Label = $Label
 

@@ -22,8 +22,10 @@ shader = ExtResource("13_6lgvq")
 shader_parameter/y_pos = 0.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_nyopm"]
-outline_size = 2
+outline_size = 3
 outline_color = Color(0, 0, 0, 1)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.14902)
 
 [sub_resource type="Resource" id="Resource_muax6"]
 script = ExtResource("14_e2onq")
@@ -43,7 +45,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("9_07b58"), ExtResource("3_l0suc")])
+backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("4_0hgcl"), ExtResource("7_hoigf"), ExtResource("5_8w3vm"), ExtResource("3_l0suc"), ExtResource("8_l2bsn"), ExtResource("9_07b58")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -156,5 +158,6 @@ installation = SubResource("Resource_muax6")
 [connection signal="value_changed" from="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" to="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" method="_on_value_changed"]
 [connection signal="assets_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_assets_downloaded"]
 [connection signal="file_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_file_downloaded"]
+[connection signal="launching" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_launching"]
 [connection signal="libraries_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_libraries_downloaded"]
 [connection signal="natives_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_natives_downloaded"]

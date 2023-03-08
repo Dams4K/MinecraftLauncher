@@ -7,6 +7,8 @@ signal libraries_downloaded
 
 signal file_downloaded(files_downloaded: int, total_files: int)
 
+signal launching
+
 @export var installation: MinecraftInstallation
 
 var downloader: Requests
@@ -50,4 +52,5 @@ func new_file_downloaded(file_downloaded: int, total_files: int) -> void:
 	emit_signal("file_downloaded", files_downloaded, self.total_files)
 	
 	if files_downloaded == self.total_files:
+		emit_signal("launching")
 		installation.run()
