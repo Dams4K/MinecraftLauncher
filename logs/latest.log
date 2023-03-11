@@ -1,0 +1,17 @@
+[09:24:58] [Client thread/ERROR]: Can't find the resource index file: /home/damien/.local/share/godot/app_userdata/MinecraftLauncher/assets/indexes/1.8.json
+[09:24:58] [Client thread/INFO]: Setting user: Dams4LT
+[09:24:58] [Client thread/INFO]: (Session ID is token:null:0)
+[09:24:59] [Client thread/INFO]: LWJGL Version: 2.9.4
+[09:24:59] [Client thread/INFO]: Reloading ResourceManager: Default
+[09:24:59] [Client thread/ERROR]: Couldn't initialize twitch stream
+[09:24:59] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[09:25:00] [Thread-6/INFO]: Initializing LWJGL OpenAL
+[09:25:00] [Thread-6/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[09:25:00] [Thread-6/INFO]: OpenAL initialized.
+[09:25:00] [Sound Library Loader/INFO]: Sound engine started
+[09:25:01] [Client thread/INFO]: Created: 512x512 textures-atlas
+[09:25:06] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:music.menu
+[09:25:09] [Client thread/WARN]: Unable to play unknown soundEvent: minecraft:gui.button.press
+[09:25:09] [Client thread/INFO]: Stopping!
+[09:25:09] [Client thread/INFO]: SoundSystem shutting down...
+[09:25:09] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com

@@ -45,7 +45,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("4_0hgcl"), ExtResource("7_hoigf"), ExtResource("5_8w3vm"), ExtResource("3_l0suc"), ExtResource("8_l2bsn"), ExtResource("9_07b58")])
+backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("4_0hgcl"), ExtResource("7_hoigf"), ExtResource("8_l2bsn"), ExtResource("5_8w3vm"), ExtResource("9_07b58"), ExtResource("3_l0suc")])
 blur_amount = 1.0
 transition_time = 15.0
 

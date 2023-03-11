@@ -15,13 +15,16 @@ var downloader: Requests
 var total_files := 0
 var files_downloaded := 0
 
+var assets: MinecraftAssets
+var libraries: MinecraftLibraries
+
 func _ready() -> void:
 	downloader = Requests.new()
 	add_child(downloader)
 
 func launch():
-	var assets: MinecraftAssets = installation.get_minecraft_assets()
-	var libraries: MinecraftLibraries = installation.get_minecraft_libraries()
+	assets = installation.get_minecraft_assets()
+	libraries = installation.get_minecraft_libraries()
 	assets.new_asset_downloaded.connect(new_file_downloaded)
 	libraries.new_lib_downloaded.connect(new_file_downloaded)
 	
@@ -53,4 +56,4 @@ func new_file_downloaded(file_downloaded: int, total_files: int) -> void:
 	
 	if files_downloaded == self.total_files:
 		emit_signal("launching")
-		installation.run()
+		installation.run(libraries, assets)
