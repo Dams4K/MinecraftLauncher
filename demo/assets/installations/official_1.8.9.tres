@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MinecraftOfficialInstallation" load_steps=2 format=3 uid="uid://dqkcyriuotjr5"]
+
+[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft_official_installation.gd" id="1_ef8o8"]
+
+[resource]
+script = ExtResource("1_ef8o8")
+version_file = null
+game_folder = null

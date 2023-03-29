@@ -1,12 +1,63 @@
+@tool
 extends Resource
 class_name MinecraftInstallation
 
-@export_global_file("*.json") var version_file
-@export_global_dir var game_folder
+@export_group("Folders")
+@export var minecraft_folder = "user://"
+@export var game_folder = "user://"
+
+@export_group("Modifications")
+@export var mod_loader := MINECRAFT_MOD_LOADER.VANILLA
+@export var mod_list: Array[MinecraftMod] = []
+
+@export_group("Mc Version")
+@export var minecraft_version_type := MINECRAFT_VERSION_TYPE.OFFICIAL:
+	set(value):
+		minecraft_version_type = value
+		notify_property_list_changed()
+var mc_version_id: String = ""
+var mc_version_file: String = ""
+
+enum MINECRAFT_MOD_LOADER {
+	VANILLA,
+	FORGE,
+	FABRIC
+}
+
+enum MINECRAFT_VERSION_TYPE {
+	OFFICIAL,
+	PERSONAL
+}
+
+func _get_property_list():
+	var properties = []
+	var version_file_usage = PROPERTY_USAGE_NO_EDITOR
+	var mc_version_id_usage = PROPERTY_USAGE_NO_EDITOR
+	
+	if minecraft_version_type == MINECRAFT_VERSION_TYPE.OFFICIAL:
+		mc_version_id_usage = PROPERTY_USAGE_DEFAULT
+	elif minecraft_version_type == MINECRAFT_VERSION_TYPE.PERSONAL:
+		version_file_usage = PROPERTY_USAGE_DEFAULT
+	
+	properties.append({
+		"name": "mc_version_file",
+		"type": TYPE_STRING,
+		"usage": version_file_usage,
+		"hint": PROPERTY_HINT_FILE
+	})
+	properties.append({
+		"name": "mc_version_id",
+		"type": TYPE_STRING,
+		"usage": mc_version_id_usage,
+		"hint": PROPERTY_HINT_PLACEHOLDER_TEXT,
+		"hint_string": "1.8.9"
+	})
+	
+	return properties
 
 
 func get_data():
-	var file = FileAccess.open(version_file, FileAccess.READ)
+	var file = FileAccess.open(mc_version_file, FileAccess.READ)
 	if file.get_error() != OK:
 		print("error opening version_file")
 		return
@@ -43,7 +94,4 @@ func run(minecraft_libraries: MinecraftLibraries, minecraft_assets: MinecraftAss
 		"--assetIndex", str(minecraft_assets.get_id()),
 		"--assetsDir", ProjectSettings.globalize_path(minecraft_assets.ASSETS_FOLDER)
 	]
-	var output = []
-	OS.execute("/usr/lib/jvm/jdk-8/bin/java", args, output, true, false)
-	print(output)
-#	print(args)
+	OS.create_process("/usr/lib/jvm/jdk-8/bin/java", args, false)

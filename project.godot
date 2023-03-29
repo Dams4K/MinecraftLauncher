@@ -17,7 +17,9 @@ Paths/Config="user://config.cfg"
 
 config/name="MinecraftLauncher"
 run/main_scene="res://demo/Main.tscn"
-config/features=PackedStringArray("4.0")
+config/use_custom_user_dir=true
+config/custom_user_dir_name=".gocraft"
+config/features=PackedStringArray("4.1")
 config/icon="res://icon.svg"
 config/version="1.0.0"
 

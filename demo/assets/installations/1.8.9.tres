@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MinecraftInstallation" load_steps=4 format=3 uid="uid://dnyyo13ff720u"]
+
+[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft_installation.gd" id="1_haj43"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/resources/minecraft_mod.gd" id="1_ogkyb"]
+
+[sub_resource type="Resource" id="Resource_4ea4v"]
+script = ExtResource("1_ogkyb")
+download_method = 1
+mod_url = ""
+
+[resource]
+script = ExtResource("1_haj43")
+minecraft_folder = "user://"
+game_folder = "user://"
+mod_loader = 0
+mod_list = Array[ExtResource("1_ogkyb")]([SubResource("Resource_4ea4v")])
+minecraft_version_type = 0
+mc_version_file = ""
+mc_version_id = "1.8.9"

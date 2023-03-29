@@ -26,19 +26,7 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 		var response := await request.do_file(url, path)
 		if response.result != Requests.Result.SUCCESS:
 			print("Error of type %s: code %s" % [response.result, response.code])
-#		var file_downloaded = false
-#
-#		var f = func(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-#			file_downloaded = true
-		
-#		http_request.request_completed.connect(f)
-#		http_request.download_file = path
-#		http_request.request(url)
-#		if !file_downloaded:
-#			await http_request.request_completed
-	
-#		http_request.disconnect("request_completed", f)
-	
+			
 	# check if file is correct
 	if sha1 != "" and not Utils.check_sha1(path, sha1):
 		DirAccess.remove_absolute(path)
