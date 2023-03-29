@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://duliiyafrs8i"]
+[gd_scene load_steps=18 format=3 uid="uid://bnvlws7lnrdw"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
@@ -13,9 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
 [ext_resource type="PackedScene" uid="uid://7621mv7f4fro" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
 [ext_resource type="Shader" path="res://demo/assets/shaders/appear_bottom.gdshader" id="13_6lgvq"]
-[ext_resource type="Script" path="res://addons/minecraft_launcher/launcher.gd" id="13_nuljg"]
 [ext_resource type="Script" path="res://demo/LoadingBar.gd" id="14_yip4u"]
-[ext_resource type="Resource" uid="uid://dnyyo13ff720u" path="res://demo/assets/installations/1.8.9.tres" id="16_0kso4"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/version_components/mc_installation.gd" id="16_xmnrj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8uauq"]
 shader = ExtResource("13_6lgvq")
@@ -40,7 +39,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("6_bdn53"), ExtResource("3_l0suc"), ExtResource("5_8w3vm"), ExtResource("9_07b58"), ExtResource("7_hoigf")])
+backgrounds = Array[Texture2D]([ExtResource("8_l2bsn"), ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("9_07b58"), ExtResource("4_0hgcl"), ExtResource("3_l0suc"), ExtResource("7_hoigf")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -144,16 +143,13 @@ text = "Libraries"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MinecraftLauncher" type="Node" parent="."]
-script = ExtResource("13_nuljg")
-installation = ExtResource("16_0kso4")
+[node name="MCInstallation" type="Node" parent="."]
+script = ExtResource("16_xmnrj")
+mc_version_file = ""
+mc_version_id = "1.8.9"
 
 [connection signal="_play_button_pressed" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
 [connection signal="_switch_to_accounts_container" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
 [connection signal="_switch_to_play_container" from="CenterContainer/VBoxContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]
 [connection signal="value_changed" from="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" to="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" method="_on_value_changed"]
-[connection signal="assets_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_assets_downloaded"]
-[connection signal="file_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_file_downloaded"]
-[connection signal="launching" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_launching"]
-[connection signal="libraries_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_libraries_downloaded"]
-[connection signal="natives_downloaded" from="MinecraftLauncher" to="." method="_on_minecraft_launcher_natives_downloaded"]
+[connection signal="assets_downloaded" from="MCInstallation" to="." method="_on_mc_installation_assets_downloaded"]

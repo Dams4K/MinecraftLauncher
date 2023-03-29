@@ -1,11 +1,14 @@
-extends Resource
-class_name MinecraftLibraries
+extends Node
+class_name MCLibraries
 
 signal new_lib_downloaded(lib_downloaded: int, total_libs: int)
 
+var MINECRAFT_FOLDER: String = "user://"
+
 const LIBRARIES_URL = "https://libraries.minecraft.net/"
-const LIBRARIES_PATH = "user://libraries/"
-const NATIVES_PATH = "user://natives/"
+const LIBRARIES_FOLDER = "libraries"
+const NATIVES_FOLDER = "natives"
+const CLIENT_FOLDER = "versions/%s"
 
 var data: Array = []
 
@@ -48,15 +51,16 @@ func download_libraries(downloader: Requests) -> void:
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await Utils.download_file(downloader, url, LIBRARIES_PATH.path_join(path), sha1)
+		await Utils.download_file(downloader, url, MINECRAFT_FOLDER.path_join(LIBRARIES_FOLDER.path_join(path)), sha1)
 		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_libraries - ended")
 
 func download_natives(downloader: Requests, clear_folder: bool = false) -> void:
+	var natives_path = MINECRAFT_FOLDER.path_join(NATIVES_FOLDER)
 	if clear_folder:
-		for filename in DirAccess.get_files_at(NATIVES_PATH):
-			DirAccess.remove_absolute(NATIVES_PATH.path_join(filename))
+		for filename in DirAccess.get_files_at(natives_path):
+			DirAccess.remove_absolute(natives_path.path_join(filename))
 	
 	var libs = get_libs(LibrariesType.NATIVES)
 	var libs_count: int = len(libs)
@@ -66,12 +70,14 @@ func download_natives(downloader: Requests, clear_folder: bool = false) -> void:
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await Utils.download_file(downloader, url, NATIVES_PATH.path_join(file_name), sha1)
-		await unzip_file(NATIVES_PATH.path_join(file_name), ["MANIFEST.mf"], true)
+		await Utils.download_file(downloader, url, natives_path.path_join(file_name), sha1)
+		await unzip_file(natives_path.path_join(file_name), ["MANIFEST.mf"], true)
 		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_natives - ended")
 
+func download_client(downloader: Requests, version_id) -> void:
+	var client_path = MINECRAFT_FOLDER.path_join(CLIENT_FOLDER % version_id)
 
 func get_libs(lib_type: LibrariesType = LibrariesType.BOTH) -> Array:
 	var libs = []

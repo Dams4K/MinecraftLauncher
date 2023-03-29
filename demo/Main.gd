@@ -7,7 +7,7 @@ const base_backgrounds_path = "res://demo/assets/textures/backgrounds/"
 @onready var play_container: VBoxContainer = %PlayContainer
 @onready var accounts_container: VBoxContainer = %AccountsContainer
 
-@onready var minecraft_launcher: Launcher = $MinecraftLauncher
+@onready var mc_installation: MCInstallation = $MCInstallation
 
 @onready var loading_panel: Panel = %LoadingPanel
 @onready var loading_bar: ProgressBar = %LoadingBar
@@ -88,11 +88,7 @@ func _on_play_button_pressed() -> void:
 	tween.tween_property(loading_panel, "modulate:a", 1.0, .5)
 	tween.tween_property(loading_panel.material, "shader_parameter/y_pos", 0.0, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tween.play()
-	minecraft_launcher.launch()
-
-
-func _on_minecraft_launcher_assets_downloaded() -> void:
-	assets_label.theme_type_variation = "LabelSuccess"
+	mc_installation.run()
 
 
 func _on_minecraft_launcher_libraries_downloaded() -> void:
@@ -110,3 +106,7 @@ func _on_minecraft_launcher_file_downloaded(files_downloaded, total_files) -> vo
 
 func _on_minecraft_launcher_launching() -> void:
 	loading_bar.text = "Launching..."
+
+
+func _on_mc_installation_assets_downloaded() -> void:
+	assets_label.theme_type_variation = "LabelSuccess"

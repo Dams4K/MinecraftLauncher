@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/minecraft_launcher/launcher.gd" id="1_6s1du"]
 [ext_resource type="Script" path="res://tests/LauncherTest.gd" id="1_fnf48"]
-[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft_installation.gd" id="2_oe2ki"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/version_components/mc_installation.gd" id="2_oe2ki"]
 
 [sub_resource type="Resource" id="Resource_go0cc"]
 script = ExtResource("2_oe2ki")

@@ -9,20 +9,22 @@ signal file_downloaded(files_downloaded: int, total_files: int)
 
 signal launching
 
-@export var installation: MinecraftInstallation
+@export var installation: MCInstallation
 
 var downloader: Requests
 var total_files := 0
 var files_downloaded := 0
 
-var assets: MinecraftAssets
-var libraries: MinecraftLibraries
+var assets: MCAssets
+var libraries: MCLibraries
 
 func _ready() -> void:
 	downloader = Requests.new()
 	add_child(downloader)
 
 func launch():
+	await installation.load_version_file(downloader)
+	
 	assets = installation.get_minecraft_assets()
 	libraries = installation.get_minecraft_libraries()
 	assets.new_asset_downloaded.connect(new_file_downloaded)
@@ -56,4 +58,4 @@ func new_file_downloaded(file_downloaded: int, total_files: int) -> void:
 	
 	if files_downloaded == self.total_files:
 		emit_signal("launching")
-		installation.run(libraries, assets)
+#		installation.run(libraries, assets)
