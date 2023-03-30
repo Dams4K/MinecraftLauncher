@@ -3,6 +3,13 @@ class_name Utils
 
 const CHUNK_SIZE = 1024
 
+enum OS_TYPE {
+	LINUX,
+	WINDOWS,
+	MACOS,
+	UNKNOWN
+}
+
 static func check_sha1(file_path: String, sha1: String, context: int = HashingContext.HASH_SHA1):
 	var ctx = HashingContext.new()
 	ctx.start(context)
@@ -33,3 +40,12 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 
 static func download_content_file(http_request: HTTPRequest) -> Variant:
 	return
+
+static func get_os_type() -> OS_TYPE:
+	var os_name = OS.get_name()
+	var os_type := OS_TYPE.UNKNOWN
+	if os_name in ["Linux", "FreeBSD", "NetBSD", "OpenBSD", "BSD"]: os_type = OS_TYPE.LINUX
+	elif os_name in ["Windows", "UWP"]: os_type = OS_TYPE.WINDOWS
+	elif os_name in ["macOS"]: os_type = OS_TYPE.MACOS
+	
+	return os_type

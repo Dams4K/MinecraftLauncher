@@ -3,8 +3,6 @@ class_name MCLibraries
 
 signal new_lib_downloaded(lib_downloaded: int, total_libs: int)
 
-var MINECRAFT_FOLDER: String = "user://"
-
 const LIBRARIES_URL = "https://libraries.minecraft.net/"
 const LIBRARIES_FOLDER = "libraries"
 const NATIVES_FOLDER = "natives"
@@ -12,7 +10,7 @@ const CLIENT_FOLDER = "versions/%s"
 
 var data: Array = []
 
-enum LibrariesType {
+enum LIBRARIES_TYPE {
 	LIBRARIES,
 	NATIVES,
 	BOTH
@@ -42,8 +40,8 @@ func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool
 		DirAccess.remove_absolute(path)
 
 
-func download_libraries(downloader: Requests) -> void:
-	var libs = get_libs(LibrariesType.LIBRARIES)
+func download_libraries(downloader: Requests, folder: String) -> void:
+	var libs = get_libs(LIBRARIES_TYPE.LIBRARIES)
 	var libs_count: int = len(libs)
 	for i in range(libs_count):
 		var lib: Dictionary = libs[i]
@@ -51,18 +49,18 @@ func download_libraries(downloader: Requests) -> void:
 		var sha1 = lib.get("sha1", "")
 		var url = lib.get("url", "")
 		
-		await Utils.download_file(downloader, url, MINECRAFT_FOLDER.path_join(LIBRARIES_FOLDER.path_join(path)), sha1)
+		await Utils.download_file(downloader, url, folder.path_join(LIBRARIES_FOLDER.path_join(path)), sha1)
 		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_libraries - ended")
 
-func download_natives(downloader: Requests, clear_folder: bool = false) -> void:
-	var natives_path = MINECRAFT_FOLDER.path_join(NATIVES_FOLDER)
+func download_natives(downloader: Requests, folder: String, clear_folder: bool = false) -> void:
+	var natives_path = folder.path_join(NATIVES_FOLDER)
 	if clear_folder:
 		for filename in DirAccess.get_files_at(natives_path):
 			DirAccess.remove_absolute(natives_path.path_join(filename))
 	
-	var libs = get_libs(LibrariesType.NATIVES)
+	var libs = get_libs(LIBRARIES_TYPE.NATIVES)
 	var libs_count: int = len(libs)
 	for i in range(libs_count):
 		var lib: Dictionary = libs[i]
@@ -76,10 +74,7 @@ func download_natives(downloader: Requests, clear_folder: bool = false) -> void:
 	
 	print("download_natives - ended")
 
-func download_client(downloader: Requests, version_id) -> void:
-	var client_path = MINECRAFT_FOLDER.path_join(CLIENT_FOLDER % version_id)
-
-func get_libs(lib_type: LibrariesType = LibrariesType.BOTH) -> Array:
+func get_libs(lib_type: LIBRARIES_TYPE = LIBRARIES_TYPE.BOTH) -> Array:
 	var libs = []
 	
 	for librarie in data:
@@ -88,12 +83,12 @@ func get_libs(lib_type: LibrariesType = LibrariesType.BOTH) -> Array:
 		var artifact = librarie["downloads"].get("artifact", {})
 		var classifiers = librarie["downloads"].get("classifiers", {})
 		
-		if get_os_name() in librarie.get("natives", {}) and lib_type in [LibrariesType.NATIVES, LibrariesType.BOTH]:
+		if get_os_name() in librarie.get("natives", {}) and lib_type in [LIBRARIES_TYPE.NATIVES, LIBRARIES_TYPE.BOTH]:
 			var os_arch = "64" if OS.has_feature("64") else "32"
 			var native = classifiers.get(librarie["natives"][get_os_name()].format({"arch": os_arch}))
 			if native != null:
 				libs.append(native)
-		if not artifact.is_empty() and lib_type in [LibrariesType.LIBRARIES, LibrariesType.BOTH]:
+		if not artifact.is_empty() and lib_type in [LIBRARIES_TYPE.LIBRARIES, LIBRARIES_TYPE.BOTH]:
 			libs.append(artifact)
 	
 	return libs

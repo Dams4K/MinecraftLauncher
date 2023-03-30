@@ -90,15 +90,6 @@ func _on_play_button_pressed() -> void:
 	tween.play()
 	mc_installation.run()
 
-
-func _on_minecraft_launcher_libraries_downloaded() -> void:
-	libraries_label.theme_type_variation = "LabelSuccess"
-
-
-func _on_minecraft_launcher_natives_downloaded() -> void:
-	natives_label.theme_type_variation = "LabelSuccess"
-
-
 func _on_minecraft_launcher_file_downloaded(files_downloaded, total_files) -> void:
 	loading_bar.max_value = total_files
 	loading_bar.value = files_downloaded
@@ -110,3 +101,11 @@ func _on_minecraft_launcher_launching() -> void:
 
 func _on_mc_installation_assets_downloaded() -> void:
 	assets_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_mc_installation_libraries_downloaded() -> void:
+	libraries_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_mc_installation_natives_downloaded() -> void:
+	natives_label.theme_type_variation = "LabelSuccess"
