@@ -19,27 +19,6 @@ enum LIBRARIES_TYPE {
 func _init(data: Array) -> void:
 	self.data = data
 
-func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool) -> void:
-	var reader = ZIPReader.new()
-	reader.open(path)
-	
-	var files = reader.get_files()
-	for filename in files:
-		if filename in exclude_files or filename.ends_with("/"):
-			continue
-		
-		var res = reader.read_file(filename)
-		var filepath = path.replace(path.get_file(), filename)
-		var file = FileAccess.open(filepath, FileAccess.WRITE)
-		
-		if file != null:
-			file.store_buffer(res)
-	reader.close()
-	
-	if delete_archive:
-		DirAccess.remove_absolute(path)
-
-
 func download_libraries(downloader: Requests, folder: String) -> void:
 	var libs = get_libs(LIBRARIES_TYPE.LIBRARIES)
 	var libs_count: int = len(libs)
@@ -69,7 +48,8 @@ func download_natives(downloader: Requests, folder: String, clear_folder: bool =
 		var url = lib.get("url", "")
 		
 		await Utils.download_file(downloader, url, natives_path.path_join(file_name), sha1)
-		await unzip_file(natives_path.path_join(file_name), ["MANIFEST.mf"], true)
+		print("natives")
+		await Utils.unzip_file(natives_path.path_join(file_name), ["MANIFEST.mf"], true)
 		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_natives - ended")

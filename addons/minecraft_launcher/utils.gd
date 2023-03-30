@@ -11,11 +11,14 @@ enum OS_TYPE {
 }
 
 static func check_sha1(file_path: String, sha1: String, context: int = HashingContext.HASH_SHA1):
+	if sha1.is_empty():
+		return false
+	
 	var ctx = HashingContext.new()
 	ctx.start(context)
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
-	if file.get_error() != OK:
+	if file == null or file.get_error() != OK:
 		return false
 	
 	while not file.eof_reached():
@@ -24,12 +27,12 @@ static func check_sha1(file_path: String, sha1: String, context: int = HashingCo
 	var res = ctx.finish()
 	return res.hex_encode() == sha1
 
-static func download_file(request: Requests, url: String, path: String, sha1: String = "") -> void:
+static func download_file(request: Requests, url: String, path: String, sha1: String = "", overwrite: bool = false) -> void:
 	DirAccess.make_dir_recursive_absolute(path.replace(path.get_file(), "")) # TODO: check err
 	# if something is missing, don't do it
 	if url == "" || path == "": return
 	
-	if not FileAccess.file_exists(path) or not Utils.check_sha1(path, sha1):
+	if not FileAccess.file_exists(path) or (Utils.check_sha1(path, sha1) and overwrite):
 		var response := await request.do_file(url, path)
 		if response.result != Requests.Result.SUCCESS:
 			print("Error of type %s: code %s" % [response.result, response.code])
@@ -38,8 +41,28 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 	if sha1 != "" and not Utils.check_sha1(path, sha1):
 		DirAccess.remove_absolute(path)
 
-static func download_content_file(http_request: HTTPRequest) -> Variant:
-	return
+static func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool) -> void:
+	var reader = ZIPReader.new()
+	var err = reader.open(path)
+	
+	var files = reader.get_files()
+	for filename in files:
+		if filename in exclude_files or filename.ends_with("/"):
+			continue
+		
+		var res = reader.read_file(filename)
+		var filepath = path.replace(path.get_file(), filename)
+		var folder = filepath.get_base_dir()
+		DirAccess.make_dir_recursive_absolute(folder)
+		
+		var file = FileAccess.open(filepath, FileAccess.WRITE)
+		if file != null:
+			file.store_buffer(res)
+	reader.close()
+	
+	if delete_archive:
+		DirAccess.remove_absolute(path)
+
 
 static func get_os_type() -> OS_TYPE:
 	var os_name = OS.get_name()

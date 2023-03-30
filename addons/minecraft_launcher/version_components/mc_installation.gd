@@ -8,6 +8,8 @@ signal natives_downloaded
 signal libraries_downloaded
 signal assets_downloaded
 
+@export var java_manager: JavaManager
+
 @export_category("Folders")
 @export var minecraft_folder = "user://"
 @export var game_folder = "user://"
@@ -87,8 +89,8 @@ func _ready() -> void:
 	mc_runner = MCRunner.new()
 	add_child(mc_runner)
 	
-	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
-	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
+#	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
+#	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
 
 func load_version_file() -> void:
 	if mc_version_type == MINECRAFT_VERSION_TYPE.OFFICIAL:
@@ -114,6 +116,18 @@ func run():
 	var client_jar_path: String = minecraft_folder.path_join("versions/%s.jar" % mc_version_id)
 	await mc_client.download_client(downloader, client_jar_path)
 	
+	var java_major_version = version_data["javaVersion"]["majorVersion"]
+	var java_downloader: JavaDownloader = null
+	if Utils.get_os_type() == Utils.OS_TYPE.LINUX:
+		for linux_java_downloader in java_manager.linux_javas:
+			if linux_java_downloader.java_major_version == str(java_major_version):
+				java_downloader = linux_java_downloader
+				break
+	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
+	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
+	print(java_exe_path)
+	print(java_folder_path.path_join(java_downloader.exe_path))
+	
 	var jvm_args := MCJVMArgs.new()
 	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(mc_libraries.NATIVES_FOLDER))
 	jvm_args.launcher_name = "GoCraft"
@@ -135,6 +149,6 @@ func run():
 	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args
 	mc_runner.main_class = version_data["mainClass"]
-	mc_runner.java_path = "/usr/lib/jvm/jre-17-openjdk/bin/java"
+	mc_runner.java_path = java_exe_path
 	
 	mc_runner.run()

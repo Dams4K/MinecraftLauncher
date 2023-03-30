@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bnvlws7lnrdw"]
+[gd_scene load_steps=22 format=3 uid="uid://bnvlws7lnrdw"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
@@ -14,7 +14,10 @@
 [ext_resource type="PackedScene" uid="uid://7621mv7f4fro" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
 [ext_resource type="Shader" path="res://demo/assets/shaders/appear_bottom.gdshader" id="13_6lgvq"]
 [ext_resource type="Script" path="res://demo/LoadingBar.gd" id="14_yip4u"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/java_manager.gd" id="16_kkxe5"]
+[ext_resource type="Resource" uid="uid://bpc5u6s0v5q1x" path="res://demo/assets/java_downloaders/linux_java_17.tres" id="16_ret3p"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/version_components/mc_installation.gd" id="16_xmnrj"]
+[ext_resource type="Resource" uid="uid://dgyxcs8ol60sx" path="res://demo/assets/java_downloaders/linux_java_8.tres" id="17_d17bv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8uauq"]
 shader = ExtResource("13_6lgvq")
@@ -25,6 +28,11 @@ outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 2
 shadow_color = Color(0, 0, 0, 0.14902)
+
+[sub_resource type="Resource" id="Resource_8je2n"]
+script = ExtResource("16_kkxe5")
+linux_javas = Array[Resource("res://addons/minecraft_launcher/java_downloader.gd")]([ExtResource("16_ret3p"), ExtResource("17_d17bv")])
+windows_javas = Array[Resource("res://addons/minecraft_launcher/java_downloader.gd")]([])
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -39,7 +47,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("7_hoigf"), ExtResource("9_07b58"), ExtResource("5_8w3vm"), ExtResource("4_0hgcl"), ExtResource("3_l0suc"), ExtResource("8_l2bsn")])
+backgrounds = Array[Texture2D]([ExtResource("4_0hgcl"), ExtResource("5_8w3vm"), ExtResource("3_l0suc"), ExtResource("6_bdn53"), ExtResource("9_07b58"), ExtResource("8_l2bsn"), ExtResource("7_hoigf")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -145,8 +153,9 @@ vertical_alignment = 1
 
 [node name="MCInstallation" type="Node" parent="."]
 script = ExtResource("16_xmnrj")
+java_manager = SubResource("Resource_8je2n")
 mc_version_file = ""
-mc_version_id = "1.19.4"
+mc_version_id = "1.8.9"
 
 [connection signal="_play_button_pressed" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
 [connection signal="_switch_to_accounts_container" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]

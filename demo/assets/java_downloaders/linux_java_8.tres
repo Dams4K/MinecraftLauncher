@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JavaDownloader" load_steps=2 format=3 uid="uid://dgyxcs8ol60sx"]
+
+[ext_resource type="Script" path="res://addons/minecraft_launcher/java_downloader.gd" id="1_ubgqk"]
+
+[resource]
+script = ExtResource("1_ubgqk")
+java_major_version = "8"
+url = "https://download1349.mediafire.com/oelifij4do5gqw6eqxKjglXY80mJgWlp7PR5DOohlQdaUpQx6xSb9f2TB-0WXlmZ_GifH1wn861EtdBfhlA5vKt14-Y/1s42c2qzt1szxyl/openjdk8.zip"
+exe_path = "openjdk8/java-se-8u42-ri/bin/java"
