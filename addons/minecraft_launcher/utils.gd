@@ -44,20 +44,9 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 static func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool) -> void:
 	var reader = ZIPReader.new()
 	var err = reader.open(path)
-	
-	var files = reader.get_files()
-	for filename in files:
-		if filename in exclude_files or filename.ends_with("/"):
-			continue
-		
-		var res = reader.read_file(filename)
-		var filepath = path.replace(path.get_file(), filename)
-		var folder = filepath.get_base_dir()
-		DirAccess.make_dir_recursive_absolute(folder)
-		
-		var file = FileAccess.open(filepath, FileAccess.WRITE)
-		if file != null:
-			file.store_buffer(res)
+	if err != OK:
+		return
+	reader.extract_files(path.get_base_dir())
 	reader.close()
 	
 	if delete_archive:
