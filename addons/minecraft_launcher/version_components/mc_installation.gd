@@ -123,6 +123,12 @@ func run():
 			if linux_java_downloader.java_major_version == str(java_major_version):
 				java_downloader = linux_java_downloader
 				break
+	elif Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
+		for windows_java_downloader in java_manager.windows_javas:
+			if windows_java_downloader.java_major_version == str(java_major_version):
+				java_downloader = windows_java_downloader
+				break
+	
 	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
 	print(java_exe_path)

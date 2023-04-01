@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="JavaDownloader" load_steps=2 format=3 uid="uid://w8oe1ck4lhf0"]
+
+[ext_resource type="Script" path="res://addons/minecraft_launcher/java_downloader.gd" id="1_upvcq"]
+
+[resource]
+script = ExtResource("1_upvcq")
+java_major_version = "17"
+url = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip"
+exe_path = "jdk-17.0.2/bin/javaw.exe"
