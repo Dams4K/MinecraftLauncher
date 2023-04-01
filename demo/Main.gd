@@ -53,11 +53,9 @@ func _on_play_button_pressed() -> void:
 	tween.tween_property(loading_panel, "modulate:a", 1.0, .5)
 	tween.tween_property(loading_panel.material, "shader_parameter/y_pos", 0.0, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tween.play()
-	mc_installation.run()
-
-func _on_minecraft_launcher_file_downloaded(files_downloaded, total_files) -> void:
-	loading_bar.max_value = total_files
-	loading_bar.value = files_downloaded
+	
+	var thread = Thread.new()
+	thread.start(mc_installation.run)
 
 
 func _on_minecraft_launcher_launching() -> void:
@@ -74,3 +72,8 @@ func _on_mc_installation_libraries_downloaded() -> void:
 
 func _on_mc_installation_natives_downloaded() -> void:
 	natives_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_mc_installation_new_file_downloaded(files_downloaded, files_to_download) -> void:
+	loading_bar.max_value = files_to_download
+	loading_bar.value = files_downloaded

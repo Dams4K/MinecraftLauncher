@@ -3,9 +3,9 @@ extends Node
 var config = ConfigFile.new()
 
 
-var ram: int = 2:
+var max_ram: int = 2:
 	set(v):
-		ram = v
+		max_ram = v
 		save_cfg()
 var x_resolution: int = -1:
 	set(v):
@@ -19,13 +19,13 @@ var y_resolution: int = -1:
 func load_cfg():
 	var config = ConfigFile.new()
 	if config.load(ProjectSettings.get("Launcher/Paths/Config")) == OK:
-		ram = config.get_value("Global", "ram", ram)
+		max_ram = config.get_value("Global", "max_ram", max_ram)
 		
 		x_resolution = config.get_value("Resolution", "x", x_resolution)
 		y_resolution = config.get_value("Resolution", "y", y_resolution)
 
 func save_cfg():
-	config.set_value("Global", "ram", ram)
+	config.set_value("Global", "max_ram", max_ram)
 	config.set_value("Resolution", "x", x_resolution)
 	config.set_value("Resolution", "y", y_resolution)
 	

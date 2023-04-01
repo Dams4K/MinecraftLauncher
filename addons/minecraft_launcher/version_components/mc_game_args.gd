@@ -51,9 +51,9 @@ func to_array() -> Array[String]:
 	if demo:
 		array.append("--demo")
 	if width > -1:
-		array.append_array(["--width", width])
+		array.append_array(["--width", str(width)])
 	if height > -1:
-		array.append_array(["--height", height])
+		array.append_array(["--height", str(height)])
 		
 	return array
 

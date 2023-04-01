@@ -48,7 +48,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("5_8w3vm"), ExtResource("9_07b58"), ExtResource("6_bdn53"), ExtResource("3_l0suc"), ExtResource("8_l2bsn")])
+backgrounds = Array[Texture2D]([ExtResource("8_l2bsn"), ExtResource("9_07b58"), ExtResource("3_l0suc"), ExtResource("4_0hgcl"), ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("7_hoigf")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -165,3 +165,4 @@ mc_version_id = "1.19.4"
 [connection signal="assets_downloaded" from="MCInstallation" to="." method="_on_mc_installation_assets_downloaded"]
 [connection signal="libraries_downloaded" from="MCInstallation" to="." method="_on_mc_installation_libraries_downloaded"]
 [connection signal="natives_downloaded" from="MCInstallation" to="." method="_on_mc_installation_natives_downloaded"]
+[connection signal="new_file_downloaded" from="MCInstallation" to="." method="_on_mc_installation_new_file_downloaded"]

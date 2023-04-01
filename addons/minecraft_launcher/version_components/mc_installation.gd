@@ -45,6 +45,7 @@ var mc_libraries: MCLibraries
 var mc_client: MCClient
 var mc_runner: MCRunner
 
+var files_downloaded: int = 0
 var files_to_download: int = 1000
 
 func _get_property_list():
@@ -89,8 +90,16 @@ func _ready() -> void:
 	mc_runner = MCRunner.new()
 	add_child(mc_runner)
 	
-	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
-	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
+#	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
+#	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
+	mc_assets.new_asset_downloaded.connect(_on_new_file_downloaded)
+	mc_libraries.new_lib_downloaded.connect(_on_new_file_downloaded)
+	
+	files_to_download = len(mc_libraries.get_libs(MCLibraries.LIBRARIES_TYPE.BOTH)) + len(await mc_assets.get_assets_list(downloader, minecraft_folder))
+
+func _on_new_file_downloaded(a, b):
+	files_downloaded += 1
+	new_file_downloaded.emit(files_downloaded, files_to_download)
 
 func load_version_file() -> void:
 	if mc_version_type == MINECRAFT_VERSION_TYPE.OFFICIAL:
@@ -131,13 +140,12 @@ func run():
 	
 	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
-	print(java_exe_path)
-	print(java_folder_path.path_join(java_downloader.exe_path))
 	
 	var jvm_args := MCJVMArgs.new()
 	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(mc_libraries.NATIVES_FOLDER))
 	jvm_args.launcher_name = "GoCraft"
 	jvm_args.launcher_version = ProjectSettings.get("application/config/version")
+	jvm_args.xmx = "%sG" % Config.max_ram
 	
 	var libs_abs_path: Array[String] = []
 	for lib in mc_libraries.get_libs(mc_libraries.LIBRARIES_TYPE.LIBRARIES):
@@ -151,6 +159,8 @@ func run():
 	game_args.game_dir = ProjectSettings.globalize_path(game_folder)
 	game_args.assets_dir = ProjectSettings.globalize_path(minecraft_folder.path_join(mc_assets.ASSETS_FOLDER))
 	game_args.asset_index = mc_assets.get_id()
+	game_args.width = Config.x_resolution
+	game_args.height = Config.y_resolution
 	
 	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args

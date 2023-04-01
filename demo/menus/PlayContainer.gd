@@ -11,8 +11,8 @@ signal _play_button_pressed
 func _ready() -> void:
 	ram_slider.max_value = ceil(OS.get_total_system_memory() / 1024.0 / 1024.0 / 1024.0)
 	
-	ram_slider.value = Config.ram
-	ram_label.text = str(Config.ram) + "Go"
+	ram_slider.value = Config.max_ram
+	ram_label.text = str(Config.max_ram) + "Go"
 	
 	x_line_edit.text = str(Config.x_resolution)
 	y_line_edit.text = str(Config.y_resolution)
@@ -37,7 +37,7 @@ func _on_ram_slider_value_changed(value: float) -> void:
 
 func _on_ram_slider_drag_ended(value_changed: bool) -> void:
 	if value_changed:
-		Config.ram = ram_slider.value
+		Config.max_ram = ram_slider.value
 
 
 func _on_play_button_pressed() -> void:
