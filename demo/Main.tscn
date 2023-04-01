@@ -47,7 +47,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("3_l0suc"), ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("5_8w3vm"), ExtResource("6_bdn53"), ExtResource("7_hoigf"), ExtResource("9_07b58")])
+backgrounds = Array[Texture2D]([ExtResource("9_07b58"), ExtResource("3_l0suc"), ExtResource("7_hoigf"), ExtResource("4_0hgcl"), ExtResource("6_bdn53"), ExtResource("8_l2bsn"), ExtResource("5_8w3vm")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -155,7 +155,7 @@ vertical_alignment = 1
 script = ExtResource("16_xmnrj")
 java_manager = SubResource("Resource_8je2n")
 mc_version_file = ""
-mc_version_id = "1.16.4"
+mc_version_id = "1.19.4"
 
 [connection signal="_play_button_pressed" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
 [connection signal="_switch_to_accounts_container" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]

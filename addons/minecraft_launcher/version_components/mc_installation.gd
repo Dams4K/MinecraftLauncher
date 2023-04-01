@@ -89,8 +89,8 @@ func _ready() -> void:
 	mc_runner = MCRunner.new()
 	add_child(mc_runner)
 	
-#	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
-#	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
+	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
+	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
 
 func load_version_file() -> void:
 	if mc_version_type == MINECRAFT_VERSION_TYPE.OFFICIAL:

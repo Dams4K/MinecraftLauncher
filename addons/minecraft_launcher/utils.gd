@@ -44,9 +44,14 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 static func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool) -> void:
 	var reader = ZIPReader.new()
 	var err = reader.open(path)
-	if err != OK:
-		return
-	reader.extract_files(path.get_base_dir())
+	
+	var files = reader.get_files()
+	for file in files:
+		if file.get_file() in exclude_files:
+			continue
+			
+		reader.extract_file(file, true, path.get_base_dir().path_join(file))
+	
 	reader.close()
 	
 	if delete_archive:

@@ -49,7 +49,7 @@ func download_natives(downloader: Requests, folder: String, clear_folder: bool =
 		
 		await Utils.download_file(downloader, url, natives_path.path_join(file_name), sha1)
 		print("natives")
-		await Utils.unzip_file(natives_path.path_join(file_name), ["MANIFEST.mf"], true)
+		await Utils.unzip_file(natives_path.path_join(file_name), ["META-INF", "MANIFEST.MF"], true)
 		emit_signal("new_lib_downloaded", i+1, libs_count)
 	
 	print("download_natives - ended")
