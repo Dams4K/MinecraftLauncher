@@ -16,6 +16,7 @@ signal assets_downloaded
 
 @export_category("Modifications")
 @export var mod_loader := MINECRAFT_MOD_LOADER.VANILLA
+@export_placeholder("0.14.19") var fabric_loader_version: String
 @export var mod_list: Array[MinecraftMod] = []
 
 @export_category("MC Version")
@@ -44,6 +45,8 @@ var mc_assets: MCAssets
 var mc_libraries: MCLibraries
 var mc_client: MCClient
 var mc_runner: MCRunner
+
+var mc_fabric: MCFabric
 
 var files_downloaded: int = 0
 var files_to_download: int = 1000
@@ -90,6 +93,9 @@ func _ready() -> void:
 	mc_runner = MCRunner.new()
 	add_child(mc_runner)
 	
+	mc_fabric = MCFabric.new()
+	add_child(mc_fabric)
+	
 #	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
 #	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
 	mc_assets.new_asset_downloaded.connect(_on_new_file_downloaded)
@@ -116,6 +122,9 @@ func load_version_file() -> void:
 
 
 func run():
+	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
+		mc_fabric.download_libraries(downloader, mc_version_id, fabric_loader_version, minecraft_folder)
+	
 	await mc_assets.download_assets(downloader, minecraft_folder)
 	emit_signal("assets_downloaded")
 	await mc_libraries.download_natives(downloader, minecraft_folder, true)
@@ -167,4 +176,4 @@ func run():
 	mc_runner.main_class = version_data["mainClass"]
 	mc_runner.java_path = java_exe_path
 	
-	mc_runner.run()
+#	mc_runner.run()

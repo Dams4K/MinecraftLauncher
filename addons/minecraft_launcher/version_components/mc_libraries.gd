@@ -8,7 +8,7 @@ const LIBRARIES_FOLDER = "libraries"
 const NATIVES_FOLDER = "natives"
 const CLIENT_FOLDER = "versions/%s"
 
-var data: Array = []
+var libraries: Array = []
 
 enum LIBRARIES_TYPE {
 	LIBRARIES,
@@ -17,7 +17,7 @@ enum LIBRARIES_TYPE {
 }
 
 func _init(data: Array) -> void:
-	self.data = data
+	self.libraries = libraries
 
 func download_libraries(downloader: Requests, folder: String) -> void:
 	var libs = get_libs(LIBRARIES_TYPE.LIBRARIES)
@@ -57,7 +57,7 @@ func download_natives(downloader: Requests, folder: String, clear_folder: bool =
 func get_libs(lib_type: LIBRARIES_TYPE = LIBRARIES_TYPE.BOTH) -> Array:
 	var libs = []
 	
-	for librarie in data:
+	for librarie in libraries:
 		if not check_rules(librarie.get("rules", [])): continue
 		
 		var artifact = librarie["downloads"].get("artifact", {})
