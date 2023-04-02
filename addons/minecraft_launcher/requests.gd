@@ -80,9 +80,7 @@ class Response extends RefCounted:
 	
 	## Converts the body to a GDScript object. Assumes a valid UTF8 JSON body.
 	func json() -> Variant:
-		var j = JSON.new()
-		j.parse(text())
-		return j.data
+		return JSON.parse_string(text())
 
 
 ## Performs an asynchronous web request using threads.

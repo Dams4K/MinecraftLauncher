@@ -4,9 +4,10 @@ class_name MCInstallation
 
 signal new_file_downloaded(files_downloaded: int, files_to_download: int)
 
-signal natives_downloaded
 signal libraries_downloaded
 signal assets_downloaded
+signal client_downloaded
+signal java_downloaded
 
 @export var java_manager: JavaManager
 
@@ -41,12 +42,13 @@ enum MINECRAFT_VERSION_TYPE {
 }
 
 var downloader: Requests
-#var mc_assets: MCAssets
+var mc_assets: MCAssets
 #var mc_libraries: MCLibraries
-#var mc_client: MCClient
-#var mc_runner: MCRunner
+var mc_client: MCClient
+var mc_runner: MCRunner
 #
 #var mc_fabric: MCFabric
+var fabric: Fabric
 
 var files_downloaded: int = 0
 var files_to_download: int = 1000
@@ -83,15 +85,18 @@ func _ready() -> void:
 	add_child(downloader)
 	
 	await load_version_file()
+	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
+		fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
+		add_child(fabric)
 	
-#	mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-#	add_child(mc_assets)
+	mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
+	add_child(mc_assets)
 #	mc_libraries = MCLibraries.new(version_data.get("libraries", []))
 #	add_child(mc_libraries)
-#	mc_client = MCClient.new(version_data.get("downloads", {}))
-#	add_child(mc_client)
-#	mc_runner = MCRunner.new()
-#	add_child(mc_runner)
+	mc_client = MCClient.new(version_data.get("downloads", {}))
+	add_child(mc_client)
+	mc_runner = MCRunner.new()
+	add_child(mc_runner)
 #
 #	mc_fabric = MCFabric.new()
 #	add_child(mc_fabric)
@@ -122,42 +127,43 @@ func load_version_file() -> void:
 
 
 func run():
-	print("Running function")
+	#-- DOWNLOAD LIBRARIES
 	var libraries_data: Array = version_data.get("libraries", [])
 	var mc_libraries: MCLibraries = MCLibraries.new(libraries_data)
 	await mc_libraries.download_artifacts(downloader, minecraft_folder.path_join("libraries"))
 	await mc_libraries.download_natives(downloader, minecraft_folder.path_join("natives"))
 	
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		var fabric: Fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
 		await fabric.download_libraries(downloader, minecraft_folder.path_join("libraries"))
-#		mc_fabric.download_libraries(downloader, mc_version_id, fabric_loader_version, minecraft_folder)
-	print("end")
-#	await mc_assets.download_assets(downloader, minecraft_folder)
-#	emit_signal("assets_downloaded")
-#	await mc_libraries.download_natives(downloader, minecraft_folder, true)
-#	emit_signal("natives_downloaded")
-#	await mc_libraries.download_libraries(downloader, minecraft_folder)
-#	emit_signal("libraries_downloaded")
-#	var client_jar_path: String = minecraft_folder.path_join("versions/%s.jar" % mc_version_id)
-#	await mc_client.download_client(downloader, client_jar_path)
-#
-#	var java_major_version = version_data["javaVersion"]["majorVersion"]
-#	var java_downloader: JavaDownloader = null
-#	if Utils.get_os_type() == Utils.OS_TYPE.LINUX:
-#		for linux_java_downloader in java_manager.linux_javas:
-#			if linux_java_downloader.java_major_version == str(java_major_version):
-#				java_downloader = linux_java_downloader
-#				break
-#	elif Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
-#		for windows_java_downloader in java_manager.windows_javas:
-#			if windows_java_downloader.java_major_version == str(java_major_version):
-#				java_downloader = windows_java_downloader
-#				break
-#
-#	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
-#	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
-#
+	libraries_downloaded.emit()
+	
+	#-- DOWNLOAD ASSETS
+	await mc_assets.download_assets(downloader, minecraft_folder)
+	assets_downloaded.emit()
+	
+	#-- DOWNLOAD CLIENT
+	var client_jar_path: String = minecraft_folder.path_join("versions/%s.jar" % mc_version_id)
+	await mc_client.download_client(downloader, client_jar_path)
+	client_downloaded.emit()
+	
+	#-- DOWNLOAD JAVA
+	var java_major_version = version_data["javaVersion"]["majorVersion"]
+	var java_downloader: JavaDownloader = null
+	if Utils.get_os_type() == Utils.OS_TYPE.LINUX:
+		for linux_java_downloader in java_manager.linux_javas:
+			if linux_java_downloader.java_major_version == str(java_major_version):
+				java_downloader = linux_java_downloader
+				break
+	elif Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
+		for windows_java_downloader in java_manager.windows_javas:
+			if windows_java_downloader.java_major_version == str(java_major_version):
+				java_downloader = windows_java_downloader
+				break
+	
+	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
+	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
+	java_downloaded.emit()
+
 #	var jvm_args := MCJVMArgs.new()
 #	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(mc_libraries.NATIVES_FOLDER))
 #	jvm_args.launcher_name = "GoCraft"
@@ -183,5 +189,5 @@ func run():
 #	mc_runner.game_args = game_args
 #	mc_runner.main_class = version_data["mainClass"]
 #	mc_runner.java_path = java_exe_path
-	
+#	
 #	mc_runner.run()

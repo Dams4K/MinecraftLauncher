@@ -50,4 +50,4 @@ func download_assets(downloader: Requests, folder: String):
 			await Utils.download_file(downloader, RESOURCES_URL.path_join(url), object_path)
 		emit_signal("new_asset_downloaded", i+1, assets_count)
 	
-	print("finish")
+	print("assets - finish")

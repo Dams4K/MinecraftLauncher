@@ -14,8 +14,10 @@ const base_backgrounds_path = "res://demo/assets/textures/backgrounds/"
 @onready var informative_labels: HBoxContainer = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels
 
 @onready var assets_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/AssetsLabel
-@onready var natives_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/NativesLabel
 @onready var libraries_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/LibrariesLabel
+@onready var client_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/ClientLabel
+@onready var java_label: Label = $CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels/JavaLabel
+
 
 func _ready() -> void:
 	loading_bar.value = 0
@@ -54,9 +56,8 @@ func _on_play_button_pressed() -> void:
 	tween.tween_property(loading_panel.material, "shader_parameter/y_pos", 0.0, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tween.play()
 	
-#	var thread = Thread.new()
-#	thread.start(mc_installation.run)
-	mc_installation.run()
+	var thread = Thread.new()
+	thread.start(mc_installation.run)
 
 
 func _on_minecraft_launcher_launching() -> void:
@@ -71,8 +72,12 @@ func _on_mc_installation_libraries_downloaded() -> void:
 	libraries_label.theme_type_variation = "LabelSuccess"
 
 
-func _on_mc_installation_natives_downloaded() -> void:
-	natives_label.theme_type_variation = "LabelSuccess"
+func _on_mc_installation_client_downloaded() -> void:
+	client_label.theme_type_variation = "LabelSuccess"
+
+
+func _on_mc_installation_java_downloaded() -> void:
+	java_label.theme_type_variation = "LabelSuccess"
 
 
 func _on_mc_installation_new_file_downloaded(files_downloaded, files_to_download) -> void:

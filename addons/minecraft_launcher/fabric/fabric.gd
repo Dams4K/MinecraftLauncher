@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 class_name Fabric
 
 const API_URL = "https://meta.fabricmc.net/"
@@ -22,3 +22,9 @@ func download_libraries(downloader: Requests, target_folder: String) -> int:
 	fb_libraries.download_common_libraries(downloader, target_folder)
 	
 	return OK
+
+func get_main_class() -> String:
+	if loader_data == null or loader_data.is_empty():
+		return ""
+	
+	return loader_data["launcherMeta"]["mainClass"]["client"]
