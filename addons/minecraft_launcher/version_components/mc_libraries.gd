@@ -1,5 +1,5 @@
 extends Node
-class_name MCLibraries
+#class_name MCLibraries
 
 signal new_lib_downloaded(lib_downloaded: int, total_libs: int)
 

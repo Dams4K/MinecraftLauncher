@@ -54,8 +54,9 @@ func _on_play_button_pressed() -> void:
 	tween.tween_property(loading_panel.material, "shader_parameter/y_pos", 0.0, 1.0).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	tween.play()
 	
-	var thread = Thread.new()
-	thread.start(mc_installation.run)
+#	var thread = Thread.new()
+#	thread.start(mc_installation.run)
+	mc_installation.run()
 
 
 func _on_minecraft_launcher_launching() -> void:
