@@ -9,7 +9,8 @@ signal _play_button_pressed
 @onready var y_line_edit: LineEdit = %YLineEdit
 
 func _ready() -> void:
-	ram_slider.max_value = ceil(OS.get_total_system_memory() / 1024.0 / 1024.0 / 1024.0)
+	#TODO: recreate get_total_system_memory
+	#ram_slider.max_value = ceil(OS.get_total_system_memory() / 1024.0 / 1024.0 / 1024.0)
 	
 	ram_slider.value = Config.max_ram
 	ram_label.text = str(Config.max_ram) + "Go"

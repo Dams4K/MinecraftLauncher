@@ -42,10 +42,10 @@ enum MINECRAFT_VERSION_TYPE {
 }
 
 var downloader: Requests
-var mc_assets: MCAssets
+#var mc_assets: MCAssets
 #var mc_libraries: MCLibraries
-var mc_client: MCClient
-var mc_runner: MCRunner
+#var mc_client: MCClient
+#var mc_runner: MCRunner
 #
 #var mc_fabric: MCFabric
 var fabric: Fabric
@@ -74,7 +74,7 @@ func _get_property_list():
 		"type": TYPE_STRING,
 		"usage": mc_version_id_usage,
 		"hint": PROPERTY_HINT_PLACEHOLDER_TEXT,
-		"hint_string": "1.8.9"
+		"hint_string": "x.x.x"
 	})
 	
 	return properties
@@ -82,6 +82,7 @@ func _get_property_list():
 
 func _ready() -> void:
 	downloader = Requests.new()
+	downloader.name = "Downloader"
 	add_child(downloader)
 	
 	await load_version_file()
@@ -89,14 +90,17 @@ func _ready() -> void:
 		fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
 		add_child(fabric)
 	
-	mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-	add_child(mc_assets)
+	#mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
+	#mc_assets.name = "MCAssets"
+	#add_child(mc_assets)
 #	mc_libraries = MCLibraries.new(version_data.get("libraries", []))
 #	add_child(mc_libraries)
-	mc_client = MCClient.new(version_data.get("downloads", {}))
-	add_child(mc_client)
-	mc_runner = MCRunner.new()
-	add_child(mc_runner)
+	#mc_client = MCClient.new(version_data.get("downloads", {}))
+	#mc_client.name = "MCClient"
+	#add_child(mc_client)
+	#mc_runner = MCRunner.new()
+	#mc_runner.name = "MCRunner"
+	#add_child(mc_runner)
 #
 #	mc_fabric = MCFabric.new()
 #	add_child(mc_fabric)
@@ -130,7 +134,7 @@ func run():
 	#-- DOWNLOAD LIBRARIES
 	var libraries_data: Array = version_data.get("libraries", [])
 	var mc_libraries: MCLibraries = MCLibraries.new(libraries_data)
-	await mc_libraries.download_artifacts(downloader, minecraft_folder.path_join("libraries"))
+	var artifacts = await mc_libraries.download_artifacts(downloader, minecraft_folder.path_join("libraries"))
 	await mc_libraries.download_natives(downloader, minecraft_folder.path_join("natives"))
 	
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
@@ -138,11 +142,13 @@ func run():
 	libraries_downloaded.emit()
 	
 	#-- DOWNLOAD ASSETS
+	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
 	await mc_assets.download_assets(downloader, minecraft_folder)
 	assets_downloaded.emit()
 	
 	#-- DOWNLOAD CLIENT
 	var client_jar_path: String = minecraft_folder.path_join("versions/%s.jar" % mc_version_id)
+	var mc_client = MCClient.new(version_data.get("downloads", {}))
 	await mc_client.download_client(downloader, client_jar_path)
 	client_downloaded.emit()
 	
@@ -162,32 +168,36 @@ func run():
 	
 	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
+	
 	java_downloaded.emit()
 
-#	var jvm_args := MCJVMArgs.new()
-#	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(mc_libraries.NATIVES_FOLDER))
-#	jvm_args.launcher_name = "GoCraft"
-#	jvm_args.launcher_version = ProjectSettings.get("application/config/version")
-#	jvm_args.xmx = "%sG" % Config.max_ram
+	var jvm_args := MCJVMArgs.new()
+	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join("natives")) #TODO: maybe projectsettings???
+	jvm_args.launcher_name = "GoCraft"
+	jvm_args.launcher_version = ProjectSettings.get("application/config/version")
+	jvm_args.xmx = "%sG" % Config.max_ram
 #
-#	var libs_abs_path: Array[String] = []
-#	for lib in mc_libraries.get_libs(mc_libraries.LIBRARIES_TYPE.LIBRARIES):
-#		libs_abs_path.append(ProjectSettings.globalize_path(minecraft_folder.path_join(mc_libraries.LIBRARIES_FOLDER.path_join(lib.get("path", "")))))
-#	libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
-#	jvm_args.libraries_path = libs_abs_path
+	var libs_abs_path: Array[String] = []
+	for lib in artifacts:
+		libs_abs_path.append(ProjectSettings.globalize_path(lib))
+		#libs_abs_path.append(ProjectSettings.globalize_path(minecraft_folder.path_join("libraries".path_join(lib.get("path", "")))))
+	libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
+	jvm_args.libraries_path = libs_abs_path
 #
-#	var game_args := MCGameArgs.new()
-#	game_args.username = "Dams4LT"
-#	game_args.version = mc_version_id
-#	game_args.game_dir = ProjectSettings.globalize_path(game_folder)
-#	game_args.assets_dir = ProjectSettings.globalize_path(minecraft_folder.path_join(mc_assets.ASSETS_FOLDER))
-#	game_args.asset_index = mc_assets.get_id()
-#	game_args.width = Config.x_resolution
-#	game_args.height = Config.y_resolution
-#
-#	mc_runner.jvm_args = jvm_args
-#	mc_runner.game_args = game_args
-#	mc_runner.main_class = version_data["mainClass"]
-#	mc_runner.java_path = java_exe_path
+	var game_args := MCGameArgs.new()
+	game_args.username = "Dams4LT"
+	game_args.version = mc_version_id
+	game_args.game_dir = ProjectSettings.globalize_path(game_folder)
+	game_args.assets_dir = ProjectSettings.globalize_path(minecraft_folder.path_join("assets"))
+	game_args.asset_index = mc_assets.get_id()
+	game_args.width = Config.x_resolution
+	game_args.height = Config.y_resolution
+	
+	var mc_runner = MCRunner.new()
+	mc_runner.jvm_args = jvm_args
+	mc_runner.game_args = game_args
+	mc_runner.main_class = version_data["mainClass"]
+	#mc_runner.java_path = "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-2.fc38.x86_64/jre/bin/java"
+	mc_runner.java_path = java_exe_path
 #	
-#	mc_runner.run()
+	mc_runner.run()

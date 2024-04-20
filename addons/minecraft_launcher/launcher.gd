@@ -23,33 +23,34 @@ func _ready() -> void:
 	add_child(downloader)
 
 func launch():
-	await installation.load_version_file(downloader)
+	pass
+	#await installation.load_version_file()
 	
-	assets = installation.get_minecraft_assets()
-	libraries = installation.get_minecraft_libraries()
-	assets.new_asset_downloaded.connect(new_file_downloaded)
-	libraries.new_lib_downloaded.connect(new_file_downloaded)
+	#assets = installation.get_minecraft_assets()
+	#libraries = installation.get_minecraft_libraries()
+	#assets.new_asset_downloaded.connect(new_file_downloaded)
+	#libraries.new_lib_downloaded.connect(new_file_downloaded)
 	
-	total_files = len((await assets.get_assets_list(downloader)).values()) + len(libraries.get_libs())
-	emit_signal("file_downloaded", 0, total_files)
-	
-	var runners := [
-		func():
-			await assets.download_assets(downloader)
-			emit_signal("assets_downloaded"),
-		func():
-			await libraries.download_natives(downloader)
-			emit_signal("natives_downloaded"),
-		func():
-			await libraries.download_libraries(downloader)
-			emit_signal("libraries_downloaded")
-	]
+	#total_files = len((await assets.get_assets_list(downloader)).values()) + len(libraries.get_libs())
+	#emit_signal("file_downloaded", 0, total_files)
+	#
+	#var runners := [
+		#func():
+			#await assets.download_assets(downloader)
+			#emit_signal("assets_downloaded"),
+		#func():
+			#await libraries.download_natives(downloader)
+			#emit_signal("natives_downloaded"),
+		#func():
+			#await libraries.download_libraries(downloader)
+			#emit_signal("libraries_downloaded")
+	#]
 
-	var threads: Array[Thread] = []
-	for runner in runners:
-		var new_thread = Thread.new()
-		new_thread.start(runner)
-		threads.append(new_thread)
+	#var threads: Array[Thread] = []
+	#for runner in runners:
+		#var new_thread = Thread.new()
+		#new_thread.start(runner)
+		#threads.append(new_thread)
 
 
 func new_file_downloaded(file_downloaded: int, total_files: int) -> void:

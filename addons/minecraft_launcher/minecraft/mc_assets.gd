@@ -1,5 +1,5 @@
-extends Node
-#class_name MCAssets
+extends Resource
+class_name MCAssets
 
 signal new_asset_downloaded(assets_downloaded: int, total_assets: int)
 

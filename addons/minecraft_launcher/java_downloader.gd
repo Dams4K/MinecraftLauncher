@@ -7,6 +7,7 @@ class_name JavaDownloader
 
 func download_java(downloader: Requests, folder: String) -> String:
 	var path = folder.path_join("java" + java_major_version + ".zip")
-	await Utils.download_file(downloader, url, path)
+	await Utils.download_file(downloader, url, path, "", false)
 	await Utils.unzip_file(path, [], false)
 	return path
+ 

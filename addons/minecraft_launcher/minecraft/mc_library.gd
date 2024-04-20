@@ -29,7 +29,7 @@ func download_artifact(downloader: Requests, target_folder: String):
 	if not check_rules() or artifact == null:
 		return
 	
-	await artifact.download(downloader, target_folder)
+	return await artifact.download(downloader, target_folder)
 
 func download_native(downloader: Requests, target_folder: String):
 	if not check_rules() or native == null:

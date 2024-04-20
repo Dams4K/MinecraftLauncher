@@ -1,5 +1,5 @@
-extends Node
-#class_name MCRunner
+extends Resource
+class_name MCRunner
 
 var java_path: String
 

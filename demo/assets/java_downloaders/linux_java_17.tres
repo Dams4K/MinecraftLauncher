@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_ps84f")
 java_major_version = "17"
-url = "https://download1582.mediafire.com/7jqfb5ye8qqgJbodqb1GhWeo3v7Qy1QWK6x29-k_KodK5siZWrs0XPUfgI7E89vHdcSqS3J-N5P_l7XFl7SfpjvOenI/arn2vikt02hk4c9/linux-openjdk17.zip"
-exe_path = "openjdk-17/jdk-17.0.2/bin/java"
+url = "http://127.0.0.1:5000/java17"
+exe_path = "jdk-17.0.2/bin/java"

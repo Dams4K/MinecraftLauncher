@@ -1,5 +1,5 @@
-extends Node
-#class_name MCClient
+extends Resource
+class_name MCClient
 
 var downloads: Dictionary = {}
 

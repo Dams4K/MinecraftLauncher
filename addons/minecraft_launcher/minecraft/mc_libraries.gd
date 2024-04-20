@@ -11,8 +11,12 @@ func _init(libraries_data: Array) -> void:
 		libraries.append(MCLibrary.new(library_data))
 
 func download_artifacts(downloader: Requests, target_folder: String):
+	var artifacts = []
 	for library in self.libraries:
-		await library.download_artifact(downloader, target_folder)
+		var lib_path = await library.download_artifact(downloader, target_folder)
+		if lib_path:
+			artifacts.append(lib_path)
+	return artifacts
 
 func download_natives(downloader: Requests, target_folder: String):
 	for library in self.libraries:
