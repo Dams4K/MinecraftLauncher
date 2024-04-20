@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MCInstallation" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://addons/minecraft_launcher/version_components/mc_installation.gd" id="2_ciey3"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/mc_installation.gd" id="2_ciey3"]
 
 [resource]
 script = ExtResource("2_ciey3")

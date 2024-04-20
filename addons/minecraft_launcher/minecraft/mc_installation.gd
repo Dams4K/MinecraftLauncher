@@ -42,11 +42,6 @@ enum MINECRAFT_VERSION_TYPE {
 }
 
 var downloader: Requests
-#var mc_assets: MCAssets
-#var mc_libraries: MCLibraries
-#var mc_client: MCClient
-#var mc_runner: MCRunner
-#
 #var mc_fabric: MCFabric
 var fabric: Fabric
 
@@ -89,19 +84,8 @@ func _ready() -> void:
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
 		fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
 		add_child(fabric)
-	
-	#mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-	#mc_assets.name = "MCAssets"
-	#add_child(mc_assets)
-#	mc_libraries = MCLibraries.new(version_data.get("libraries", []))
-#	add_child(mc_libraries)
-	#mc_client = MCClient.new(version_data.get("downloads", {}))
-	#mc_client.name = "MCClient"
-	#add_child(mc_client)
-	#mc_runner = MCRunner.new()
-	#mc_runner.name = "MCRunner"
-	#add_child(mc_runner)
-#
+
+
 #	mc_fabric = MCFabric.new()
 #	add_child(mc_fabric)
 #

@@ -16,7 +16,7 @@
 [ext_resource type="Script" path="res://demo/LoadingBar.gd" id="14_yip4u"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/java_manager.gd" id="16_kkxe5"]
 [ext_resource type="Resource" uid="uid://bpc5u6s0v5q1x" path="res://demo/assets/java_downloaders/linux_java_17.tres" id="16_ret3p"]
-[ext_resource type="Script" path="res://addons/minecraft_launcher/version_components/mc_installation.gd" id="16_xmnrj"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/mc_installation.gd" id="16_xmnrj"]
 [ext_resource type="Resource" uid="uid://dgyxcs8ol60sx" path="res://demo/assets/java_downloaders/linux_java_8.tres" id="17_d17bv"]
 [ext_resource type="Resource" uid="uid://w8oe1ck4lhf0" path="res://demo/assets/java_downloaders/windows_java_17.tres" id="19_8vens"]
 
@@ -48,7 +48,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("7_hoigf"), ExtResource("5_8w3vm"), ExtResource("4_0hgcl"), ExtResource("8_l2bsn"), ExtResource("3_l0suc"), ExtResource("9_07b58"), ExtResource("6_bdn53")])
+backgrounds = Array[Texture2D]([ExtResource("7_hoigf"), ExtResource("9_07b58"), ExtResource("8_l2bsn"), ExtResource("3_l0suc"), ExtResource("5_8w3vm"), ExtResource("6_bdn53"), ExtResource("4_0hgcl")])
 blur_amount = 1.0
 transition_time = 15.0
 
