@@ -2,6 +2,8 @@
 extends Node
 class_name MCInstallation
 
+signal version_file_loaded
+
 signal new_file_downloaded(files_downloaded: int, files_to_download: int)
 
 signal libraries_downloaded
@@ -9,17 +11,22 @@ signal assets_downloaded
 signal client_downloaded
 signal java_downloaded
 
+const LIBRARIES_FOLDER = "libraries"
+const NATIVES_FOLDER = "natives"
+const ASSETS_FOLDER = "assets"
+const VERSIONS_FOLDER = "versions"
+const RUNTIME_FOLDER = "runtime"
+
 @export var java_manager: JavaManager
+@export var launcher_name := "GoCraft"
+@export var launcher_version := "1.0.0"
 
 @export_category("Folders")
 @export var minecraft_folder = "user://"
 @export var game_folder = "user://"
 
 @export_category("Modifications")
-@export var mod_loader := MINECRAFT_MOD_LOADER.VANILLA:
-	set(v):
-		mod_loader = v
-		notify_property_list_changed()
+@export var mod_loader := MINECRAFT_MOD_LOADER.VANILLA
 @export_placeholder("x.x.x") var fabric_loader_version: String
 @export var mod_list: Array[MinecraftMod] = []
 
@@ -118,27 +125,33 @@ func load_version_file() -> void:
 	
 		var content = file.get_as_text()
 		version_data = JSON.parse_string(content)
+	
+	version_file_loaded.emit()
 
 
 
 func run():
+	if version_data == {}:
+		print_debug("Wait for version_data")
+		await version_file_loaded
+	
 	#-- DOWNLOAD LIBRARIES
 	var libraries_data: Array = version_data.get("libraries", [])
 	var mc_libraries: MCLibraries = MCLibraries.new(libraries_data)
-	var artifacts = await mc_libraries.download_artifacts(downloader, minecraft_folder.path_join("libraries"))
-	await mc_libraries.download_natives(downloader, minecraft_folder.path_join("natives"))
+	var artifacts = await mc_libraries.download_artifacts(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
+	await mc_libraries.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
 	
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		await fabric.download_libraries(downloader, minecraft_folder.path_join("libraries"))
+		await fabric.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
 	libraries_downloaded.emit()
 	
 	#-- DOWNLOAD ASSETS
 	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-	await mc_assets.download_assets(downloader, minecraft_folder)
+	await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
 	assets_downloaded.emit()
 	
 	#-- DOWNLOAD CLIENT
-	var client_jar_path: String = minecraft_folder.path_join("versions/%s.jar" % mc_version_id)
+	var client_jar_path: String = minecraft_folder.path_join(VERSIONS_FOLDER.path_join("%s.jar") % mc_version_id)
 	var mc_client = MCClient.new(version_data.get("downloads", {}))
 	await mc_client.download_client(downloader, client_jar_path)
 	client_downloaded.emit()
@@ -157,29 +170,28 @@ func run():
 				java_downloader = windows_java_downloader
 				break
 	
-	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join("runtime"))
+	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join(RUNTIME_FOLDER))
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
 	
 	java_downloaded.emit()
 
 	var jvm_args := MCJVMArgs.new()
-	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join("natives")) #TODO: maybe projectsettings???
-	jvm_args.launcher_name = "GoCraft"
-	jvm_args.launcher_version = ProjectSettings.get("application/config/version")
+	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(NATIVES_FOLDER))
+	jvm_args.launcher_name = launcher_name
+	jvm_args.launcher_version = launcher_version
 	jvm_args.xmx = "%sG" % Config.max_ram
 #
 	var libs_abs_path: Array[String] = []
 	for lib in artifacts:
 		libs_abs_path.append(ProjectSettings.globalize_path(lib))
-		#libs_abs_path.append(ProjectSettings.globalize_path(minecraft_folder.path_join("libraries".path_join(lib.get("path", "")))))
 	libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
 	jvm_args.libraries_path = libs_abs_path
 #
 	var game_args := MCGameArgs.new()
-	game_args.username = "Dams4LT"
+	game_args.username = "Dams4LT" #TODO: ---
 	game_args.version = mc_version_id
 	game_args.game_dir = ProjectSettings.globalize_path(game_folder)
-	game_args.assets_dir = ProjectSettings.globalize_path(minecraft_folder.path_join("assets"))
+	game_args.assets_dir = ProjectSettings.globalize_path(minecraft_folder.path_join(ASSETS_FOLDER))
 	game_args.asset_index = mc_assets.get_id()
 	game_args.width = Config.x_resolution
 	game_args.height = Config.y_resolution

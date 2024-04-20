@@ -23,6 +23,7 @@ expand_icon = true
 
 [node name="SettingsContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="RamContainer" type="HBoxContainer" parent="SettingsContainer"]
 layout_mode = 2
@@ -40,6 +41,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("3_il1tp")
 min_value = 1.0
+max_value = 8.0
 value = 4.0
 ticks_on_borders = true
 
@@ -49,6 +51,7 @@ layout_mode = 2
 text = "4Go "
 
 [node name="ResolutionContainer" type="HBoxContainer" parent="SettingsContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="SettingsContainer/ResolutionContainer"]
@@ -79,11 +82,11 @@ alignment = 1
 
 [node name="MinecraftFolderButton" type="Button" parent="SettingsContainer"]
 layout_mode = 2
+size_flags_vertical = 10
 text = "Open Minecraft Folder"
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 2
-size_flags_vertical = 10
 text = "Play"
 
 [connection signal="pressed" from="AccountButton" to="." method="_on_account_button_pressed"]

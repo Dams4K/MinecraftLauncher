@@ -48,7 +48,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("7_hoigf"), ExtResource("6_bdn53"), ExtResource("5_8w3vm"), ExtResource("8_l2bsn"), ExtResource("3_l0suc"), ExtResource("9_07b58"), ExtResource("4_0hgcl")])
+backgrounds = Array[Texture2D]([ExtResource("7_hoigf"), ExtResource("8_l2bsn"), ExtResource("5_8w3vm"), ExtResource("6_bdn53"), ExtResource("9_07b58"), ExtResource("3_l0suc"), ExtResource("4_0hgcl")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -164,6 +164,7 @@ vertical_alignment = 1
 [node name="MCInstallation" type="Node" parent="."]
 script = ExtResource("16_xmnrj")
 java_manager = SubResource("Resource_8je2n")
+launcher_name = null
 mc_version_file = ""
 mc_version_id = "1.19.2"
 

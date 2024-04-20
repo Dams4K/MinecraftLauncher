@@ -4,7 +4,6 @@ class_name MCAssets
 signal new_asset_downloaded(assets_downloaded: int, total_assets: int)
 
 const RESOURCES_URL = "https://resources.download.minecraft.net/"
-const ASSETS_FOLDER = "assets"
 
 var data: Dictionary = {}
 
@@ -23,7 +22,7 @@ func get_url():
 	return data.get("url", "")
 
 func get_assets_list(downloader: Requests, folder: String) -> Dictionary:
-	var file_path = folder.path_join(ASSETS_FOLDER.path_join("indexes/%s.json" % get_id()))
+	var file_path = folder.path_join("indexes/%s.json" % get_id())
 	await Utils.download_file(downloader, get_url(), file_path, get_sha1())
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -44,7 +43,7 @@ func download_assets(downloader: Requests, folder: String):
 		
 		var hash: String = object.get("hash")
 		var url = hash.substr(0, 2) + "/" + hash
-		var object_path = folder.path_join(ASSETS_FOLDER.path_join("objects").path_join(url))
+		var object_path = folder.path_join("objects").path_join(url)
 		
 		if not FileAccess.file_exists(object_path):
 			print_debug("Downloading assets.... %s/%s" % [i,assets_count])

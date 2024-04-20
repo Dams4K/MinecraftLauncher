@@ -13,7 +13,7 @@ func _ready() -> void:
 	#ram_slider.max_value = ceil(OS.get_total_system_memory() / 1024.0 / 1024.0 / 1024.0)
 	
 	ram_slider.value = Config.max_ram
-	ram_label.text = str(Config.max_ram) + "Go"
+	_on_ram_slider_value_changed(Config.max_ram)
 	
 	x_line_edit.text = str(Config.x_resolution)
 	y_line_edit.text = str(Config.y_resolution)
@@ -33,7 +33,7 @@ func _on_account_button_pressed() -> void:
 
 
 func _on_ram_slider_value_changed(value: float) -> void:
-	ram_label.text = str(value) + "Go"
+	ram_label.text = str(value) + " Go"
 
 
 func _on_ram_slider_drag_ended(value_changed: bool) -> void:
