@@ -16,8 +16,11 @@ signal java_downloaded
 @export var game_folder = "user://"
 
 @export_category("Modifications")
-@export var mod_loader := MINECRAFT_MOD_LOADER.VANILLA
-@export_placeholder("0.14.19") var fabric_loader_version: String
+@export var mod_loader := MINECRAFT_MOD_LOADER.VANILLA:
+	set(v):
+		mod_loader = v
+		notify_property_list_changed()
+@export_placeholder("x.x.x") var fabric_loader_version: String
 @export var mod_list: Array[MinecraftMod] = []
 
 @export_category("MC Version")
@@ -52,11 +55,15 @@ func _get_property_list():
 	var properties = []
 	var version_file_usage = PROPERTY_USAGE_NO_EDITOR
 	var mc_version_id_usage = PROPERTY_USAGE_NO_EDITOR
+	var mod_list_usage = PROPERTY_USAGE_NO_EDITOR
 	
 	if mc_version_type == MINECRAFT_VERSION_TYPE.OFFICIAL:
 		mc_version_id_usage = PROPERTY_USAGE_DEFAULT
 	elif mc_version_type == MINECRAFT_VERSION_TYPE.PERSONAL:
 		version_file_usage = PROPERTY_USAGE_DEFAULT
+	
+	if mod_loader in [MINECRAFT_MOD_LOADER.FORGE, MINECRAFT_MOD_LOADER.FABRIC]:
+		mod_list_usage = PROPERTY_USAGE_DEFAULT
 	
 	properties.append({
 		"name": "mc_version_file",
