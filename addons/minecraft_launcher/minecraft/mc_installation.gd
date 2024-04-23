@@ -96,8 +96,8 @@ func _ready() -> void:
 	
 	await load_version_file()
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
+		print("---")
 		fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
-		add_child(fabric)
 
 
 #	mc_fabric = MCFabric.new()
@@ -142,7 +142,7 @@ func run():
 	await mc_libraries.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
 	
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		await fabric.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
+		artifacts.append_array(await fabric.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))) #Add Fabric libs
 	libraries_downloaded.emit()
 	
 	#-- DOWNLOAD ASSETS
@@ -184,6 +184,8 @@ func run():
 	var libs_abs_path: Array[String] = []
 	for lib in artifacts:
 		libs_abs_path.append(ProjectSettings.globalize_path(lib))
+	
+	
 	libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
 	jvm_args.libraries_path = libs_abs_path
 #
@@ -200,6 +202,8 @@ func run():
 	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args
 	mc_runner.main_class = version_data["mainClass"]
+	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
+		mc_runner.main_class = fabric.get_main_class()
 	#mc_runner.java_path = "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-2.fc38.x86_64/jre/bin/java"
 	mc_runner.java_path = java_exe_path
 #	

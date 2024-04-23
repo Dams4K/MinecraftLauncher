@@ -7,9 +7,9 @@ var url: String
 static func from_dict(library_data: Dictionary) -> FBLibrary:
 	return FBLibrary.new(library_data["name"], library_data["url"])
 
-func _init(librarie_name: String, librarie_url: String) -> void:
-	self.name = librarie_name
-	self.url = librarie_url
+func _init(library_name: String, library_url: String) -> void:
+	self.name = library_name
+	self.url = library_url
 
 func get_path() -> String:
 	var splitted_lib_name = name.split(":")
