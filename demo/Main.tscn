@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bnvlws7lnrdw"]
+[gd_scene load_steps=25 format=3 uid="uid://bnvlws7lnrdw"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/mc_installation.gd" id="16_xmnrj"]
 [ext_resource type="Resource" uid="uid://dgyxcs8ol60sx" path="res://demo/assets/java_downloaders/linux_java_8.tres" id="17_d17bv"]
 [ext_resource type="Resource" uid="uid://w8oe1ck4lhf0" path="res://demo/assets/java_downloaders/windows_java_17.tres" id="19_8vens"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/tweakers/forge_tweaker.gd" id="20_6iqlo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8uauq"]
 shader = ExtResource("13_6lgvq")
@@ -35,6 +36,13 @@ script = ExtResource("16_kkxe5")
 linux_javas = Array[Resource("res://addons/minecraft_launcher/java_downloader.gd")]([ExtResource("16_ret3p"), ExtResource("17_d17bv")])
 windows_javas = Array[Resource("res://addons/minecraft_launcher/java_downloader.gd")]([ExtResource("19_8vens")])
 
+[sub_resource type="Resource" id="Resource_ytrm8"]
+script = ExtResource("20_6iqlo")
+forge_version_name = "1.20.1-forge-47.2.32"
+installer_path = "res://demo/assets/forge/forge-1.20.1-47.2.32-installer.jar"
+version_jar = ""
+minecraft_version = &"1.20.1"
+
 [node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -48,7 +56,7 @@ script = ExtResource("1_idodt")
 
 [node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
 layer = -1
-backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("3_l0suc"), ExtResource("9_07b58"), ExtResource("4_0hgcl"), ExtResource("5_8w3vm"), ExtResource("8_l2bsn"), ExtResource("7_hoigf")])
+backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("4_0hgcl"), ExtResource("9_07b58"), ExtResource("8_l2bsn"), ExtResource("5_8w3vm"), ExtResource("7_hoigf"), ExtResource("3_l0suc")])
 blur_amount = 1.0
 transition_time = 15.0
 
@@ -164,6 +172,7 @@ vertical_alignment = 1
 [node name="MCInstallation" type="Node" parent="."]
 script = ExtResource("16_xmnrj")
 java_manager = SubResource("Resource_8je2n")
+tweaker = SubResource("Resource_ytrm8")
 fabric_loader_version = "0.15.10"
 mc_version_file = ""
 mc_version_id = "1.19.2"

@@ -8,7 +8,7 @@ var game_args: MCGameArgs
 var main_class: String
 
 func run():
-	var args: Array[String] = []
+	var args: Array = []
 	args.append_array(jvm_args.to_array())
 	args.append(main_class)
 	args.append_array(game_args.to_array())

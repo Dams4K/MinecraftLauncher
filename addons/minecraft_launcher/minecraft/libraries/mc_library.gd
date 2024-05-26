@@ -1,41 +1,47 @@
 extends Resource
 class_name MCLibrary
 
+var name: String
+
 var artifact: MCArtifact
+var artifact_path: String = ""
+
 var native: MCNative
+var native_path: String = ""
+
 var rules: Array[MCRule]
 
 func _init(library_data: Dictionary) -> void:
+	name = library_data.get("name", "NULL")
 	var artifact_dict: Dictionary = library_data["downloads"].get("artifact", {})
 	var classifiers_list: Dictionary = library_data.get("natives", {})
 
 	if not artifact_dict.is_empty():
 		self.artifact = MCArtifact.new(artifact_dict)
-#	print(classifiers_list)
+	
 	if get_os_name() in classifiers_list:
 		var classifier_name = classifiers_list[get_os_name()]
 		var arch = "64" if OS.has_feature("64") else "32"
 		var classifier_data = library_data["downloads"]["classifiers"].get(classifier_name.replace("${arch}", arch), {})
 		if not classifier_data.is_empty():
-			native = MCNative.new(classifier_data)
+			self.native = MCNative.new(classifier_data)
 
 	for rule_data in library_data.get("rules", []):
 		self.rules.append(MCRule.new(rule_data))
-
-#	print(artifact)
-#	print(native)
 
 func download_artifact(downloader: Requests, target_folder: String):
 	if not check_rules() or artifact == null:
 		return
 	
-	return await artifact.download(downloader, target_folder)
+	artifact_path = await artifact.download(downloader, target_folder)
+	return artifact_path
 
 func download_native(downloader: Requests, target_folder: String):
 	if not check_rules() or native == null:
 		return
 	
-	await native.download(downloader, target_folder)
+	native_path = await native.download(downloader, target_folder)
+	return native_path
 
 func check_rules():
 	var result = true

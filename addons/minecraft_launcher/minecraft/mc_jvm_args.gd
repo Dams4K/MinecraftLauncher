@@ -7,8 +7,10 @@ class_name MCJVMArgs
 @export var libraries_path: Array[String]
 @export var xmx: String = "2G"
 
-func to_array() -> Array[String]:
-	var array: Array[String] = []
+var complementaries: Array = []
+
+func to_array() -> Array:
+	var array: Array = complementaries.duplicate()
 	
 	array.append("-Djava.library.path=%s" % natives_directory)
 	array.append("-Dminecraft.launcher.brand=%s" % launcher_name)

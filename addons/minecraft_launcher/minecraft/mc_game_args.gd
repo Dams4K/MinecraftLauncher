@@ -34,8 +34,10 @@ enum VERSION_TYPE {
 	SNAPSHOT
 }
 
-func to_array() -> Array[String]:
-	var array: Array[String] = []
+var complementaries: Array = []
+
+func to_array() -> Array:
+	var array: Array = complementaries.duplicate()
 	
 	append_if_can(array, "--clientId", client_id)
 	append_if_can(array, "--xuid", xuid)
@@ -57,7 +59,7 @@ func to_array() -> Array[String]:
 		
 	return array
 
-func append_if_can(array: Array[String], arg: String, value: String):
+func append_if_can(array: Array, arg: String, value: String):
 	if value.is_empty():
 		return
 	

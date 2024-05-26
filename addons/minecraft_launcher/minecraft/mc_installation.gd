@@ -21,6 +21,8 @@ const RUNTIME_FOLDER = "runtime"
 @export var launcher_name := "GoCraft"
 @export var launcher_version := "1.0.0"
 
+@export var tweaker: MCTweaker
+
 @export_category("Folders")
 @export var minecraft_folder = "user://"
 @export var game_folder = "user://"
@@ -54,6 +56,7 @@ enum MINECRAFT_VERSION_TYPE {
 var downloader: Requests
 #var mc_fabric: MCFabric
 var fabric: Fabric
+var forge: Forge
 
 var files_downloaded: int = 0
 var files_to_download: int = 1000
@@ -97,7 +100,7 @@ func _ready() -> void:
 	await load_version_file()
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
 		print("---")
-		fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
+		#fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
 
 
 #	mc_fabric = MCFabric.new()
@@ -135,26 +138,6 @@ func run():
 		print_debug("Wait for version_data")
 		await version_file_loaded
 	
-	#-- DOWNLOAD LIBRARIES
-	var libraries_data: Array = version_data.get("libraries", [])
-	var mc_libraries: MCLibraries = MCLibraries.new(libraries_data)
-	var artifacts = await mc_libraries.download_artifacts(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
-	await mc_libraries.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
-	
-	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		artifacts.append_array(await fabric.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))) #Add Fabric libs
-	libraries_downloaded.emit()
-	
-	#-- DOWNLOAD ASSETS
-	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-	await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
-	assets_downloaded.emit()
-	
-	#-- DOWNLOAD CLIENT
-	var client_jar_path: String = minecraft_folder.path_join(VERSIONS_FOLDER.path_join("%s.jar") % mc_version_id)
-	var mc_client = MCClient.new(version_data.get("downloads", {}))
-	await mc_client.download_client(downloader, client_jar_path)
-	client_downloaded.emit()
 	
 	#-- DOWNLOAD JAVA
 	var java_major_version = version_data["javaVersion"]["majorVersion"]
@@ -174,17 +157,41 @@ func run():
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
 	
 	java_downloaded.emit()
-
+	
+	await tweaker.setup(downloader, minecraft_folder, java_exe_path)
+	await tweaker.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
+	await tweaker.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
+	var artifacts = tweaker.get_libraries()
+	print("%s artifacts" % len(artifacts))
+	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
+		#artifacts.append_array(await fabric.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))) #Add Fabric libs
+		pass
+	elif mod_loader == MINECRAFT_MOD_LOADER.FORGE:
+		pass
+	libraries_downloaded.emit()
+	
+	#-- DOWNLOAD ASSETS
+	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
+	await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
+	assets_downloaded.emit()
+	
+	#-- DOWNLOAD CLIENT
+	#var client_jar_path: String = minecraft_folder.path_join(VERSIONS_FOLDER.path_join("%s.jar") % mc_version_id)
+	var client_jar_path: String = await tweaker.get_client_jar(downloader, minecraft_folder.path_join(VERSIONS_FOLDER))
+	#var mc_client = MCClient.new(version_data.get("downloads", {}))
+	#await mc_client.download_client(downloader, client_jar_path)
+	#client_downloaded.emit()
+	
 	var jvm_args := MCJVMArgs.new()
 	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(NATIVES_FOLDER))
 	jvm_args.launcher_name = launcher_name
 	jvm_args.launcher_version = launcher_version
 	jvm_args.xmx = "%sG" % Config.max_ram
-#
-	var libs_abs_path: Array[String] = []
-	for lib in artifacts:
-		libs_abs_path.append(ProjectSettings.globalize_path(lib))
-	
+	jvm_args.complementaries = tweaker.get_jvm(minecraft_folder.path_join(LIBRARIES_FOLDER))
+
+	var libs_abs_path: Array[String] = artifacts
+	#for lib in artifacts:
+		#libs_abs_path.append(ProjectSettings.globalize_path(lib))
 	
 	libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
 	jvm_args.libraries_path = libs_abs_path
@@ -197,11 +204,12 @@ func run():
 	game_args.asset_index = mc_assets.get_id()
 	game_args.width = Config.x_resolution
 	game_args.height = Config.y_resolution
+	game_args.complementaries = tweaker.get_game_args()
 	
 	var mc_runner = MCRunner.new()
 	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args
-	mc_runner.main_class = version_data["mainClass"]
+	mc_runner.main_class = tweaker.get_main_class()
 	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
 		mc_runner.main_class = fabric.get_main_class()
 	#mc_runner.java_path = "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-2.fc38.x86_64/jre/bin/java"
