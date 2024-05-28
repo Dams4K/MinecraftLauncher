@@ -54,9 +54,6 @@ enum MINECRAFT_VERSION_TYPE {
 }
 
 var downloader: Requests
-#var mc_fabric: MCFabric
-var fabric: Fabric
-var forge: Forge
 
 var files_downloaded: int = 0
 var files_to_download: int = 1000
@@ -98,20 +95,7 @@ func _ready() -> void:
 	add_child(downloader)
 	
 	await load_version_file()
-	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		print("---")
-		#fabric = Fabric.new(await Fabric.get_specific_loader(downloader, mc_version_id, fabric_loader_version))
 
-
-#	mc_fabric = MCFabric.new()
-#	add_child(mc_fabric)
-#
-##	mc_assets.new_asset_downloaded.connect(func(a, b): print("assets: ", a, "/", b))
-##	mc_libraries.new_lib_downloaded.connect(func(a, b): print("libs: ", a, "/", b))
-#	mc_assets.new_asset_downloaded.connect(_on_new_file_downloaded)
-#	mc_libraries.new_lib_downloaded.connect(_on_new_file_downloaded)
-#
-#	files_to_download = len(mc_libraries.get_libs(MCLibraries.LIBRARIES_TYPE.BOTH)) + len(await mc_assets.get_assets_list(downloader, minecraft_folder))
 
 func _on_new_file_downloaded(a, b):
 	files_downloaded += 1
@@ -141,6 +125,7 @@ func run():
 	
 	#-- DOWNLOAD JAVA
 	var java_major_version = version_data["javaVersion"]["majorVersion"]
+	java_major_version = 17 #TODO: fix this, i'm forced to set manually 8
 	var java_downloader: JavaDownloader = null
 	if Utils.get_os_type() == Utils.OS_TYPE.LINUX:
 		for linux_java_downloader in java_manager.linux_javas:
@@ -163,24 +148,17 @@ func run():
 	await tweaker.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
 	var artifacts = tweaker.get_libraries()
 	print("%s artifacts" % len(artifacts))
-	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		#artifacts.append_array(await fabric.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))) #Add Fabric libs
-		pass
-	elif mod_loader == MINECRAFT_MOD_LOADER.FORGE:
-		pass
+	
 	libraries_downloaded.emit()
 	
 	#-- DOWNLOAD ASSETS
 	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-	await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
-	assets_downloaded.emit()
+	#await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
+	#assets_downloaded.emit()
 	
 	#-- DOWNLOAD CLIENT
-	#var client_jar_path: String = minecraft_folder.path_join(VERSIONS_FOLDER.path_join("%s.jar") % mc_version_id)
 	var client_jar_path: String = await tweaker.get_client_jar(downloader, minecraft_folder.path_join(VERSIONS_FOLDER))
-	#var mc_client = MCClient.new(version_data.get("downloads", {}))
-	#await mc_client.download_client(downloader, client_jar_path)
-	#client_downloaded.emit()
+	client_downloaded.emit()
 	
 	var jvm_args := MCJVMArgs.new()
 	jvm_args.natives_directory = ProjectSettings.globalize_path(minecraft_folder.path_join(NATIVES_FOLDER))
@@ -190,12 +168,11 @@ func run():
 	jvm_args.complementaries = tweaker.get_jvm(minecraft_folder.path_join(LIBRARIES_FOLDER))
 
 	var libs_abs_path: Array[String] = artifacts
-	#for lib in artifacts:
-		#libs_abs_path.append(ProjectSettings.globalize_path(lib))
 	
-	libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
+	if client_jar_path != "":
+		libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
 	jvm_args.libraries_path = libs_abs_path
-#
+	
 	var game_args := MCGameArgs.new()
 	game_args.username = "Dams4LT" #TODO: ---
 	game_args.version = mc_version_id
@@ -210,9 +187,6 @@ func run():
 	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args
 	mc_runner.main_class = tweaker.get_main_class()
-	if mod_loader == MINECRAFT_MOD_LOADER.FABRIC:
-		mc_runner.main_class = fabric.get_main_class()
-	#mc_runner.java_path = "/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.402.b06-2.fc38.x86_64/jre/bin/java"
 	mc_runner.java_path = java_exe_path
-#	
+	
 	mc_runner.run()

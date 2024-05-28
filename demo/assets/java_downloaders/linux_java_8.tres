@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_ubgqk")
 java_major_version = "8"
-url = "https://download1349.mediafire.com/oelifij4do5gqw6eqxKjglXY80mJgWlp7PR5DOohlQdaUpQx6xSb9f2TB-0WXlmZ_GifH1wn861EtdBfhlA5vKt14-Y/1s42c2qzt1szxyl/openjdk8.zip"
+url = "http://127.0.0.1:5000/java8"
 exe_path = "openjdk8/java-se-8u42-ri/bin/java"

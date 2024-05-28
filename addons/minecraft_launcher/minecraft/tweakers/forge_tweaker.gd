@@ -5,8 +5,6 @@ class_name ForgeTweaker
 @export_placeholder("1.20.1-forge-47.2.32") var forge_version_name: String
 ## Available paths:[br]http://<path>.jar[br]https://<path>.jar[br]res://<path>.jar
 @export_file("*.jar") var installer_path: String
-## Available paths:[br]http://<path>.jar[br]https://<path>.jar[br]res://<path>.jar
-@export_file("*.jar") var version_jar: String
 
 
 func setup(downloader: Requests, minecraft_folder: String, java_path: String):
@@ -40,14 +38,14 @@ func get_game_args():
 	return complementary_data["arguments"]["game"]
 
 func get_client_jar(downloader: Requests, versions_folder: String):
-	var path = ProjectSettings.globalize_path(versions_folder.path_join(get_forge_version_name()))
-	if version_jar.begins_with("http"):
-		await Utils.download_file(downloader, version_jar, path, "")
-	elif version_jar.begins_with("res://"):
-		var file = FileAccess.open(version_jar, FileAccess.READ)
-		var outside_file = FileAccess.open(path, FileAccess.WRITE)
-		outside_file.store_buffer(file.get_buffer(file.get_length()))
-	return path
+	#var path = ProjectSettings.globalize_path(versions_folder.path_join(get_forge_version_name()))
+	#if version_jar.begins_with("http"):
+		#await Utils.download_file(downloader, version_jar, path, "")
+	#elif version_jar.begins_with("res://"):
+		#var file = FileAccess.open(version_jar, FileAccess.READ)
+		#var outside_file = FileAccess.open(path, FileAccess.WRITE)
+		#outside_file.store_buffer(file.get_buffer(file.get_length()))
+	return ""
 
 func get_installer(downloader: Requests, minecraft_folder: String):
 	var file_name: String = installer_path.get_file()
@@ -73,11 +71,8 @@ func install_forge(downloader: Requests, minecraft_folder: String, java_path: St
 	minecraft_folder = ProjectSettings.globalize_path(minecraft_folder)
 	
 	var outputs = []
-	#TODO: don't reinstall when it's already installed. For now, tmp comment
-	#OS.execute("cd", [minecraft_folder])
-	#OS.execute(java_path, ["-jar", installer_path, "--installClient", minecraft_folder], outputs)
-	#OS.execute("cd", [minecraft_folder, "&&", java_path, "-jar", installer_path, "--installClient", minecraft_folder], outputs)
-	
+	#TODO: don't reinstall when it's already installed
+	#TODO: same file for windows (not permissions required)
 	var install_forge_sh = installer_path.get_base_dir().path_join("install_forge.sh")
 	var exc_file = FileAccess.open(install_forge_sh, FileAccess.WRITE)
 	exc_file.store_string("cd $2\n$1 -jar $3 --installClient $2")
@@ -85,11 +80,7 @@ func install_forge(downloader: Requests, minecraft_folder: String, java_path: St
 	exc_file.close()
 	
 	print("%s %s %s %s" % [install_forge_sh, java_path, minecraft_folder, installer_path])
-	var o = []
-	await OS.execute(install_forge_sh, [java_path, minecraft_folder, installer_path], o, true, true)
-	print(o)
-	
-	#DirAccess.remove_absolute(installer_path)
+	await OS.execute(install_forge_sh, [java_path, minecraft_folder, installer_path])
 
 func get_forge_version_name():
 	return "%s_forge.jar" % minecraft_version

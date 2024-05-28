@@ -30,7 +30,7 @@ func setup(downloader: Requests, minecraft_folder: String, java_path: String):
 	if data.is_empty():
 		push_error("No data for minecraft")
 	if complementary_data.is_empty():
-		push_error("No complementary data: no mods")
+		push_warning("No complementary data: no mods")
 	
 	var libraries_data: Array = data.get("libraries", [])
 	libraries_data.append_array(complementary_data.get("libraries", []))

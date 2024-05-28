@@ -1,47 +1,25 @@
-[gd_scene load_steps=25 format=3 uid="uid://bnvlws7lnrdw"]
+[gd_scene load_steps=12 format=3 uid="uid://bnvlws7lnrdw"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
-[ext_resource type="PackedScene" uid="uid://c4mndr017k5bj" path="res://demo/CanvasBackground.tscn" id="1_liqpm"]
-[ext_resource type="Texture2D" uid="uid://lpc6uqc2jwad" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_3_2021.jpg" id="3_l0suc"]
-[ext_resource type="Texture2D" uid="uid://di2kcvmqgnlp4" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_6.jpg" id="4_0hgcl"]
-[ext_resource type="Texture2D" uid="uid://dyuawxii778l6" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_1_2021.jpg" id="5_8w3vm"]
-[ext_resource type="Texture2D" uid="uid://um8sts8ewg8w" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_5.jpg" id="6_bdn53"]
-[ext_resource type="Texture2D" uid="uid://cxagxx3pbk6nj" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_7.jpg" id="7_hoigf"]
-[ext_resource type="Texture2D" uid="uid://caiek12ngpt80" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_2_2021.jpg" id="8_l2bsn"]
-[ext_resource type="Texture2D" uid="uid://p83bxvj3h2d7" path="res://demo/assets/textures/backgrounds/minecraft_concept_art_4_2021.jpg" id="9_07b58"]
-[ext_resource type="PackedScene" uid="uid://kd8li5fi1xi6" path="res://demo/menus/PlayContainer.tscn" id="10_5hgt8"]
-[ext_resource type="PackedScene" uid="uid://7621mv7f4fro" path="res://demo/menus/accounts/AccountsContainer.tscn" id="11_jpeew"]
-[ext_resource type="Shader" path="res://demo/assets/shaders/appear_bottom.gdshader" id="13_6lgvq"]
-[ext_resource type="Script" path="res://demo/LoadingBar.gd" id="14_yip4u"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/java_manager.gd" id="16_kkxe5"]
 [ext_resource type="Resource" uid="uid://bpc5u6s0v5q1x" path="res://demo/assets/java_downloaders/linux_java_17.tres" id="16_ret3p"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/mc_installation.gd" id="16_xmnrj"]
 [ext_resource type="Resource" uid="uid://dgyxcs8ol60sx" path="res://demo/assets/java_downloaders/linux_java_8.tres" id="17_d17bv"]
 [ext_resource type="Resource" uid="uid://w8oe1ck4lhf0" path="res://demo/assets/java_downloaders/windows_java_17.tres" id="19_8vens"]
-[ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/tweakers/forge_tweaker.gd" id="20_6iqlo"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/java_downloader.gd" id="20_0pa4w"]
+[ext_resource type="Resource" uid="uid://1kr331jmpwv6" path="res://demo/assets/profiles/forge_1201.tres" id="21_bqhpt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8uauq"]
-shader = ExtResource("13_6lgvq")
-shader_parameter/y_pos = 0.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_nyopm"]
-outline_size = 3
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 2
-shadow_color = Color(0, 0, 0, 0.14902)
+[sub_resource type="Resource" id="Resource_2ce40"]
+script = ExtResource("20_0pa4w")
+java_major_version = "8"
+url = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip"
+exe_path = "jdk-17.0.2/bin/javaw.exe"
 
 [sub_resource type="Resource" id="Resource_8je2n"]
 script = ExtResource("16_kkxe5")
-linux_javas = Array[Resource("res://addons/minecraft_launcher/java_downloader.gd")]([ExtResource("16_ret3p"), ExtResource("17_d17bv")])
-windows_javas = Array[Resource("res://addons/minecraft_launcher/java_downloader.gd")]([ExtResource("19_8vens")])
-
-[sub_resource type="Resource" id="Resource_ytrm8"]
-script = ExtResource("20_6iqlo")
-forge_version_name = "1.20.1-forge-47.2.32"
-installer_path = "res://demo/assets/forge/forge-1.20.1-47.2.32-installer.jar"
-version_jar = ""
-minecraft_version = &"1.20.1"
+linux_javas = Array[ExtResource("20_0pa4w")]([ExtResource("16_ret3p"), ExtResource("17_d17bv")])
+windows_javas = Array[ExtResource("20_0pa4w")]([ExtResource("19_8vens"), SubResource("Resource_2ce40")])
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -54,11 +32,13 @@ size_flags_vertical = 2
 theme = ExtResource("1_hsfwl")
 script = ExtResource("1_idodt")
 
-[node name="CanvasBackground" parent="." instance=ExtResource("1_liqpm")]
-layer = -1
-backgrounds = Array[Texture2D]([ExtResource("6_bdn53"), ExtResource("4_0hgcl"), ExtResource("9_07b58"), ExtResource("8_l2bsn"), ExtResource("5_8w3vm"), ExtResource("7_hoigf"), ExtResource("3_l0suc")])
-blur_amount = 1.0
-transition_time = 15.0
+[node name="MCInstallation" type="Node" parent="."]
+script = ExtResource("16_xmnrj")
+java_manager = SubResource("Resource_8je2n")
+tweaker = ExtResource("21_bqhpt")
+fabric_loader_version = "0.15.10"
+mc_version_file = ""
+mc_version_id = "1.19.2"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -68,121 +48,45 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(604, 362)
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 300)
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SkinContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 
-[node name="Container" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Panel"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PlayContainer" parent="CenterContainer/VBoxContainer/Panel/Container" instance=ExtResource("10_5hgt8")]
-layout_mode = 2
-
-[node name="AccountsContainer" parent="CenterContainer/VBoxContainer/Panel/Container" instance=ExtResource("11_jpeew")]
-visible = false
-layout_mode = 2
-
-[node name="LoadingPanel" type="Panel" parent="CenterContainer/VBoxContainer"]
-unique_name_in_owner = true
-material = SubResource("ShaderMaterial_8uauq")
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer/LoadingPanel"]
-use_parent_material = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LoadingBar" type="ProgressBar" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer"]
-unique_name_in_owner = true
-use_parent_material = true
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-value = 50.0
-show_percentage = false
-script = ExtResource("14_yip4u")
-text = "Downloading... {value}%"
-
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar"]
-use_parent_material = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Downloading... 50%"
-label_settings = SubResource("LabelSettings_nyopm")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="InformativeLabels" type="HBoxContainer" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer"]
-use_parent_material = true
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-alignment = 1
 
-[node name="LibrariesLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
-use_parent_material = true
+[node name="Button" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer"]
 layout_mode = 2
-theme_type_variation = &"LabelProcess"
-theme_override_font_sizes/font_size = 9
-text = "Libraries"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_type_variation = &"ButtonBottomLeft"
+text = "CHANGER"
 
-[node name="AssetsLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
-use_parent_material = true
+[node name="Panel" type="Panel" parent="CenterContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
-theme_type_variation = &"LabelError"
-theme_override_font_sizes/font_size = 9
-text = "Assets"
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 3
+theme_type_variation = &"PanelCover"
 
-[node name="ClientLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
-use_parent_material = true
+[node name="PlayContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(370, 0)
 layout_mode = 2
-theme_type_variation = &"LabelSuccess"
-theme_override_font_sizes/font_size = 9
-text = "Client"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="JavaLabel" type="Label" parent="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/InformativeLabels"]
-use_parent_material = true
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer"]
 layout_mode = 2
-theme_type_variation = &"LabelSuccess"
-theme_override_font_sizes/font_size = 9
-text = "Java"
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_vertical = 6
 
-[node name="MCInstallation" type="Node" parent="."]
-script = ExtResource("16_xmnrj")
-java_manager = SubResource("Resource_8je2n")
-tweaker = SubResource("Resource_ytrm8")
-fabric_loader_version = "0.15.10"
-mc_version_file = ""
-mc_version_id = "1.19.2"
+[node name="PlayerNameLineEdit" type="LineEdit" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/VBoxContainer"]
+layout_mode = 2
+text = "Farfelu"
 
-[connection signal="_play_button_pressed" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_button_pressed"]
-[connection signal="_switch_to_accounts_container" from="CenterContainer/VBoxContainer/Panel/Container/PlayContainer" to="." method="_on_play_container__switch_to_accounts_container"]
-[connection signal="_switch_to_play_container" from="CenterContainer/VBoxContainer/Panel/Container/AccountsContainer" to="." method="_on_accounts_container__switch_to_play_container"]
-[connection signal="value_changed" from="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" to="CenterContainer/VBoxContainer/LoadingPanel/VBoxContainer/LoadingBar" method="_on_value_changed"]
-[connection signal="assets_downloaded" from="MCInstallation" to="." method="_on_mc_installation_assets_downloaded"]
-[connection signal="client_downloaded" from="MCInstallation" to="." method="_on_mc_installation_client_downloaded"]
-[connection signal="java_downloaded" from="MCInstallation" to="." method="_on_mc_installation_java_downloaded"]
-[connection signal="libraries_downloaded" from="MCInstallation" to="." method="_on_mc_installation_libraries_downloaded"]
-[connection signal="new_file_downloaded" from="MCInstallation" to="." method="_on_mc_installation_new_file_downloaded"]
+[node name="Button" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer"]
+layout_mode = 2
+theme_type_variation = &"ButtonBottomRight"
+text = "JOUER"
