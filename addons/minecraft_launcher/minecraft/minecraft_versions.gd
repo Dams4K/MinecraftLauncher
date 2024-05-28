@@ -5,6 +5,8 @@ const VERSION_MANIFEST_V2_URL = "https://piston-meta.mojang.com/mc/game/version_
 
 static func get_version_file(downloader: Requests, version_id) -> Dictionary:
 	var versions = (await downloader.do_get(VERSION_MANIFEST_V2_URL)).json()
+	if versions == null:
+		return {}
 	
 	for v in versions["versions"]:
 		if v["id"] == version_id:
