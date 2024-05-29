@@ -117,12 +117,12 @@ func load_version_file() -> void:
 
 
 
-func run():
+func run(username: String):
 	if version_data == {}:
 		print_debug("Wait for version_data")
 		await version_file_loaded
 	
-	
+	print("QSD")
 	#-- DOWNLOAD JAVA
 	var java_major_version = version_data["javaVersion"]["majorVersion"]
 	java_major_version = 17 #TODO: fix this, i'm forced to set manually 8
@@ -140,11 +140,13 @@ func run():
 	
 	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join(RUNTIME_FOLDER))
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
-	
+	print("Java")
 	java_downloaded.emit()
 	
 	await tweaker.setup(downloader, minecraft_folder, java_exe_path)
+	print("Libs")
 	await tweaker.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
+	print("Natives")
 	await tweaker.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
 	var artifacts = tweaker.get_libraries()
 	print("%s artifacts" % len(artifacts))
@@ -174,7 +176,7 @@ func run():
 	jvm_args.libraries_path = libs_abs_path
 	
 	var game_args := MCGameArgs.new()
-	game_args.username = "Dams4LT" #TODO: ---
+	game_args.username = username
 	game_args.version = mc_version_id
 	game_args.game_dir = ProjectSettings.globalize_path(game_folder)
 	game_args.assets_dir = ProjectSettings.globalize_path(minecraft_folder.path_join(ASSETS_FOLDER))

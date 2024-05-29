@@ -1,7 +1,6 @@
 extends Node3D
 
 @onready var anchor: Node3D = $Anchor
-@onready var camera_animations: AnimationPlayer = $CameraAnimations
 
 @export var rotation_speed: float = 0.002
 @export var can_animate: bool = true

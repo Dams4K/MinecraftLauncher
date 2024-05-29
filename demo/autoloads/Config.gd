@@ -16,6 +16,8 @@ var y_resolution: int = -1:
 		y_resolution = v
 		save_cfg()
 
+var username: String = "Farfelu"
+
 func load_cfg():
 	var config = ConfigFile.new()
 	if config.load(ProjectSettings.get("Launcher/Paths/Config")) == OK:

@@ -77,7 +77,7 @@ layout_mode = 2
 [node name="PlayerViewportContainer" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer" instance=ExtResource("10_ubwb3")]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer"]
+[node name="ChangeButton" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer"]
 layout_mode = 2
 theme_type_variation = &"ButtonBottomLeft"
 text = "CHANGER"
@@ -110,7 +110,8 @@ text = "Pseudo :"
 
 [node name="PlayerNameLineEdit" type="LineEdit" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer"]
 layout_mode = 2
-text = "Farfelu"
+placeholder_text = "Ton pseudo idiot"
+max_length = 16
 context_menu_enabled = false
 
 [node name="Title" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer"]
@@ -121,10 +122,12 @@ label_settings = SubResource("LabelSettings_7ta4k")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer"]
+[node name="PlayButton" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer"]
 layout_mode = 2
 theme_type_variation = &"ButtonBottomRight"
 text = "JOUER  "
 
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="pressed" from="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/ChangeButton" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer/PlayerNameLineEdit" to="." method="_on_player_name_line_edit_text_changed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/PlayButton" to="." method="_on_play_button_pressed"]
