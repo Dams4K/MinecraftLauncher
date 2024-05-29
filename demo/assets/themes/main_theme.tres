@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://dmajl82kqvoml"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://dmajl82kqvoml"]
 
 [ext_resource type="FontFile" uid="uid://lh8tw5kqre88" path="res://demo/assets/fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf" id="1_pypml"]
 [ext_resource type="StyleBox" uid="uid://bh8ujnokaxlik" path="res://demo/assets/materials/theme/panel_style.tres" id="2_lgucj"]
@@ -100,12 +100,16 @@ content_margin_left = 12.0
 [sub_resource type="FontVariation" id="FontVariation_r8fu8"]
 base_font = ExtResource("1_pypml")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mg5a0"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ybk8p"]
 content_margin_left = 12.0
 content_margin_top = 12.0
 content_margin_right = 12.0
 content_margin_bottom = 8.0
 bg_color = Color(0.803922, 0.85098, 0.823529, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_go60s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wxavo"]
 bg_color = Color(0.976471, 0.984314, 0.976471, 1)
@@ -169,18 +173,18 @@ LineEdit/colors/clear_button_color_pressed = Color(0, 0, 0, 1)
 LineEdit/colors/font_color = Color(0.976471, 0.984314, 0.976471, 1)
 LineEdit/colors/font_outline_color = Color(0, 0, 0, 1)
 LineEdit/colors/font_placeholder_color = Color(0.976471, 0.984314, 0.976471, 0.403922)
-LineEdit/colors/font_selected_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_selected_color = Color(0.976471, 0.984314, 0.976471, 1)
 LineEdit/colors/font_uneditable_color = Color(0, 0, 0, 1)
-LineEdit/colors/selection_color = Color(0, 0, 0, 1)
+LineEdit/colors/selection_color = Color(0.976471, 0.984314, 0.976471, 0.211765)
 LineEdit/constants/caret_width = 0
 LineEdit/constants/minimum_character_width = 0
 LineEdit/constants/outline_size = 0
 LineEdit/font_sizes/font_size = 28
 LineEdit/fonts/font = SubResource("FontVariation_r8fu8")
 LineEdit/icons/clear = null
-LineEdit/styles/focus = null
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_mg5a0")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_ybk8p")
-LineEdit/styles/read_only = null
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_go60s")
 Panel/styles/panel = ExtResource("2_lgucj")
 PanelContainer/styles/panel = ExtResource("2_lgucj")
 PanelCover/base_type = &"Panel"
