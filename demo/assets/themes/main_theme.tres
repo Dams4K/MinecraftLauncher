@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=14 format=3 uid="uid://dmajl82kqvoml"]
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://dmajl82kqvoml"]
 
 [ext_resource type="FontFile" uid="uid://lh8tw5kqre88" path="res://demo/assets/fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf" id="1_pypml"]
 [ext_resource type="StyleBox" uid="uid://bh8ujnokaxlik" path="res://demo/assets/materials/theme/panel_style.tres" id="2_lgucj"]
@@ -94,6 +94,9 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_02bl3"]
+content_margin_left = 12.0
+
 [sub_resource type="FontVariation" id="FontVariation_r8fu8"]
 base_font = ExtResource("1_pypml")
 
@@ -150,6 +153,9 @@ ButtonSelected/base_type = &"Button"
 ButtonSelected/styles/focus = SubResource("StyleBoxFlat_ijii1")
 ButtonSelected/styles/hover = SubResource("StyleBoxFlat_fn1s3")
 ButtonSelected/styles/normal = SubResource("StyleBoxFlat_qilrn")
+HeaderSmall/base_type = &"Label"
+HeaderSmall/font_sizes/font_size = 18
+HeaderSmall/styles/normal = SubResource("StyleBoxEmpty_02bl3")
 LabelError/base_type = &"Label"
 LabelError/colors/font_color = Color(1, 0.6, 0.631373, 1)
 LabelError/fonts/font = SubResource("FontVariation_r8fu8")

@@ -2,7 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
-[ext_resource type="PackedScene" uid="uid://b37yxgwl3lhrf" path="res://demo/3d/player_godot.tscn" id="10_78qp8"]
+[ext_resource type="PackedScene" uid="uid://b2mp5ed0vs4pf" path="res://demo/menus/player_viewport_container.tscn" id="10_ubwb3"]
+[ext_resource type="FontFile" uid="uid://dqgwaq7bvtwpr" path="res://demo/assets/fonts/Comfortaa/static/Comfortaa-Bold.ttf" id="11_khfrt"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/java_manager.gd" id="16_kkxe5"]
 [ext_resource type="Resource" uid="uid://bpc5u6s0v5q1x" path="res://demo/assets/java_downloaders/linux_java_17.tres" id="16_ret3p"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/mc_installation.gd" id="16_xmnrj"]
@@ -22,12 +23,9 @@ script = ExtResource("16_kkxe5")
 linux_javas = Array[ExtResource("20_0pa4w")]([ExtResource("16_ret3p"), ExtResource("17_d17bv")])
 windows_javas = Array[ExtResource("20_0pa4w")]([ExtResource("19_8vens"), SubResource("Resource_2ce40")])
 
-[sub_resource type="Environment" id="Environment_v363f"]
-background_mode = 1
-background_color = Color(1, 1, 1, 1)
-
-[sub_resource type="World3D" id="World3D_2rb1n"]
-environment = SubResource("Environment_v363f")
+[sub_resource type="LabelSettings" id="LabelSettings_7ta4k"]
+font = ExtResource("11_khfrt")
+font_size = 96
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -76,19 +74,8 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer"]
+[node name="PlayerViewportContainer" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer" instance=ExtResource("10_ubwb3")]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="SubViewport" type="SubViewport" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/SubViewportContainer"]
-own_world_3d = true
-world_3d = SubResource("World3D_2rb1n")
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(180, 306)
-render_target_update_mode = 4
-
-[node name="player" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/SubViewportContainer/SubViewport" instance=ExtResource("10_78qp8")]
 
 [node name="Button" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/SkinContainer"]
 layout_mode = 2
@@ -108,14 +95,31 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PlayerNameLineEdit" type="LineEdit" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.1
 anchor_right = 1.0
-anchor_bottom = 0.144
+anchor_bottom = 1.0
 grow_horizontal = 2
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderSmall"
+text = "Pseudo :"
+
+[node name="PlayerNameLineEdit" type="LineEdit" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer"]
+layout_mode = 2
 text = "Farfelu"
+context_menu_enabled = false
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "SMP2I"
+label_settings = SubResource("LabelSettings_7ta4k")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Button" type="Button" parent="CenterContainer/PanelContainer/HBoxContainer/PlayContainer"]
 layout_mode = 2

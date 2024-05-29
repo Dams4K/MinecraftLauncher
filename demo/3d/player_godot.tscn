@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://b37yxgwl3lhrf"]
+[gd_scene load_steps=19 format=3 uid="uid://b37yxgwl3lhrf"]
 
 [ext_resource type="Material" uid="uid://bdrh2jj7c4oc3" path="res://demo/assets/materials/player_godot.tres" id="1_1alkx"]
+[ext_resource type="Script" path="res://demo/3d/player_godot.gd" id="1_ic7ak"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ms1tc"]
 resource_name = "player_Cube_003"
@@ -282,6 +283,37 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="Animation" id="Animation_m6kjv"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Armature/Skeleton3D:LArm")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.564787, -0.151334, -0.209965, 0.7836)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Armature/Skeleton3D:RArm")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.579708, -0.07632, 0.105889, 0.804302)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Armature/Skeleton3D:LLeg")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, -0.701057, 0.092296, 0.092296, 0.701057)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Armature/Skeleton3D:RLeg")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 0.701057, 0.092296, -0.092296, 0.701057)
+
 [sub_resource type="Animation" id="Animation_26i1t"]
 resource_name = "Walk"
 loop_mode = 1
@@ -314,37 +346,6 @@ tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = PackedFloat32Array(0, 1, 0.701057, 0.092296, -0.092296, 0.701057, 0.5, 1, 0.701057, -0.0922959, 0.0922959, 0.701057)
 
-[sub_resource type="Animation" id="Animation_m6kjv"]
-length = 0.001
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Armature/Skeleton3D:LArm")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -0.564787, -0.151334, -0.209965, 0.7836)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Armature/Skeleton3D:RArm")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.579708, -0.07632, 0.105889, 0.804302)
-tracks/2/type = "rotation_3d"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Armature/Skeleton3D:LLeg")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = PackedFloat32Array(0, 1, -0.701057, 0.092296, 0.092296, 0.701057)
-tracks/3/type = "rotation_3d"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Armature/Skeleton3D:RLeg")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = PackedFloat32Array(0, 1, 0.701057, 0.092296, -0.092296, 0.701057)
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4ew8p"]
 _data = {
 "RESET": SubResource("Animation_m6kjv"),
@@ -352,6 +353,7 @@ _data = {
 }
 
 [node name="player" type="Node3D"]
+script = ExtResource("1_ic7ak")
 
 [node name="Armature" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.7, 0)
@@ -518,14 +520,16 @@ skin = SubResource("Skin_1eqeo")
 mesh = SubResource("ArrayMesh_2dob1")
 skin = SubResource("Skin_1eqeo")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.707107, -0.247634, 0.662327, 0, 0.936672, 0.350207, -0.707107, -0.247634, 0.662327, 4, 1.6, 4)
-projection = 1
-size = 8.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="PlayerAnimations" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_4ew8p")
 }
 autoplay = "Walk"
 speed_scale = 0.4
+
+[node name="Anchor" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Anchor"]
+transform = Transform3D(0.707107, -0.247634, 0.662327, 0, 0.936672, 0.350207, -0.707107, -0.247634, 0.662327, 4, 1.6, 4)
+projection = 1
+size = 8.0

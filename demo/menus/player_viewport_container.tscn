@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2mp5ed0vs4pf"]
+
+[ext_resource type="PackedScene" uid="uid://b37yxgwl3lhrf" path="res://demo/3d/player_godot.tscn" id="1_43n2w"]
+[ext_resource type="Script" path="res://demo/menus/player_viewport_container.gd" id="1_pea4d"]
+
+[sub_resource type="Environment" id="Environment_v363f"]
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+
+[sub_resource type="World3D" id="World3D_2rb1n"]
+environment = SubResource("Environment_v363f")
+
+[node name="PlayerViewportContainer" type="SubViewportContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+stretch = true
+script = ExtResource("1_pea4d")
+rotation_force = 0.01
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+world_3d = SubResource("World3D_2rb1n")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="player" parent="SubViewport" instance=ExtResource("1_43n2w")]
