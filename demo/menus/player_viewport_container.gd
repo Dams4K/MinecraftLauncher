@@ -10,6 +10,11 @@ var should_rotate: bool = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
+		if not event.is_pressed():
+			player.can_animate = true
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			start_rotation = player.get_camera_rotation()
 			player.set_camera_rotation(start_rotation)
