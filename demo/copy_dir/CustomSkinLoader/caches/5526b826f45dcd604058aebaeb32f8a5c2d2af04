@@ -1,0 +1,9 @@
+{
+  "id" : "c8e9513c13604cd7bbb3cba15475a0ac",
+  "name" : "Dams4K",
+  "properties" : [ {
+    "name" : "textures",
+    "value" : "ewogICJ0aW1lc3RhbXAiIDogMTcxNjk4ODU3ODExMCwKICAicHJvZmlsZUlkIiA6ICJjOGU5NTEzYzEzNjA0Y2Q3YmJiM2NiYTE1NDc1YTBhYyIsCiAgInByb2ZpbGVOYW1lIiA6ICJEYW1zNEsiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWNlNDQwZTY2YTg0YWMzMzhiZjZiNjk0NzUwOTBiOTQ5M2NhYjNkNTcyODhkOWU2MDk5NWEyMDM0YzIwZjExNyIKICAgIH0KICB9Cn0="
+  } ],
+  "profileActions" : [ ]
+}

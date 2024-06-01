@@ -1,0 +1,9 @@
+{
+  "id" : "25ab50f0bd3b4c7583acdeda04ed08f7",
+  "name" : "farfelu",
+  "properties" : [ {
+    "name" : "textures",
+    "value" : "ewogICJ0aW1lc3RhbXAiIDogMTcxNjk4ODA4OTk5NCwKICAicHJvZmlsZUlkIiA6ICIyNWFiNTBmMGJkM2I0Yzc1ODNhY2RlZGEwNGVkMDhmNyIsCiAgInByb2ZpbGVOYW1lIiA6ICJmYXJmZWx1IiwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzdjYjNiYTUyZGRkNWNjODJjMGIwNTBjM2Y5MjBmODdkYTM2YWRkODAxNjU4NDZmNDc5MDc5NjYzODA1NDMzZGIiLAogICAgICAibWV0YWRhdGEiIDogewogICAgICAgICJtb2RlbCIgOiAic2xpbSIKICAgICAgfQogICAgfQogIH0KfQ=="
+  } ],
+  "profileActions" : [ ]
+}

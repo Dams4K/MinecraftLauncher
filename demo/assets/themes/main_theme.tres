@@ -100,7 +100,12 @@ content_margin_left = 12.0
 [sub_resource type="FontVariation" id="FontVariation_r8fu8"]
 base_font = ExtResource("1_pypml")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mg5a0"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esnox"]
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.816, 0.85, 0.830167, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ybk8p"]
 content_margin_left = 12.0
@@ -167,7 +172,7 @@ LabelProcess/base_type = &"Label"
 LabelProcess/colors/font_color = Color(1, 0.890196, 0.6, 1)
 LabelSuccess/base_type = &"Label"
 LabelSuccess/colors/font_color = Color(0.619608, 1, 0.6, 1)
-LineEdit/colors/caret_color = Color(0, 0, 0, 1)
+LineEdit/colors/caret_color = Color(0.976471, 0.984314, 0.976471, 1)
 LineEdit/colors/clear_button_color = Color(0, 0, 0, 1)
 LineEdit/colors/clear_button_color_pressed = Color(0, 0, 0, 1)
 LineEdit/colors/font_color = Color(0.976471, 0.984314, 0.976471, 1)
@@ -176,13 +181,13 @@ LineEdit/colors/font_placeholder_color = Color(0.976471, 0.984314, 0.976471, 0.4
 LineEdit/colors/font_selected_color = Color(0.976471, 0.984314, 0.976471, 1)
 LineEdit/colors/font_uneditable_color = Color(0, 0, 0, 1)
 LineEdit/colors/selection_color = Color(0.976471, 0.984314, 0.976471, 0.211765)
-LineEdit/constants/caret_width = 0
+LineEdit/constants/caret_width = 1
 LineEdit/constants/minimum_character_width = 0
 LineEdit/constants/outline_size = 0
 LineEdit/font_sizes/font_size = 28
 LineEdit/fonts/font = SubResource("FontVariation_r8fu8")
 LineEdit/icons/clear = null
-LineEdit/styles/focus = SubResource("StyleBoxEmpty_mg5a0")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_esnox")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_ybk8p")
 LineEdit/styles/read_only = SubResource("StyleBoxEmpty_go60s")
 Panel/styles/panel = ExtResource("2_lgucj")

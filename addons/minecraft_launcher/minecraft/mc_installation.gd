@@ -21,7 +21,10 @@ const RUNTIME_FOLDER = "runtime"
 @export var launcher_name := "GoCraft"
 @export var launcher_version := "1.0.0"
 
+@export_dir var copy_dir
+
 @export var tweaker: MCTweaker
+@export var mods: Array[MCMod] = []
 
 @export_category("Folders")
 @export var minecraft_folder = "user://"
@@ -115,17 +118,9 @@ func load_version_file() -> void:
 	
 	version_file_loaded.emit()
 
-
-
 func run(username: String):
-	if version_data == {}:
-		print_debug("Wait for version_data")
-		await version_file_loaded
-	
-	print("QSD")
 	#-- DOWNLOAD JAVA
-	var java_major_version = version_data["javaVersion"]["majorVersion"]
-	java_major_version = 17 #TODO: fix this, i'm forced to set manually 8
+	var java_major_version = 17 #TODO: fix this, i'm forced to set manually 8
 	var java_downloader: JavaDownloader = null
 	if Utils.get_os_type() == Utils.OS_TYPE.LINUX:
 		for linux_java_downloader in java_manager.linux_javas:
@@ -152,6 +147,11 @@ func run(username: String):
 	print("%s artifacts" % len(artifacts))
 	
 	libraries_downloaded.emit()
+	
+	#-- Download MODS
+	for mod in mods:
+		(mod as CFMod).get_file(downloader, minecraft_folder.path_join("mods"))
+	print("mods downloaded")
 	
 	#-- DOWNLOAD ASSETS
 	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))

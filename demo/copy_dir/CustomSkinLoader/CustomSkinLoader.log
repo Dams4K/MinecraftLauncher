@@ -1,0 +1,96 @@
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: CustomSkinLoader 14.19.1
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: DataDir: /home/damien/.local/share/.gocraft/CustomSkinLoader
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Operating System: Linux (amd64) version 6.8.9-100.fc38.x86_64
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Java Version: 17.0.2, Oracle Corporation
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Minecraft: unknown
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Config File: /home/damien/.local/share/.gocraft/CustomSkinLoader/CustomSkinLoader.json
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Try to load config.
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Successfully load config.
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: MojangAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: Legacy
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: CustomSkinAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: CustomSKinAPIPlus
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: UniSkinAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: ElyByAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: GlitchlessAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: MinecraftCapesAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Add a profile loader: WynntilsAPI
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Config File is out of date: 14.17, build number: 19
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: Successfully update config.
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: version : 14.19.1
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: buildNumber : 26
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: loadlist : [{ "name": "LocalSkin", "type": "Legacy", "checkPNG": "false", "skin": "LocalSkin/skins/{USERNAME}.png", "model": "auto", "cape": "LocalSkin/capes/{USERNAME}.png", "elytra": "LocalSkin/elytras/{USERNAME}.png" }, { "name": "Mojang", "type": "MojangAPI", "apiRoot": "https://api.mojang.com/", "sessionRoot": "https://sessionserver.mojang.com/" }, { "name": "LittleSkin", "type": "CustomSkinAPI", "root": "https://littleskin.cn/csl/" }, { "name": "BlessingSkin", "type": "CustomSkinAPI", "root": "https://skin.prinzeugen.net/" }, { "name": "ElyBy", "type": "ElyByAPI", "root": "http://skinsystem.ely.by/textures/" }, { "name": "SkinMe", "type": "UniSkinAPI", "root": "http://www.skinme.cc/uniskin/" }, { "name": "TLauncher", "type": "ElyByAPI", "root": "https://auth.tlauncher.org/skin/profile/texture/login/" }, { "name": "GlitchlessGames", "type": "GlitchlessAPI", "root": "https://games.glitchless.ru/api/minecraft/users/profiles/textures/?nickname=" }, { "name": "MinecraftCapes", "type": "MinecraftCapesAPI", "root": "https://api.minecraftcapes.net/profile/" }, { "name": "OptiFine", "type": "Legacy", "checkPNG": "false", "model": "auto", "cape": "https://optifine.net/capes/{USERNAME}.png" }, { "name": "Wynntils", "type": "WynntilsAPI", "root": "https://athena.wynntils.com/user/getInfo" }, { "name": "CloakPlus", "type": "Legacy", "checkPNG": "false", "model": "auto", "cape": "http://161.35.130.99/capes/{USERNAME}.png" }, { "name": "LabyMod", "type": "Legacy", "checkPNG": "false", "model": "auto", "cape": "https://dl.labymod.net/capes/{STANDARD_UUID}" }, { "name": "Cosmetica", "type": "Legacy", "checkPNG": "false", "model": "auto", "cape": "https://api.cosmetica.cc/get/cloak?username={USERNAME}&uuid={STANDARD_UUID}&nothirdparty" }]
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: enableDynamicSkull : true
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: enableTransparentSkin : true
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: forceLoadAllTextures : true
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: enableCape : true
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: threadPoolSize : 8
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: enableLogStdOut : false
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: cacheExpiry : 30
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: forceUpdateSkull : false
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: enableLocalProfileCache : false
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: enableCacheAutoClean : false
+[2024-05-29 15:16:17] [Render thread/INFO] [CustomSkinLoader Core]: forceDisableCache : false
+[2024-05-29 15:16:17] [Dams4K/INFO] [CustomSkinLoader Core]: Loading Dams4K's profile.
+[2024-05-29 15:16:17] [Dams4K/INFO] [CustomSkinLoader Core]: 1/14 Try to load profile from 'LocalSkin'.
+[2024-05-29 15:16:17] [Dams4K/INFO] [CustomSkinLoader Core]: 2/14 Try to load profile from 'Mojang'.
+[2024-05-29 15:16:17] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://api.mojang.com/profiles/minecraft'.
+[2024-05-29 15:16:17] [Dams4K/INFO] [CustomSkinLoader Core]: Payload: ["Dams4K"]
+[2024-05-29 15:16:17] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: 72)
+[2024-05-29 15:16:17] [Dams4K/DEBUG] [CustomSkinLoader Core]: Content: [ {
+  "id" : "c8e9513c13604cd7bbb3cba15475a0ac",
+  "name" : "Dams4K"
+} ]
+[2024-05-29 15:16:17] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://sessionserver.mojang.com/session/minecraft/profile/c8e9513c13604cd7bbb3cba15475a0ac'.
+[2024-05-29 15:16:18] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: 532)
+[2024-05-29 15:16:18] [Dams4K/DEBUG] [CustomSkinLoader Core]: Saved to cache (Length: 532 , Path: '/home/damien/.local/share/.gocraft/CustomSkinLoader/caches/5526b826f45dcd604058aebaeb32f8a5c2d2af04' , Expire: 1716988608)
+[2024-05-29 15:16:18] [Dams4K/DEBUG] [CustomSkinLoader Core]: Content: {
+  "id" : "c8e9513c13604cd7bbb3cba15475a0ac",
+  "name" : "Dams4K",
+  "properties" : [ {
+    "name" : "textures",
+    "value" : "ewogICJ0aW1lc3RhbXAiIDogMTcxNjk4ODU3ODExMCwKICAicHJvZmlsZUlkIiA6ICJjOGU5NTEzYzEzNjA0Y2Q3YmJiM2NiYTE1NDc1YTBhYyIsCiAgInByb2ZpbGVOYW1lIiA6ICJEYW1zNEsiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWNlNDQwZTY2YTg0YWMzMzhiZjZiNjk0NzUwOTBiOTQ5M2NhYjNkNTcyODhkOWU2MDk5NWEyMDM0YzIwZjExNyIKICAgIH0KICB9Cn0="
+  } ],
+  "profileActions" : [ ]
+}
+[2024-05-29 15:16:18] [Dams4K/INFO] [CustomSkinLoader Core]: 3/14 Try to load profile from 'LittleSkin'.
+[2024-05-29 15:16:18] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://littleskin.cn/csl/Dams4K.json'.
+[2024-05-29 15:16:19] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: 2)
+[2024-05-29 15:16:19] [Dams4K/DEBUG] [CustomSkinLoader Core]: Saved to cache (Length: 2 , Path: '/home/damien/.local/share/.gocraft/CustomSkinLoader/caches/322cd5f8ccb7a326184fd8aee791763cea59c6c2' , Expire: 1716988669)
+[2024-05-29 15:16:19] [Dams4K/DEBUG] [CustomSkinLoader Core]: Content: {}
+[2024-05-29 15:16:19] [Dams4K/INFO] [CustomSkinLoader Core]: Both skin and cape not found.
+[2024-05-29 15:16:19] [Dams4K/INFO] [CustomSkinLoader Core]: 4/14 Try to load profile from 'BlessingSkin'.
+[2024-05-29 15:16:19] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://skin.prinzeugen.net/Dams4K.json'.
+[2024-05-29 15:16:20] [Dams4K/DEBUG] [CustomSkinLoader Core]: Failed to request (Response Code: 404)
+[2024-05-29 15:16:20] [Dams4K/INFO] [CustomSkinLoader Core]: Profile not found.
+[2024-05-29 15:16:20] [Dams4K/INFO] [CustomSkinLoader Core]: 5/14 Try to load profile from 'ElyBy'.
+[2024-05-29 15:16:20] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'http://skinsystem.ely.by/textures/Dams4K'.
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: 121)
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Saved to cache (Length: 121 , Path: '/home/damien/.local/share/.gocraft/CustomSkinLoader/caches/75e1425c4b38cc7a46456ab6ac3124b0ac4e65d3' , Expire: 1716988676)
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Content: {"SKIN":{"url":"http://textures.minecraft.net/texture/9ce440e66a84ac338bf6b69475090b9493cab3d57288d9e60995a2034c20f117"}}
+[2024-05-29 15:16:21] [Dams4K/INFO] [CustomSkinLoader Core]: 6/14 Try to load profile from 'SkinMe'.
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'http://www.skinme.cc/uniskin/Dams4K.json'.
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Failed to request http://www.skinme.cc/uniskin/Dams4K.json (Exception: java.net.UnknownHostException: www.skinme.cc)
+[2024-05-29 15:16:21] [Dams4K/INFO] [CustomSkinLoader Core]: Profile not found.
+[2024-05-29 15:16:21] [Dams4K/INFO] [CustomSkinLoader Core]: 7/14 Try to load profile from 'TLauncher'.
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://auth.tlauncher.org/skin/profile/texture/login/Dams4K'.
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: -1)
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Saved to cache (Length: 121 , Path: '/home/damien/.local/share/.gocraft/CustomSkinLoader/caches/dfaab936e6e475cb95028aca51d96241505a875b' , Expire: 1716988673)
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Content: {"SKIN":{"url":"http://textures.minecraft.net/texture/9ce440e66a84ac338bf6b69475090b9493cab3d57288d9e60995a2034c20f117"}}
+[2024-05-29 15:16:21] [Dams4K/INFO] [CustomSkinLoader Core]: 8/14 Try to load profile from 'GlitchlessGames'.
+[2024-05-29 15:16:21] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://games.glitchless.ru/api/minecraft/users/profiles/textures/?nickname=Dams4K'.
+[2024-05-29 15:16:22] [Dams4K/DEBUG] [CustomSkinLoader Core]: Failed to request (Response Code: 404)
+[2024-05-29 15:16:22] [Dams4K/INFO] [CustomSkinLoader Core]: Profile not found.
+[2024-05-29 15:16:22] [Dams4K/INFO] [CustomSkinLoader Core]: 9/14 Try to load profile from 'MinecraftCapes'.
+[2024-05-29 15:16:22] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://api.minecraftcapes.net/profile/c8e9513c13604cd7bbb3cba15475a0ac'.
+[2024-05-29 15:16:22] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: -1)
+[2024-05-29 15:16:22] [Dams4K/DEBUG] [CustomSkinLoader Core]: Saved to cache (Length: 96 , Path: '/home/damien/.local/share/.gocraft/CustomSkinLoader/caches/628658ea129781eb0ab62ea7d081164e26a6f3c4' , Expire: 1716990382)
+[2024-05-29 15:16:22] [Dams4K/DEBUG] [CustomSkinLoader Core]: Content: {"animatedCape":false,"capeGlint":false,"upsideDown":false,"textures":{"cape":null,"ears":null}}
+[2024-05-29 15:16:22] [Dams4K/INFO] [CustomSkinLoader Core]: Both skin and cape not found.
+[2024-05-29 15:16:22] [Dams4K/INFO] [CustomSkinLoader Core]: 10/14 Try to load profile from 'OptiFine'.
+[2024-05-29 15:16:22] [Dams4K/DEBUG] [CustomSkinLoader Core]: Try to request 'https://optifine.net/capes/Dams4K.png'.
+[2024-05-29 15:16:23] [Dams4K/DEBUG] [CustomSkinLoader Core]: Successfully request (Response Code: 200 , Content Length: 1103)
+[2024-05-29 15:16:23] [Dams4K/DEBUG] [CustomSkinLoader Core]: Saved to cache (Length: 1103 , Path: '/home/damien/.local/share/.gocraft/CustomSkinLoader/caches/e961a33d51acdeae8bbc12decc4bc85d15f6def1' , Expire: 1716989187)
+[2024-05-29 15:16:23] [Dams4K/INFO] [CustomSkinLoader Core]: Dams4K's profile loaded.
+[2024-05-29 15:16:23] [Dams4K/INFO] [CustomSkinLoader Core]: (SkinUrl: (LOCAL_LEGACY)112ae41ba18d5c5da183bc6e372908c3aacad8f3,LocalSkin/skins/Dams4K.png , Model: auto , CapeUrl: (LEGACY)https://optifine.net/capes/Dams4K.png  , Expiry: 1716988613)

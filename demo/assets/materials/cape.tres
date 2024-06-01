@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://8takg5xmbcdn"]
+
+[resource]
+resource_name = "CapeMaterial"
+transparency = 4
+texture_filter = 2

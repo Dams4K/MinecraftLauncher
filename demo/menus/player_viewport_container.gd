@@ -1,5 +1,7 @@
 extends SubViewportContainer
 
+signal change_cape_request
+
 @onready var player: Node3D = $SubViewport/player
 
 var start_pos: Vector2
@@ -24,3 +26,7 @@ func _gui_input(event: InputEvent) -> void:
 		player.can_animate = not event.pressed
 	if event is InputEventMouseMotion and should_rotate:
 		player.set_camera_rotation(start_rotation - (event.position.x - start_pos.x) * rotation_force)
+
+
+func _on_player_change_cape_request() -> void:
+	change_cape_request.emit() # Because i'm lazy af

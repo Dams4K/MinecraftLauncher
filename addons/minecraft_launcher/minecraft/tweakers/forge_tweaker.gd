@@ -54,12 +54,13 @@ func get_installer(downloader: Requests, minecraft_folder: String):
 		await Utils.download_file(downloader, installer_path, path, "")
 	elif installer_path.begins_with("res://"):
 		var folder = path.get_base_dir()
-		var dir = DirAccess.make_dir_recursive_absolute(folder)
-		
-		var file = FileAccess.open(installer_path, FileAccess.READ)
-		var outside_file = FileAccess.open(path, FileAccess.WRITE)
-		outside_file.store_buffer(file.get_buffer(file.get_length()))
-		outside_file.close()
+		DirAccess.make_dir_recursive_absolute(folder)
+		var dir := DirAccess.open("res://")
+		dir.copy(installer_path, path)
+		#var file = FileAccess.open(installer_path, FileAccess.READ)
+		#var outside_file = FileAccess.open(path, FileAccess.WRITE)
+		#outside_file.store_buffer(file.get_buffer(file.get_length()))
+		#outside_file.close()
 	return path
 
 func install_forge(downloader: Requests, minecraft_folder: String, java_path: String):
@@ -73,14 +74,18 @@ func install_forge(downloader: Requests, minecraft_folder: String, java_path: St
 	var outputs = []
 	#TODO: don't reinstall when it's already installed
 	#TODO: same file for windows (not permissions required)
-	var install_forge_sh = installer_path.get_base_dir().path_join("install_forge.sh")
-	var exc_file = FileAccess.open(install_forge_sh, FileAccess.WRITE)
-	exc_file.store_string("cd $2\n$1 -jar $3 --installClient $2")
-	FileAccess.set_unix_permissions(install_forge_sh, 493)
-	exc_file.close()
-	
-	print("%s %s %s %s" % [install_forge_sh, java_path, minecraft_folder, installer_path])
-	await OS.execute(install_forge_sh, [java_path, minecraft_folder, installer_path])
+	if Utils.get_os_type() == Utils.OS_TYPE.LINUX:
+		var install_forge_sh = installer_path.get_base_dir().path_join("install_forge.sh")
+		var exc_file = FileAccess.open(install_forge_sh, FileAccess.WRITE)
+		exc_file.store_string("cd $2\n$1 -jar $3 --installClient $2")
+		FileAccess.set_unix_permissions(install_forge_sh, 493)
+		exc_file.close()
+		
+		print("%s %s %s %s" % [install_forge_sh, java_path, minecraft_folder, installer_path])
+		await OS.execute(install_forge_sh, [java_path, minecraft_folder, installer_path])
+		
+	elif Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
+		await OS.execute(java_path, ["-jar", installer_path, "--installClient", minecraft_folder])
 
 func get_forge_version_name():
 	return "%s_forge.jar" % minecraft_version

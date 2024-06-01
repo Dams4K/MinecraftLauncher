@@ -30,3 +30,5 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="player" parent="SubViewport" instance=ExtResource("1_43n2w")]
+
+[connection signal="change_cape_request" from="SubViewport/player" to="." method="_on_player_change_cape_request"]
