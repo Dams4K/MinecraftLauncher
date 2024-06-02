@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://bat3n2cmf3i2b"]
+
+[ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_87w1l"]
+[ext_resource type="Script" path="res://demo/menus/capes_selector_window.gd" id="1_qtab3"]
+[ext_resource type="PackedScene" uid="uid://b4g3n1yv8esqa" path="res://demo/menus/cape_item.tscn" id="2_cbvk4"]
+[ext_resource type="PackedScene" uid="uid://wmust7l67dnq" path="res://demo/menus/add_cape.tscn" id="4_ety5s"]
+
+[node name="CapesSelectorWindow" type="Window"]
+title = "Selection ta cape"
+position = Vector2i(0, 36)
+size = Vector2i(960, 540)
+script = ExtResource("1_qtab3")
+CAPE_ITEM = ExtResource("2_cbvk4")
+
+[node name="CapesSelectorMenu" type="ScrollContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="CapesSelectorMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 6
+mouse_filter = 2
+theme = ExtResource("1_87w1l")
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 4
+columns = 5
+
+[node name="AddCape" parent="CapesSelectorMenu/GridContainer" instance=ExtResource("4_ety5s")]
+layout_mode = 2
+
+[node name="FileDialog" type="FileDialog" parent="CapesSelectorMenu"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png")
+use_native_dialog = true
+
+[connection signal="add_cape_pressed" from="CapesSelectorMenu/GridContainer/AddCape" to="." method="_on_add_cape_add_cape_pressed"]
+[connection signal="file_selected" from="CapesSelectorMenu/FileDialog" to="." method="_on_file_dialog_file_selected"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://bnvlws7lnrdw"]
+[gd_scene load_steps=22 format=3 uid="uid://bnvlws7lnrdw"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_hsfwl"]
 [ext_resource type="Script" path="res://demo/Main.gd" id="1_idodt"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/minecraft/curseforge_mod.gd" id="10_hk57a"]
 [ext_resource type="PackedScene" uid="uid://b2mp5ed0vs4pf" path="res://demo/menus/player_viewport_container.tscn" id="10_ubwb3"]
+[ext_resource type="PackedScene" uid="uid://bat3n2cmf3i2b" path="res://demo/menus/capes_selector_window.tscn" id="11_dkweb"]
 [ext_resource type="FontFile" uid="uid://dqgwaq7bvtwpr" path="res://demo/assets/fonts/Comfortaa/static/Comfortaa-Bold.ttf" id="11_khfrt"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/requests.gd" id="13_xwuab"]
 [ext_resource type="Script" path="res://addons/minecraft_launcher/java_manager.gd" id="16_kkxe5"]
@@ -46,7 +47,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_exirq"]
@@ -71,7 +72,6 @@ _data = {
 }
 
 [node name="Main" type="Control"]
-modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -108,6 +108,9 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.png")
 use_native_dialog = true
+
+[node name="CapesSelectorWindow" parent="." instance=ExtResource("11_dkweb")]
+visible = false
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -197,6 +200,7 @@ script = ExtResource("13_xwuab")
 
 [connection signal="file_selected" from="SkinFileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="CapeFileDialog" to="." method="_on_cape_file_dialog_file_selected"]
+[connection signal="cape_selected" from="CapesSelectorWindow" to="." method="_on_capes_selector_window_cape_selected"]
 [connection signal="change_cape_request" from="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/PlayerViewportContainer" to="." method="_on_player_viewport_container_change_cape_request"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/ChangeButton" to="." method="_on_button_pressed"]
 [connection signal="text_changed" from="CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer/PlayerNameLineEdit" to="." method="_on_player_name_line_edit_text_changed"]

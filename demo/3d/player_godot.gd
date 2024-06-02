@@ -53,6 +53,7 @@ func _physics_process(delta):
 
 func handle_cape_click():
 	if Input.is_action_just_released("click_cape"):
+		can_animate = false
 		change_cape_request.emit()
 
 func launch(velocity: float):

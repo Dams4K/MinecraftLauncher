@@ -1,8 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4g3n1yv8esqa"]
+[gd_scene load_steps=8 format=3 uid="uid://b4g3n1yv8esqa"]
 
+[ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_43875"]
 [ext_resource type="Material" uid="uid://8takg5xmbcdn" path="res://demo/assets/materials/cape.tres" id="1_bfop1"]
+[ext_resource type="Script" path="res://demo/menus/cape_item.gd" id="1_iv0hx"]
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_tsgm0"]
+[sub_resource type="Environment" id="Environment_gqh3r"]
+background_mode = 1
+background_color = Color(1, 1, 1, 1)
+
+[sub_resource type="World3D" id="World3D_6dxwg"]
+environment = SubResource("Environment_gqh3r")
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_7cbna"]
 _surfaces = [{
 "aabb": AABB(-0.25, -2.66667, -1.25, 0.5, 2.66667, 2.50001),
 "format": 34896613377,
@@ -32,32 +41,65 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 0, 0, 254, 255, 0, 128, 0, 0, 0, 0, 254, 255, 84, 213, 0, 0, 0, 0, 254, 255, 255, 191, 0, 0, 255, 255, 254, 255, 0, 128, 0, 0, 255, 255, 254, 255, 84, 213, 0, 0, 255, 255, 254, 255, 255, 191, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 255, 191, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 84, 213, 0, 0, 255, 255, 0, 0, 255, 191, 255, 255, 0, 0, 254, 255, 0, 128, 255, 255, 0, 0, 254, 255, 84, 213, 255, 255, 0, 0, 254, 255, 255, 191, 255, 255, 255, 255, 254, 255, 0, 128, 255, 255, 255, 255, 254, 255, 84, 213, 255, 255, 255, 255, 254, 255, 255, 191, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 84, 213, 255, 255, 0, 0, 0, 0, 255, 191, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 84, 213, 255, 255, 255, 255, 0, 0, 255, 191, 255, 127, 255, 255, 170, 42, 84, 213, 255, 127, 255, 255, 255, 127, 255, 255, 84, 213, 170, 42, 255, 127, 255, 255, 255, 127, 255, 255, 170, 42, 84, 213, 255, 127, 255, 255, 255, 127, 255, 255, 84, 213, 170, 42, 255, 127, 255, 255, 255, 127, 255, 255, 170, 42, 84, 213, 255, 127, 0, 0, 255, 127, 255, 255, 84, 213, 170, 42, 255, 127, 0, 0, 255, 127, 255, 255, 170, 42, 84, 213, 255, 127, 0, 0, 255, 127, 255, 255, 84, 213, 170, 42, 255, 127, 0, 0)
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_tsgm0")
+shadow_mesh = SubResource("ArrayMesh_7cbna")
 
-[sub_resource type="Environment" id="Environment_yupb8"]
-background_mode = 1
-background_color = Color(1, 1, 1, 1)
+[node name="CapeItem" type="Control"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+theme = ExtResource("1_43875")
+script = ExtResource("1_iv0hx")
+TWEEN_DURATION = 0.15
 
-[sub_resource type="World3D" id="World3D_6dxwg"]
-environment = SubResource("Environment_yupb8")
-
-[node name="SubViewportContainer" type="SubViewportContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_type_variation = &"PanelContainerSmall"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
 stretch = true
 
-[node name="Cape" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.4, 0, 0, 0, 1.2, 0, 0, 0, 0.8, 0, 0, 0)
-mesh = SubResource("ArrayMesh_xdqdl")
-skeleton = NodePath("")
-
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/SubViewportContainer"]
 own_world_3d = true
 world_3d = SubResource("World3D_6dxwg")
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1152, 648)
+size_2d_override = Vector2i(512, 512)
+size_2d_override_stretch = true
 render_target_update_mode = 4
+
+[node name="Cape" type="MeshInstance3D" parent="PanelContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+transform = Transform3D(-0.393923, -0.208378, -6.99382e-08, -0.0694593, 1.18177, 0, 3.44379e-08, 1.8217e-08, -0.8, -0.25, 1, 0)
+mesh = SubResource("ArrayMesh_xdqdl")
+skeleton = NodePath("")
+
+[node name="Anchor" type="Node3D" parent="PanelContainer/SubViewportContainer/SubViewport"]
+
+[node name="Camera3D" type="Camera3D" parent="PanelContainer/SubViewportContainer/SubViewport/Anchor"]
+transform = Transform3D(0.707107, -0.247634, 0.662327, 0, 0.936672, 0.350207, -0.707107, -0.247634, 0.662327, 4, 1.6, 4)
+projection = 1
+size = 5.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

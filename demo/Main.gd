@@ -12,6 +12,7 @@ var cape_mat: StandardMaterial3D = preload("res://demo/assets/materials/cape.tre
 
 @onready var skin_file_dialog: FileDialog = $SkinFileDialog
 @onready var cape_file_dialog: FileDialog = $CapeFileDialog
+@onready var cape_selector_window: Window = $CapesSelectorWindow
 
 @onready var player_name_line_edit: LineEdit = $CenterContainer/PanelContainer/HBoxContainer/PlayContainer/Control/VBoxContainer/PlayerNameLineEdit
 
@@ -22,13 +23,16 @@ var profile: MCProfile = MCProfile.load_profile()
 @onready var skin_download_timer: Timer = $SkinDownloadTimer
 @onready var requests: Requests = $Requests
 
+@onready var player_viewport_container: SubViewportContainer = $CenterContainer/PanelContainer/HBoxContainer/SkinContainer/PlayerViewportContainer
+
 func _ready() -> void:
+	modulate.a = 0.0
+	
 	player_name_line_edit.text = profile.player_name
 	if not load_local_skin(profile.player_name):
 		skin_download_timer.start()
 	load_local_cape(profile.player_name)
 	setup_custom_skin_loader()
-	#cape_file_dialog.root_subfolder = 
 	
 
 func setup_custom_skin_loader():
@@ -96,14 +100,7 @@ func _on_player_name_line_edit_text_changed(new_text: String) -> void:
 
 
 func _on_player_viewport_container_change_cape_request() -> void:
-	cape_file_dialog.popup_centered()
-
-
-func _on_cape_file_dialog_file_selected(path: String) -> void:
-	#TODO: check image size
-	DirAccess.make_dir_recursive_absolute(cape_path.get_base_dir())
-	DirAccess.copy_absolute(path, ProjectSettings.globalize_path(cape_path % get_playername()))
-	load_local_cape(profile.player_name)
+	cape_selector_window.popup_centered()
 
 
 func _on_skin_download_timer_timeout() -> void:
@@ -130,3 +127,12 @@ func _on_skin_download_timer_timeout() -> void:
 		var path = ProjectSettings.globalize_path(skin_path % n)
 		await requests.do_file(skin_data["textures"]["SKIN"]["url"], path)
 		load_local_skin(n)
+
+
+func _on_capes_selector_window_cape_selected(path: String) -> void:
+	#TODO: check image size
+	DirAccess.make_dir_recursive_absolute(cape_path.get_base_dir())
+	DirAccess.copy_absolute(path, ProjectSettings.globalize_path(cape_path % get_playername()))
+	load_local_cape(profile.player_name)
+	
+	player_viewport_container.player.can_animate = true # spagetti code go brrr

@@ -36,6 +36,10 @@ InstallCapes="*res://demo/autoloads/InstallCapes.gd"
 
 file_logging/enable_file_logging.pc=false
 
+[display]
+
+window/subwindows/embed_subwindows=false
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/minecraft_launcher/plugin.cfg")
