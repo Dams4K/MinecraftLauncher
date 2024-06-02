@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4g3n1yv8esqa"]
+[gd_scene load_steps=10 format=3 uid="uid://b4g3n1yv8esqa"]
 
 [ext_resource type="Theme" uid="uid://dmajl82kqvoml" path="res://demo/assets/themes/main_theme.tres" id="1_43875"]
 [ext_resource type="Material" uid="uid://8takg5xmbcdn" path="res://demo/assets/materials/cape.tres" id="1_bfop1"]
@@ -42,6 +42,25 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_7cbna")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4p7sr"]
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.717647, 0.784314, 0.745098, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruwa2"]
+bg_color = Color(0.717647, 0.784314, 0.745098, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="CapeItem" type="Control"]
 custom_minimum_size = Vector2(128, 128)
@@ -100,6 +119,34 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="SelectionIndicator" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4p7sr")
+
+[node name="CheckMark" type="PanelContainer" parent="SelectionIndicator"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ruwa2")
+
+[node name="Label" type="Label" parent="SelectionIndicator/CheckMark"]
+layout_mode = 2
+text = "✓"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

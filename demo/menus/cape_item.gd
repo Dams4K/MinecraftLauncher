@@ -6,6 +6,8 @@ signal cape_selected(texture: String)
 
 var cape_mat = preload("res://demo/assets/materials/cape.tres")
 
+var selected: bool = false : set = set_selected
+
 #@export var cape_texture: Texture2D : set = set_cape_texture
 @export var cape_path: String : set = set_cape_path
 
@@ -17,13 +19,9 @@ var cape_mat = preload("res://demo/assets/materials/cape.tres")
 func _ready() -> void:
 	current_mat = cape_mat.duplicate()
 	cape_mesh.set_surface_override_material(0, current_mat)
-	#set_cape_texture(cape_texture)
+	
 	set_cape_path(cape_path)
 
-#func set_cape_texture(value: Texture2D):
-	#cape_texture = value
-	#if cape_mesh:
-		#current_mat.albedo_texture = value
 
 func set_cape_path(value: String):
 	cape_path = value

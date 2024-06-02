@@ -33,6 +33,7 @@ func _process(delta: float) -> void:
 
 func add_cape(texture_path: String):
 	var texture_name: String = texture_path.get_file().replace(".", "")
+	
 	if grid_container.get_node_or_null(texture_name) != null:
 		return
 	
