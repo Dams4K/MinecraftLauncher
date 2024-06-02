@@ -10,6 +10,6 @@ func _ready() -> void:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
-			if not dir.current_is_dir():
+			if not dir.current_is_dir() and file_name.get_extension() == "png":
 				dir.copy(internal_capes_folder.path_join(file_name), CAPES_FOLDER.path_join(file_name))
 			file_name = dir.get_next()

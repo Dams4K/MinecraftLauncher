@@ -1,6 +1,9 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://8takg5xmbcdn"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://8takg5xmbcdn"]
+
+[ext_resource type="Texture2D" uid="uid://ea32exk5848j" path="res://demo/assets/textures/capes/cherry_blossom.png" id="1_v8gop"]
 
 [resource]
 resource_name = "CapeMaterial"
 transparency = 4
+albedo_texture = ExtResource("1_v8gop")
 texture_filter = 2
