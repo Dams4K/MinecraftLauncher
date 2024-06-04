@@ -6,7 +6,7 @@ signal cape_selected(texture: String)
 
 var cape_mat = preload("res://demo/assets/materials/cape.tres")
 
-var selected: bool = false : set = set_selected
+#var selected: bool = false : set = set_selected
 
 #@export var cape_texture: Texture2D : set = set_cape_texture
 @export var cape_path: String : set = set_cape_path

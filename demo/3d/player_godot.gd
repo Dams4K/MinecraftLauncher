@@ -2,6 +2,7 @@ extends Node3D
 
 signal change_cape_request
 
+var player_mat: StandardMaterial3D = preload("res://demo/assets/materials/player_godot.tres")
 var cape_mat: StandardMaterial3D = preload("res://demo/assets/materials/cape.tres")
 
 @onready var anchor: Node3D = $Anchor
@@ -14,6 +15,12 @@ var velocity_y: float = 0.0
 @onready var cam: Camera3D = $Anchor/Camera3D
 @onready var cape_collision: StaticBody3D = $cape/CapeCollision
 
+func _ready() -> void:
+	player_mat.albedo_texture = ProfileManager.get_skin()
+	cape_mat.albedo_texture = ProfileManager.get_cape()
+	
+	ProfileManager.skin_updated.connect(_on_skin_updated)
+	ProfileManager.cape_updated.connect(_on_cape_updated)
 
 func set_camera_rotation(angle: float):
 	anchor.rotation.y = angle
@@ -58,3 +65,9 @@ func handle_cape_click():
 
 func launch(velocity: float):
 	pass
+
+func _on_skin_updated():
+	player_mat.albedo_texture = ProfileManager.get_skin()
+
+func _on_cape_updated():
+	cape_mat.albedo_texture = ProfileManager.get_cape()

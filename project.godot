@@ -31,6 +31,7 @@ config/icon="res://icon.svg"
 Config="*res://demo/autoloads/Config.gd"
 GlobalFunctions="*res://demo/autoloads/GlobalFunctions.gd"
 InstallCapes="*res://demo/autoloads/InstallCapes.gd"
+ProfileManager="*res://demo/autoloads/ProfileManager.tscn"
 
 [debug]
 

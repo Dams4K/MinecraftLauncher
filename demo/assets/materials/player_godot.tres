@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bdrh2jj7c4oc3"]
 
-[ext_resource type="Texture2D" uid="uid://nqtsrakswatw" path="res://demo/assets/textures/stevex.png" id="1_tsd3t"]
+[ext_resource type="Texture2D" uid="uid://b2f6xxdet1ino" path="res://demo/assets/textures/skins/unkown.png" id="1_kqsc0"]
 
 [resource]
 resource_name = "Material.001"
@@ -8,6 +8,6 @@ transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_texture = ExtResource("1_tsd3t")
+albedo_texture = ExtResource("1_kqsc0")
 roughness = 0.4
 texture_filter = 2

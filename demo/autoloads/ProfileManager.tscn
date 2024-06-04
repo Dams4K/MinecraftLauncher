@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://2jnpak886eyt"]
+
+[ext_resource type="Script" path="res://demo/autoloads/ProfileManager.gd" id="1_37m2s"]
+[ext_resource type="Script" path="res://addons/minecraft_launcher/requests.gd" id="1_bc7mn"]
+
+[node name="ProfileManager" type="Node"]
+script = ExtResource("1_37m2s")
+
+[node name="Requests" type="Node" parent="."]
+script = ExtResource("1_bc7mn")
+
+[node name="SkinDownloadTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="SkinDownloadTimer" to="." method="_on_skin_download_timer_timeout"]

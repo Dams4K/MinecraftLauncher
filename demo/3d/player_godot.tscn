@@ -598,6 +598,18 @@ tracks/3/path = NodePath("ArmatureWide/Skeleton3D:RLeg")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = PackedFloat32Array(0, 1, 0.701057, 0.092296, -0.092296, 0.701057)
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("cape:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -0.191986)]
+}
 
 [sub_resource type="Animation" id="Animation_26i1t"]
 resource_name = "Walk"
@@ -630,6 +642,18 @@ tracks/3/path = NodePath("ArmatureWide/Skeleton3D:RLeg")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = PackedFloat32Array(0, 1, 0.701057, 0.092296, -0.092296, 0.701057, 0.5, 1, 0.701057, -0.0922959, 0.0922959, 0.701057)
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("cape:rotation")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.0349066, 0, -0.244346), Vector3(-0.0349066, 0, -0.279253)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4ew8p"]
 _data = {
@@ -644,7 +668,7 @@ size = Vector3(1, 8.045, 5.785)
 script = ExtResource("1_ic7ak")
 
 [node name="cape" parent="." instance=ExtResource("2_vmgbt")]
-transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -0.5, 1, 0)
+transform = Transform3D(0.981627, 0.190809, 0, -0.190809, 0.981627, 0, 0, 0, 1, -0.5, 1, 0)
 
 [node name="CapeCollision" type="StaticBody3D" parent="cape"]
 

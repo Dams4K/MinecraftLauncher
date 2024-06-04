@@ -101,14 +101,6 @@ access = 2
 filters = PackedStringArray("*.png")
 use_native_dialog = true
 
-[node name="CapeFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.png")
-use_native_dialog = true
-
 [node name="CapesSelectorWindow" parent="." instance=ExtResource("11_dkweb")]
 visible = false
 
@@ -199,7 +191,7 @@ one_shot = true
 script = ExtResource("13_xwuab")
 
 [connection signal="file_selected" from="SkinFileDialog" to="." method="_on_file_dialog_file_selected"]
-[connection signal="file_selected" from="CapeFileDialog" to="." method="_on_cape_file_dialog_file_selected"]
+[connection signal="file_selected" from="SkinFileDialog" to="." method="_on_skin_file_dialog_file_selected"]
 [connection signal="cape_selected" from="CapesSelectorWindow" to="." method="_on_capes_selector_window_cape_selected"]
 [connection signal="change_cape_request" from="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/PlayerViewportContainer" to="." method="_on_player_viewport_container_change_cape_request"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/HBoxContainer/SkinContainer/ChangeButton" to="." method="_on_button_pressed"]
