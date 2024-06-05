@@ -10,8 +10,8 @@ const UNKOWN_SKIN = preload("res://demo/assets/textures/skins/unkown.png")
 
 var minecraft_folder: String = "" : set = set_minecraft_folder
 
-var MOD_SKINS_FOLDER = minecraft_folder.path_join("/CustomSkinLoader/LocalSkin/skins/%s.png")
-var MOD_CAPES_FOLDER = minecraft_folder.path_join("/CustomSkinLoader/LocalSkin/capes/%s.png")
+var MOD_SKINS_FOLDER = minecraft_folder.path_join("CustomSkinLoader/LocalSkin/skins/%s.png")
+var MOD_CAPES_FOLDER = minecraft_folder.path_join("CustomSkinLoader/LocalSkin/capes/%s.png")
 var CAPES_ASSETS_FOLDER = "user://capes"
 
 static func load_profile(mc_folder):
@@ -33,8 +33,11 @@ func set_cape_path(path: String):
 		return
 	
 	cape_path = CAPES_ASSETS_FOLDER.path_join(path.get_file())
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(cape_path.get_base_dir()))
 	image.save_png(cape_path)
-	image.save_png(MOD_CAPES_FOLDER % player_name)
+	var p = MOD_CAPES_FOLDER % player_name
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(p.get_base_dir()))
+	image.save_png(p)
 	save_profile()
 
 
@@ -52,8 +55,8 @@ func set_skin_path(path: String):
 
 func set_minecraft_folder(path: String):
 	minecraft_folder = path
-	MOD_SKINS_FOLDER = minecraft_folder.path_join("/CustomSkinLoader/LocalSkin/skins/%s.png")
-	MOD_CAPES_FOLDER = minecraft_folder.path_join("/CustomSkinLoader/LocalSkin/capes/%s.png")
+	MOD_SKINS_FOLDER = minecraft_folder.path_join("CustomSkinLoader/LocalSkin/skins/%s.png")
+	MOD_CAPES_FOLDER = minecraft_folder.path_join("CustomSkinLoader/LocalSkin/capes/%s.png")
 	return self
 
 func get_skin_texture() -> Texture2D:

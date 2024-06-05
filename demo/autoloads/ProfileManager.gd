@@ -53,11 +53,13 @@ func get_cape():
 func download_skin_texture() -> String:
 	var player_data: Dictionary = (await downloader.do_get(MINECRAFT_UUID % profile.player_name)).json()
 	if not player_data.has("id"):
+		print_debug("No uuid")
 		return ""
 
 	var player_uuid = player_data["id"]
 	var encoded_skin_data = (await downloader.do_get(MINECRAFT_PROFILE % player_uuid)).json()
 	if not encoded_skin_data.has("properties"):
+		print_debug("No properties")
 		return ""
 
 	var skin_data: Dictionary = {}
@@ -71,8 +73,11 @@ func download_skin_texture() -> String:
 	
 	if skin_data:
 		var path = ProjectSettings.globalize_path(profile.MOD_SKINS_FOLDER % profile.player_name)
+		DirAccess.make_dir_recursive_absolute(path.get_base_dir())
 		await downloader.do_file(skin_data["textures"]["SKIN"]["url"], path)
+		print_debug("Skin downloaded at %s" % path)
 		return path
+	print_debug("No idk")
 	return ""
 
 
