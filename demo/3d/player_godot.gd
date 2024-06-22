@@ -28,13 +28,13 @@ func set_camera_rotation(angle: float):
 func get_camera_rotation():
 	return anchor.rotation.y
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if can_animate:
 		anchor.rotation.y += rotation_speed
 
 const RAY_LENGTH = 1000
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var space_state = get_world_3d().direct_space_state
 	var mousepos = get_viewport().get_mouse_position()
 

@@ -19,7 +19,7 @@ var y_resolution: int = -1:
 var username: String = "Farfelu"
 
 func load_cfg():
-	var config = ConfigFile.new()
+	config = ConfigFile.new()
 	if config.load(ProjectSettings.get("Launcher/Paths/Config")) == OK:
 		max_ram = config.get_value("Global", "max_ram", max_ram)
 		

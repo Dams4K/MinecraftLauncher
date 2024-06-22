@@ -30,7 +30,7 @@ func set_cape_path(value: String):
 		var t = ImageTexture.create_from_image(i)
 		current_mat.albedo_texture = t
 
-func _gui_input(event: InputEvent) -> void:
+func _gui_input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("click_cape"):
 		cape_selected.emit(cape_path)
 

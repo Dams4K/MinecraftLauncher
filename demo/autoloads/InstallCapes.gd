@@ -5,7 +5,7 @@ var internal_capes_folder = "res://demo/assets/textures/capes/"
 
 func _ready() -> void:
 	var dir = DirAccess.open(internal_capes_folder)
-	dir.make_dir_recursive_absolute(CAPES_FOLDER)
+	DirAccess.make_dir_recursive_absolute(CAPES_FOLDER)
 	
 	if dir:
 		dir.list_dir_begin()

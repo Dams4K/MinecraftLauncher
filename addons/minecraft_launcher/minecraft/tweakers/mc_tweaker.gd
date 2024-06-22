@@ -140,3 +140,6 @@ func download_client_jar(downloader: Requests, versions_folder: String):
 
 func get_assets():
 	return MCAssets.new(data["assetIndex"])
+
+func is_ready():
+	return true

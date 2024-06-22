@@ -61,6 +61,9 @@ var downloader: Requests
 var files_downloaded: int = 0
 var files_to_download: int = 1000
 
+var mc_runner = MCRunner.new()
+var need_to_wait = false
+
 func _get_property_list():
 	var properties = []
 	var version_file_usage = PROPERTY_USAGE_NO_EDITOR
@@ -133,15 +136,19 @@ func run(username: String):
 				java_downloader = windows_java_downloader
 				break
 	
-	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join(RUNTIME_FOLDER))
+	var java_folder_path = minecraft_folder.path_join(RUNTIME_FOLDER).path_join("java%s.zip" % java_major_version)
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
-	print("Java downloaded")
+	
+	if OS.execute(java_exe_path, ["-version"]) != OK:
+		# Issue when running java
+		await java_downloader.download_java(downloader, minecraft_folder.path_join(RUNTIME_FOLDER))
+		print("Java downloaded")
 	java_downloaded.emit()
-	
 	await tweaker.setup(downloader, minecraft_folder, java_exe_path)
-	print("Libs")
 	
+	print("Libs")
 	await tweaker.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
+	
 	print("Natives")
 	await tweaker.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
 	var artifacts = tweaker.get_libraries()
@@ -186,11 +193,17 @@ func run(username: String):
 	game_args.height = Config.y_resolution
 	game_args.complementaries = tweaker.get_game_args()
 	
-	var mc_runner = MCRunner.new()
-	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args
-	#mc_runner.main_class = tweaker.get_main_class()
 	mc_runner.tweaker = tweaker
 	mc_runner.java_path = java_exe_path
 	
-	mc_runner.run()
+	if not tweaker.is_ready():
+		print_debug("Need to wait a little more...")
+		need_to_wait = true
+	else:
+		mc_runner.run()
+
+func _process(delta: float) -> void:
+	if need_to_wait and tweaker.is_ready():
+		need_to_wait = false
+		mc_runner.run()

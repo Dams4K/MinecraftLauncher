@@ -26,7 +26,7 @@ func update_grid():
 				add_cape(CAPES_FOLDER.path_join(file_name))
 			file_name = dir.get_next()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var viewport_size = capes_selector_menu.get_viewport_rect().size
 	var columns = int((viewport_size.x - capes_selector_menu.offset_left + capes_selector_menu.offset_right) / (128.0 + 4.0)) # 128.0 size of items | 4.0 size of space between items
 	grid_container.columns = columns

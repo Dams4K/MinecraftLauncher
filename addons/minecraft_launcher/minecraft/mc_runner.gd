@@ -3,9 +3,7 @@ class_name MCRunner
 
 var java_path: String
 
-var jvm_args: MCJVMArgs
 var game_args: MCGameArgs
-#var main_class: String
 
 var tweaker: MCTweaker
 
