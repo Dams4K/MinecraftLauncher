@@ -46,7 +46,7 @@ func download_native(downloader: Requests, target_folder: String):
 func check_rules():
 	var result = true
 	for rule in rules:
-		result = rule.check_rule()
+		result = rule.check_rule() #TODO: pk je ne fais pas "result = result or check_rule"
 	return result
 
 func get_os_name():

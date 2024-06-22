@@ -7,3 +7,4 @@ script = ExtResource("1_upvcq")
 java_major_version = "17"
 url = "https://download.java.net/java/GA/jdk17.0.2/dfd4a8d0985749f896bed50d7138ee7f/8/GPL/openjdk-17.0.2_windows-x64_bin.zip"
 exe_path = "jdk-17.0.2/bin/javaw.exe"
+sha1 = ""

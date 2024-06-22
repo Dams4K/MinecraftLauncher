@@ -32,7 +32,11 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 	# if something is missing, don't do it
 	if url == "" || path == "": return
 	
-	#if not FileAccess.file_exists(path) or (Utils.check_sha1(path, sha1) and overwrite):
+	# check if file is correct
+	if sha1 != "" and not Utils.check_sha1(path, sha1):
+		print("The current file %s has an incorrect sha1. Automatically deleted" % path)
+		DirAccess.remove_absolute(path)
+	
 	if not FileAccess.file_exists(path) or overwrite:
 		var response := await request.do_file(url, path)
 		if response.result != Requests.Result.SUCCESS:
@@ -41,6 +45,7 @@ static func download_file(request: Requests, url: String, path: String, sha1: St
 	# check if file is correct
 	if sha1 != "" and not Utils.check_sha1(path, sha1):
 		DirAccess.remove_absolute(path)
+		print("The downloaded file is corrupted. Wrong sha1")
 
 static func unzip_file(path: String, exclude_files: Array[String], delete_archive: bool) -> void:
 	var reader := ZIPReader.new()
@@ -67,6 +72,11 @@ static func extract_file(reader: ZIPReader, inner_path: String, outer_dst: Strin
 		return
 	
 	var outer_path: String = outer_dst.path_join(inner_path)
+	var is_folder: bool = inner_path.ends_with("/")
+	if FileAccess.file_exists(outer_path) or is_folder:
+		return
+	print("Extracting file to %s" % outer_path)
+	
 	var outer_folder = ProjectSettings.globalize_path(outer_path.get_base_dir())
 	if not DirAccess.dir_exists_absolute(outer_folder):
 		DirAccess.make_dir_recursive_absolute(outer_folder)

@@ -12,9 +12,9 @@ var complementaries: Array = []
 func to_array() -> Array:
 	var array: Array = complementaries.duplicate()
 	
-	array.append("-Djava.library.path=%s" % natives_directory)
-	array.append("-Dminecraft.launcher.brand=%s" % launcher_name)
-	array.append("-Dminecraft.launcher.version=%s" % launcher_version)
+	array.append('"-Djava.library.path=%s"' % natives_directory)
+	array.append('"-Dminecraft.launcher.brand=%s"' % launcher_name)
+	array.append('"-Dminecraft.launcher.version=%s"' % launcher_version)
 	array.append("-Xmx%s" % xmx)
 	
 	var separator: String = ":"

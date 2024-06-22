@@ -25,13 +25,14 @@ func get_complementary_version_data(downloader: Requests, version_id: StringName
 		
 	return json.data
 
-func get_jvm(library_folder: String) -> Array:
-	var args = complementary_data["arguments"]["jvm"]
-	for i in range(len(args)):
-		args[i] = args[i].replace("${library_directory}", ProjectSettings.globalize_path(library_folder))
-		args[i] = args[i].replace("${classpath_separator}", ":") #TODO: ";" on windows
-		args[i] = args[i].replace("${version_name}", get_forge_version_name().replace(".jar", ""))
-	
+func get_jvm() -> Array:
+	client_jar_path = "" # forge don't need this, we must remove it
+	var args = super.get_jvm()
+	for arg in complementary_data["arguments"]["jvm"]:
+		var value = format_jvm_arg(arg)
+		if value is String: # If value is in a correct format
+			value = value.replace("${version_name}", get_forge_version_name().replace(".jar", ""))
+			args.append(value)
 	return args
 
 func get_game_args():

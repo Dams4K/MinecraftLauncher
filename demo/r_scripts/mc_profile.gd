@@ -29,6 +29,7 @@ func set_cape_path(path: String):
 		return
 	
 	var image = Image.load_from_file(path)
+	
 	if image.get_size() != Vector2i(64, 32):
 		return
 	
@@ -46,12 +47,27 @@ func set_skin_path(path: String):
 		return
 	
 	var image = Image.load_from_file(path)
+	if image.get_size() == Vector2i(64, 32):
+		#image.resize_to_po2()
+		var im2 = Image.create(64, 64, image.has_mipmaps(), image.get_format())
+		
+		copy_pixels(Rect2i(0, 0, 64, 32), Vector2i(0, 0), image, im2)
+		copy_pixels(Rect2i(0, 16, 16, 16), Vector2i(16, 48), image, im2)
+		copy_pixels(Rect2i(40, 16, 16, 16), Vector2i(32, 48), image, im2)
+		
+		image = im2
+	
 	if image.get_size() != Vector2i(64, 64):
 		return
 	
 	skin_path = MOD_SKINS_FOLDER % player_name
 	image.save_png(skin_path)
 	save_profile()
+
+func copy_pixels(dim: Rect2i, top_left: Vector2i, from: Image, to: Image):
+	for y in range(dim.size.y):
+		for x in range(dim.size.x):
+			to.set_pixel(top_left.x + x, top_left.y + y, from.get_pixel(dim.position.x + x, dim.position.y + y))
 
 func set_minecraft_folder(path: String):
 	minecraft_folder = path

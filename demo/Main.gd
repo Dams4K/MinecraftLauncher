@@ -23,6 +23,7 @@ var cape_mat: StandardMaterial3D = preload("res://demo/assets/materials/cape.tre
 @onready var player_viewport_container: SubViewportContainer = $CenterContainer/PanelContainer/HBoxContainer/SkinContainer/PlayerViewportContainer
 
 func _ready() -> void:
+	print(ProjectSettings.globalize_path("user://"))
 	modulate.a = 0.0
 	
 	player_name_line_edit.text = ProfileManager.get_player_name()
@@ -87,15 +88,8 @@ func _on_player_viewport_container_change_cape_request() -> void:
 
 func _on_capes_selector_window_cape_selected(path: String) -> void:
 	ProfileManager.set_cape(path)
-	#DirAccess.make_dir_recursive_absolute(cape_path.get_base_dir())
-	#DirAccess.copy_absolute(path, ProjectSettings.globalize_path(cape_path % get_playername()))
-	#load_local_cape(profile.player_name)
-	
 	player_viewport_container.player.can_animate = true # spagetti code go brrr
 
 
 func _on_skin_file_dialog_file_selected(path: String) -> void:
 	ProfileManager.set_skin(path)
-	#DirAccess.make_dir_recursive_absolute(skin_path.get_base_dir())
-	#DirAccess.copy_absolute(path, ProjectSettings.globalize_path(skin_path % get_playername()))
-	#load_local_skin(get_playername())

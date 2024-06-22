@@ -18,6 +18,10 @@ func get_file(downloader: Requests, mod_folder: String):
 	
 	var url = API.path_join(GET_MOD) % [modid, fileid]
 	var file_data = (await downloader.do_get(url, "", get_headers())).json()
+	if file_data == null:
+		print("Can't download mod %s" % modid)
+		return
+	
 	var mod_name = file_data["data"]["displayName"]
 	var mod_url = file_data["data"]["downloadUrl"]
 	await downloader.do_file(mod_url, mod_folder.path_join("%s.jar" % mod_name))

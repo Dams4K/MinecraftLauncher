@@ -26,7 +26,7 @@ func get_assets_list(downloader: Requests, folder: String) -> Dictionary:
 	await Utils.download_file(downloader, get_url(), file_path, get_sha1())
 	
 	var file = FileAccess.open(file_path, FileAccess.READ)
-	if file.get_error() != OK:
+	if file == null or file.get_error() != OK:
 		push_error("Error opening file %s" % file_path)
 		return {}
 	var content: Dictionary = JSON.parse_string(file.get_as_text())
@@ -46,8 +46,8 @@ func download_assets(downloader: Requests, folder: String):
 		var object_path = folder.path_join("objects").path_join(url)
 		
 		if not FileAccess.file_exists(object_path):
-			print_debug("Downloading assets.... %s/%s" % [i,assets_count])
+			print("Downloading assets.... %s/%s" % [i,assets_count])
 			await Utils.download_file(downloader, RESOURCES_URL.path_join(url), object_path)
 		emit_signal("new_asset_downloaded", i+1, assets_count)
 	
-	print_debug("Assets downloaded")
+	print("Assets downloaded")

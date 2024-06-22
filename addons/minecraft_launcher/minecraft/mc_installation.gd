@@ -135,11 +135,12 @@ func run(username: String):
 	
 	var java_folder_path = await java_downloader.download_java(downloader, minecraft_folder.path_join(RUNTIME_FOLDER))
 	var java_exe_path = ProjectSettings.globalize_path(java_folder_path.get_base_dir().path_join(java_downloader.exe_path))
-	print("Java")
+	print("Java downloaded")
 	java_downloaded.emit()
 	
 	await tweaker.setup(downloader, minecraft_folder, java_exe_path)
 	print("Libs")
+	
 	await tweaker.download_libraries(downloader, minecraft_folder.path_join(LIBRARIES_FOLDER))
 	print("Natives")
 	await tweaker.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
@@ -148,18 +149,18 @@ func run(username: String):
 	
 	libraries_downloaded.emit()
 	
+	var mc_assets = tweaker.get_assets()
+	await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
+	assets_downloaded.emit()
+	
 	#-- Download MODS
 	for mod in mods:
 		(mod as CFMod).get_file(downloader, minecraft_folder.path_join("mods"))
 	print("mods downloaded")
 	
-	#-- DOWNLOAD ASSETS
-	var mc_assets = MCAssets.new(version_data.get("assetIndex", {}))
-	#await mc_assets.download_assets(downloader, minecraft_folder.path_join(ASSETS_FOLDER))
-	#assets_downloaded.emit()
-	
 	#-- DOWNLOAD CLIENT
-	var client_jar_path: String = await tweaker.get_client_jar(downloader, minecraft_folder.path_join(VERSIONS_FOLDER))
+	#var client_jar_path: String = 
+	await tweaker.download_client_jar(downloader, minecraft_folder.path_join(VERSIONS_FOLDER))
 	client_downloaded.emit()
 	
 	var jvm_args := MCJVMArgs.new()
@@ -167,12 +168,12 @@ func run(username: String):
 	jvm_args.launcher_name = launcher_name
 	jvm_args.launcher_version = launcher_version
 	jvm_args.xmx = "%sG" % Config.max_ram
-	jvm_args.complementaries = tweaker.get_jvm(minecraft_folder.path_join(LIBRARIES_FOLDER))
+	#jvm_args.complementaries = tweaker.get_jvm(minecraft_folder.path_join(LIBRARIES_FOLDER))
 
 	var libs_abs_path: Array[String] = artifacts
 	
-	if client_jar_path != "":
-		libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
+	#if client_jar_path != "":
+		#libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
 	jvm_args.libraries_path = libs_abs_path
 	
 	var game_args := MCGameArgs.new()
@@ -188,7 +189,8 @@ func run(username: String):
 	var mc_runner = MCRunner.new()
 	mc_runner.jvm_args = jvm_args
 	mc_runner.game_args = game_args
-	mc_runner.main_class = tweaker.get_main_class()
+	#mc_runner.main_class = tweaker.get_main_class()
+	mc_runner.tweaker = tweaker
 	mc_runner.java_path = java_exe_path
 	
 	mc_runner.run()
