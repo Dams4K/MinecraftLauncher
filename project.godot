@@ -24,7 +24,8 @@ config/custom_user_dir_name="gocraft"
 config/features=PackedStringArray("4.2")
 boot_splash/bg_color=Color(0.976471, 0.984314, 0.976471, 1)
 boot_splash/show_image=false
-config/icon="res://addons/minecraft_launcher/icon.svg"
+config/icon="res://icon.svg"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
