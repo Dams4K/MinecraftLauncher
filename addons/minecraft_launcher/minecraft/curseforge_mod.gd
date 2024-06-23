@@ -18,7 +18,6 @@ func get_file(downloader: Requests, mod_folder: String):
 	
 	var url = API.path_join(GET_MOD) % [modid, fileid]
 	var file_data_s = (await downloader.do_get(url, "", get_headers()))
-	printt(url,get_headers())
 	
 	var file_data = file_data_s.json()
 	

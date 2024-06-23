@@ -151,8 +151,8 @@ func run(username: String):
 	
 	print("Natives")
 	await tweaker.download_natives(downloader, minecraft_folder.path_join(NATIVES_FOLDER))
-	var artifacts = tweaker.get_libraries()
-	print("%s artifacts" % len(artifacts))
+	#var artifacts = tweaker.get_libraries()
+	#print("%s artifacts" % len(artifacts))
 	
 	libraries_downloaded.emit()
 	
@@ -177,12 +177,6 @@ func run(username: String):
 	jvm_args.xmx = "%sG" % Config.max_ram
 	#jvm_args.complementaries = tweaker.get_jvm(minecraft_folder.path_join(LIBRARIES_FOLDER))
 
-	var libs_abs_path: Array[String] = artifacts
-	
-	#if client_jar_path != "":
-		#libs_abs_path.append(ProjectSettings.globalize_path(client_jar_path))
-	jvm_args.libraries_path = libs_abs_path
-	
 	var game_args := MCGameArgs.new()
 	game_args.username = username
 	game_args.version = mc_version_id
@@ -201,9 +195,11 @@ func run(username: String):
 		print_debug("Need to wait a little more...")
 		need_to_wait = true
 	else:
+		print_debug("MC is running")
 		mc_runner.run()
 
 func _process(delta: float) -> void:
 	if need_to_wait and tweaker.is_ready():
+		print_debug("MC is running")
 		need_to_wait = false
 		mc_runner.run()

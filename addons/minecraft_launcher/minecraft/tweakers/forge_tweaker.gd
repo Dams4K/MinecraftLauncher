@@ -101,7 +101,7 @@ func real_forge_install(i_p, java_path, minecraft_folder, install_check_file):
 	elif Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
 		var install_forge_bat = installer_folder.path_join("install_forge.bat")
 		var exc_file = FileAccess.open(install_forge_bat, FileAccess.WRITE)
-		exc_file.store_string("cd %2\n%1 -jar %3 --installClient %2\ncopy /b NUL " + installer_folder.get_basename().path_join(install_check_file))
+		exc_file.store_string("cd %2\n%1 -jar %3 --installClient %2\ncd " + installer_folder.get_basename() + " > " + install_check_file)
 		exc_file.close()
 		
 		var df = FileAccess.open(installer_folder.path_join("debug.txt"), FileAccess.WRITE)

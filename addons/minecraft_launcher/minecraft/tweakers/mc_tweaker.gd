@@ -71,6 +71,7 @@ func get_libraries():
 	var paths: Array[String] = []
 	for lib in libraries.values():
 		var lib_path = (lib as MCLibrary).artifact_path
+		var is_native = "native" in lib_path
 		if lib_path != "":
 			paths.append(ProjectSettings.globalize_path(lib_path))
 	
@@ -101,8 +102,8 @@ func format_jvm_arg(arg):
 			value = arg["value"]
 		
 	if value is String:
-		if "=" in value:
-			value = '"%s"' % value # Powershell don't like =
+		#if "=" in value and "-D" in value:
+			#value = value.replace("-D", '-D"').replace("=", '"=') # Powershell don't like =
 		
 		var separator: String = ":"
 		if Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
