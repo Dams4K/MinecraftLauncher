@@ -23,13 +23,9 @@ var cape_mat: StandardMaterial3D = preload("res://demo/assets/materials/cape.tre
 @onready var player_viewport_container: SubViewportContainer = $CenterContainer/PanelContainer/HBoxContainer/SkinContainer/PlayerViewportContainer
 
 func _ready() -> void:
-	print(ProjectSettings.globalize_path("user://"))
 	modulate.a = 0.0
 	
 	player_name_line_edit.text = ProfileManager.get_player_name()
-	#if not load_local_skin(profile.player_name):
-		#skin_download_timer.start()
-	#load_local_cape(profile.player_name)
 	setup_custom_skin_loader()
 	
 
@@ -39,31 +35,6 @@ func setup_custom_skin_loader():
 	var d = DirAccess.open("res://")
 	d.copy("res://demo/copy_dir/CustomSkinLoader.json", m.path_join("CustomSkinLoader.json"))
 
-
-#func load_local_skin(player_name):
-	#var path = skin_path % player_name
-	#if not FileAccess.file_exists(path):
-		#player_mat.albedo_texture = UNKOWN_SKIN
-		#return false
-	#
-	#var image = Image.new()
-	#image.load(path)
-	#var t = ImageTexture.create_from_image(image)
-	#player_mat.albedo_texture = t
-	#return true
-
-
-#func load_local_cape(player_name):
-	#var path = cape_path % player_name
-	#if not FileAccess.file_exists(path):
-		#cape_mat.albedo_texture = null
-		#return false
-	#
-	#var image = Image.new()
-	#image.load(path)
-	#var t = ImageTexture.create_from_image(image)
-	#cape_mat.albedo_texture = t
-	#return true
 
 func get_playername():
 	var username = player_name_line_edit.text

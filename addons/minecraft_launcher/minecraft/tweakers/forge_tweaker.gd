@@ -80,9 +80,8 @@ func install_forge(downloader: Requests, minecraft_folder: String, java_path: St
 		print_debug("Forge is already installed")
 		return #Forge already installed
 	
-	var f = func (): real_forge_install(i_p, java_path, minecraft_folder, install_check_file)
 	install_forge_thread = Thread.new()
-	install_forge_thread.start(f)
+	install_forge_thread.start(real_forge_install.bind(i_p, java_path, minecraft_folder, install_check_file))
 	
 func real_forge_install(i_p, java_path, minecraft_folder, install_check_file):
 	var installer_folder = i_p.get_base_dir()
@@ -100,10 +99,18 @@ func real_forge_install(i_p, java_path, minecraft_folder, install_check_file):
 		await OS.execute(install_forge_sh, [java_path, minecraft_folder, i_p])
 		
 	elif Utils.get_os_type() == Utils.OS_TYPE.WINDOWS:
+		var install_forge_bat = installer_folder.path_join("install_forge.bat")
+		var exc_file = FileAccess.open(install_forge_bat, FileAccess.WRITE)
+		exc_file.store_string("cd %2\n%1 -jar %3 --installClient %2\ncopy /b NUL " + installer_folder.get_basename().path_join(install_check_file))
+		exc_file.close()
+		
+		var df = FileAccess.open(installer_folder.path_join("debug.txt"), FileAccess.WRITE)
+		df.store_string("%s %s %s %s" % [install_forge_bat, java_path, minecraft_folder, i_p])
+		df.close()
 		#TODO: don't reinstall when it's already installed using "installed" file
 		#TODO: same file for windows (no permissions required)
-		
-		await OS.execute(java_path, ["-jar", i_p, "--installClient", minecraft_folder])
+		await OS.execute(install_forge_bat, [java_path, minecraft_folder, i_p])
+		#await OS.execute(java_path, ["-jar", i_p, "--installClient", minecraft_folder])
 
 func get_forge_version_name():
 	return "%s_forge.jar" % minecraft_version

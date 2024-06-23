@@ -9,15 +9,19 @@ const GET_MOD := "/v1/mods/%s/files/%s"
 
 func get_headers():
 	return [
-		"Accept: application/json",
-		"x-api-key: %s" % GlobalFunctions.curseforge_api_key
+		'Accept: application/json',
+		'x-api-key: %s' % GlobalFunctions.curseforge_api_key
 	]
 
 func get_file(downloader: Requests, mod_folder: String):
 	DirAccess.make_dir_recursive_absolute(mod_folder)
 	
 	var url = API.path_join(GET_MOD) % [modid, fileid]
-	var file_data = (await downloader.do_get(url, "", get_headers())).json()
+	var file_data_s = (await downloader.do_get(url, "", get_headers()))
+	printt(url,get_headers())
+	
+	var file_data = file_data_s.json()
+	
 	if file_data == null:
 		print("Can't download mod %s" % modid)
 		return
