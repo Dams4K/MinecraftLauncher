@@ -35,7 +35,7 @@ func set_cape(path):
 func get_player_name():
 	return profile.player_name
 
-func get_skin():
+func get_skin() -> Texture2D:
 	return profile.get_skin_texture()
 
 func get_skin_or_download():
@@ -51,7 +51,11 @@ func get_cape():
 	return profile.get_cape_texture()
 
 func download_skin_texture() -> String:
-	var player_data: Dictionary = (await downloader.do_get(MINECRAFT_UUID % profile.player_name)).json()
+	var player_data = (await downloader.do_get(MINECRAFT_UUID % profile.player_name)).json()
+	if player_data == null:
+		print_debug("Can't download skin")
+		return ""
+	
 	if not player_data.has("id"):
 		print_debug("No uuid")
 		return ""

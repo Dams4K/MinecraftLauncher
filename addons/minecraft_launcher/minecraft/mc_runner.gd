@@ -39,4 +39,5 @@ func run():
 		var file = FileAccess.open(run_file, FileAccess.WRITE)
 		file.store_string("cd %s && %s %s" % [ProjectSettings.globalize_path("user://"), java_path, " ".join(args)])
 		file.close()
+		FileAccess.set_unix_permissions(run_file, 493) # Exec permissions
 		OS.create_process(ProjectSettings.globalize_path(run_file), [])

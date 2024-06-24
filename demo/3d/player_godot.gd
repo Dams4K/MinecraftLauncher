@@ -15,9 +15,12 @@ var velocity_y: float = 0.0
 @onready var cam: Camera3D = $Anchor/Camera3D
 @onready var cape_collision: StaticBody3D = $cape/CapeCollision
 
+@onready var slim: Node3D = $ArmatureWide/Skeleton3D/Slim
+@onready var wide: Node3D = $ArmatureWide/Skeleton3D/Wide
+
 func _ready() -> void:
-	player_mat.albedo_texture = ProfileManager.get_skin()
-	cape_mat.albedo_texture = ProfileManager.get_cape()
+	_on_skin_updated()
+	_on_cape_updated()
 	
 	ProfileManager.skin_updated.connect(_on_skin_updated)
 	ProfileManager.cape_updated.connect(_on_cape_updated)
@@ -67,7 +70,13 @@ func launch(velocity: float):
 	pass
 
 func _on_skin_updated():
-	player_mat.albedo_texture = ProfileManager.get_skin()
+	var texture = ProfileManager.get_skin()
+	player_mat.albedo_texture = texture
+	var img = texture.get_image()
+	
+	print_debug("Skin is " + ("wide" if img.get_pixel(55, 20).a == 1.0 else "small"))
+	slim.visible = img.get_pixel(55, 20).a != 1.0
+	wide.visible = img.get_pixel(55, 20).a == 1.0
 
 func _on_cape_updated():
 	cape_mat.albedo_texture = ProfileManager.get_cape()

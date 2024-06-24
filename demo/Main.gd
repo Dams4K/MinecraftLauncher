@@ -26,15 +26,7 @@ func _ready() -> void:
 	modulate.a = 0.0
 	
 	player_name_line_edit.text = ProfileManager.get_player_name()
-	setup_custom_skin_loader()
-	
-
-func setup_custom_skin_loader():
-	var m = mc_installation.minecraft_folder.path_join("CustomSkinLoader")
-	DirAccess.make_dir_recursive_absolute(m)
-	var d = DirAccess.open("res://")
-	d.copy("res://demo/copy_dir/CustomSkinLoader.json", m.path_join("CustomSkinLoader.json"))
-
+	mc_installation.install_overrides()
 
 func get_playername():
 	var username = player_name_line_edit.text

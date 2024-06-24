@@ -21,7 +21,7 @@ const RUNTIME_FOLDER = "runtime"
 @export var launcher_name := "GoCraft"
 @export var launcher_version := "1.0.0"
 
-@export_dir var copy_dir
+@export_dir var overrides_folder: String = ""
 
 @export var tweaker: MCTweaker
 @export var mods: Array[MCMod] = []
@@ -101,6 +101,40 @@ func _ready() -> void:
 	add_child(downloader)
 	
 	await load_version_file()
+
+func install_overrides():
+	if overrides_folder == null or overrides_folder.replace(" ", "") == "":
+		return
+	var internal_overrides = DirAccess.open(overrides_folder)
+	
+	var folders_to_visit = [overrides_folder]
+	
+	if internal_overrides == null:
+		print_verbose("Error while opening overrides folder")
+		return
+	
+	while not folders_to_visit.is_empty():
+		var current_folder = folders_to_visit.pop_front()
+		var dir = DirAccess.open(current_folder)
+		if dir:
+			dir.list_dir_begin()
+			var file_name = dir.get_next()
+			while file_name != "":
+				var path = current_folder.path_join(file_name)
+				var local_path: String = path.replace(overrides_folder, "")
+				if local_path[0] == "/":
+					local_path = local_path.substr(1)
+				var user_path = minecraft_folder.path_join(local_path)
+				
+				if dir.current_is_dir():
+					folders_to_visit.append(path)
+					dir.make_dir_absolute(user_path)
+				else:
+					if not FileAccess.file_exists(user_path):
+						internal_overrides.copy(path, user_path)
+				file_name = dir.get_next()
+		else:
+			print_verbose("Error opening %s" % current_folder)
 
 
 func _on_new_file_downloaded(a, b):

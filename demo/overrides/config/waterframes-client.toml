@@ -1,0 +1,14 @@
+
+[waterframes]
+
+	#Configurations to override server config
+	[waterframes.overrideConfig]
+		#Enables the option
+		enable = false
+		#Overrides 'waterframes.watermedia.enable' option
+		#Enables VLC/FFMPEG usage for multimedia processing (support added by WATERMeDIA)
+		useMultimedia = false
+		#overrides 'waterframes.rendering.keepRendering'
+		#Enables media processing and rendering, disabling it will not render nothing, you can still hear videos
+		keepRendering = false
+

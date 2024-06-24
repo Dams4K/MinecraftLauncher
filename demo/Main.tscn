@@ -92,7 +92,7 @@ script = ExtResource("1_idodt")
 [node name="MCInstallation" type="Node" parent="."]
 script = ExtResource("16_xmnrj")
 java_manager = SubResource("Resource_8je2n")
-copy_dir = "res://demo/copy_dir"
+overrides_folder = "res://demo/overrides"
 tweaker = ExtResource("9_rwcyd")
 mods = Array[Resource("res://addons/minecraft_launcher/minecraft/mc_mod.gd")]([SubResource("Resource_wyww5")])
 fabric_loader_version = "0.15.10"
